@@ -1,2 +1,2 @@
 # CADPluging
-Compas3D plugin for create kettle, by Khaibulin Nikita (581).
+Kompas3D plugin for create kettle, by Khaibulin Nikita (581).
