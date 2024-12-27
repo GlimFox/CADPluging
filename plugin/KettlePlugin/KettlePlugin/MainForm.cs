@@ -1,4 +1,7 @@
+п»їusing System.Collections.Generic;
+using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace KettlePlugin
 {
@@ -9,7 +12,7 @@ namespace KettlePlugin
         private Color _color;
 
         /// <summary>
-        /// Словарь, содержащий строки ошибок валидации.
+        /// РЎР»РѕРІР°СЂСЊ, СЃРѕРґРµСЂР¶Р°С‰РёР№ СЃС‚СЂРѕРєРё РѕС€РёР±РѕРє РІР°Р»РёРґР°С†РёРё.
         /// </summary>
         private Dictionary<ParameterType, string> _errors = new Dictionary<ParameterType, string>();
 
@@ -31,7 +34,7 @@ namespace KettlePlugin
         }
 
         /// <summary>
-        /// Функция для изменения полей при выборе другой формулы.
+        /// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ РїРѕР»РµР№ РїСЂРё РІС‹Р±РѕСЂРµ РґСЂСѓРіРѕР№ С„РѕСЂРјСѓР»С‹.
         /// </summary>
         /// <param name="isNeedClear"></param>
         private void CheckChange(bool isNeedClear)
@@ -46,46 +49,46 @@ namespace KettlePlugin
 
             if (rbBottomDiameter.Checked)
             {
-                var1_Label.Text = "Объём чайника";
-                limit1_Label.Text = "от 0,63 до 56,55";
-                hint1_Label.Text = "л";
+                var1_Label.Text = "РћР±СЉС‘Рј С‡Р°Р№РЅРёРєР°";
+                limit1_Label.Text = "РѕС‚ 0,63 РґРѕ 56,55";
+                hint1_Label.Text = "Р»";
 
-                var2_Label.Text = "Высота чайника";
-                limit2_Label.Text = "от 80 до 450";
-                hint2_Label.Text = "мм";
+                var2_Label.Text = "Р’С‹СЃРѕС‚Р° С‡Р°Р№РЅРёРєР°";
+                limit2_Label.Text = "РѕС‚ 80 РґРѕ 450";
+                hint2_Label.Text = "РјРј";
 
-                var3_Label.Text = "Диаметр дна";
-                limit3_Label.Text = "от 100 до 400";
-                hint3_Label.Text = "мм";
+                var3_Label.Text = "Р”РёР°РјРµС‚СЂ РґРЅР°";
+                limit3_Label.Text = "РѕС‚ 100 РґРѕ 400";
+                hint3_Label.Text = "РјРј";
                 tb_var1.Tag = "LidDiameter";
             }
             else if (rbHeightBase.Checked)
             {
-                var1_Label.Text = "Диаметр дна";
-                limit1_Label.Text = "от 100 до 400";
-                hint1_Label.Text = "мм";
+                var1_Label.Text = "Р”РёР°РјРµС‚СЂ РґРЅР°";
+                limit1_Label.Text = "РѕС‚ 100 РґРѕ 400";
+                hint1_Label.Text = "РјРј";
 
-                var2_Label.Text = "Объём чайника";
-                limit2_Label.Text = "от 0,63 до 56,55";
-                hint2_Label.Text = "л";
+                var2_Label.Text = "РћР±СЉС‘Рј С‡Р°Р№РЅРёРєР°";
+                limit2_Label.Text = "РѕС‚ 0,63 РґРѕ 56,55";
+                hint2_Label.Text = "Р»";
 
-                var3_Label.Text = "Высота чайника";
-                limit3_Label.Text = "от 80 до 450";
-                hint3_Label.Text = "мм";
+                var3_Label.Text = "Р’С‹СЃРѕС‚Р° С‡Р°Р№РЅРёРєР°";
+                limit3_Label.Text = "РѕС‚ 80 РґРѕ 450";
+                hint3_Label.Text = "РјРј";
             }
             else if (rbVolume.Checked)
             {
-                var1_Label.Text = "Диаметр дна";
-                limit1_Label.Text = "от 100 до 400";
-                hint1_Label.Text = "мм";
+                var1_Label.Text = "Р”РёР°РјРµС‚СЂ РґРЅР°";
+                limit1_Label.Text = "РѕС‚ 100 РґРѕ 400";
+                hint1_Label.Text = "РјРј";
 
-                var2_Label.Text = "Высота чайника";
-                limit2_Label.Text = "от 80 до 450";
-                hint2_Label.Text = "мм";
+                var2_Label.Text = "Р’С‹СЃРѕС‚Р° С‡Р°Р№РЅРёРєР°";
+                limit2_Label.Text = "РѕС‚ 80 РґРѕ 450";
+                hint2_Label.Text = "РјРј";
 
-                var3_Label.Text = "Объём чайника";
-                limit3_Label.Text = "от 0,63 до 56,55";
-                hint3_Label.Text = "л";
+                var3_Label.Text = "РћР±СЉС‘Рј С‡Р°Р№РЅРёРєР°";
+                limit3_Label.Text = "РѕС‚ 0,63 РґРѕ 56,55";
+                hint3_Label.Text = "Р»";
             }
         }
 
@@ -101,7 +104,7 @@ namespace KettlePlugin
         #region TEXTBOX_KEYPRESS
         private void TBVar1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Проверка на цифры и запятую
+            // РџСЂРѕРІРµСЂРєР° РЅР° С†РёС„СЂС‹ Рё Р·Р°РїСЏС‚СѓСЋ
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
@@ -110,7 +113,7 @@ namespace KettlePlugin
 
         private void TBVar2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Проверка на цифры и запятую
+            // РџСЂРѕРІРµСЂРєР° РЅР° С†РёС„СЂС‹ Рё Р·Р°РїСЏС‚СѓСЋ
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
@@ -119,7 +122,7 @@ namespace KettlePlugin
 
         private void TBDiameterLid_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Проверка на цифры и запятую
+            // РџСЂРѕРІРµСЂРєР° РЅР° С†РёС„СЂС‹ Рё Р·Р°РїСЏС‚СѓСЋ
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
@@ -128,7 +131,7 @@ namespace KettlePlugin
 
         private void TBHandleHeight_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Проверка на цифры и запятую
+            // РџСЂРѕРІРµСЂРєР° РЅР° С†РёС„СЂС‹ Рё Р·Р°РїСЏС‚СѓСЋ
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
@@ -136,7 +139,7 @@ namespace KettlePlugin
         }
         #endregion
 
-        private void pbChoiceColor_Click(object sender, EventArgs e)
+        private void PBChoiceColor_Click(object sender, EventArgs e)
         {
             colorDialog1 = new ColorDialog();
             colorDialog1.ShowDialog();
@@ -163,32 +166,32 @@ namespace KettlePlugin
         {
             try
             {
-                // Пробуем установить значение параметра
+                // РџСЂРѕР±СѓРµРј СѓСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР°
                 double value = double.Parse(textBox.Text);
                 _parameters.AllParameters[parameterType].Value = value;
 
-                // Удаляем ошибку, если значение корректно
+                // РЈРґР°Р»СЏРµРј РѕС€РёР±РєСѓ, РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ РєРѕСЂСЂРµРєС‚РЅРѕ
                 if (_errors.ContainsKey(parameterType))
                     _errors.Remove(parameterType);
 
-                // Сбрасываем цвет для успешного результата
+                // РЎР±СЂР°СЃС‹РІР°РµРј С†РІРµС‚ РґР»СЏ СѓСЃРїРµС€РЅРѕРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р°
                 textBox.BackColor = Color.LightGreen;
                 limitLabel.ForeColor = Color.Black;
 
-                // Проверка зависимостей
+                // РџСЂРѕРІРµСЂРєР° Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№
                 ValidateDependentParameters(parameterType);
             }
             catch (ArgumentException ex)
             {
-                // Сохраняем ошибку и подсвечиваем поле
+                // РЎРѕС…СЂР°РЅСЏРµРј РѕС€РёР±РєСѓ Рё РїРѕРґСЃРІРµС‡РёРІР°РµРј РїРѕР»Рµ
                 _errors[parameterType] = ex.Message;
                 textBox.BackColor = Color.FromArgb(217, 84, 77);
                 limitLabel.ForeColor = Color.FromArgb(217, 84, 77);
             }
             catch (FormatException)
             {
-                // Обработка ошибок формата
-                string errorMessage = "Введите корректное числовое значение.";
+                // РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє С„РѕСЂРјР°С‚Р°
+                string errorMessage = "Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ С‡РёСЃР»РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ.";
                 _errors[parameterType] = errorMessage;
                 textBox.BackColor = Color.FromArgb(217, 84, 77);
                 limitLabel.ForeColor = Color.FromArgb(217, 84, 77);
@@ -205,7 +208,7 @@ namespace KettlePlugin
             {
                 if (_parameters.AllParameters[ParameterType.DiameterLid].Value > bottomDiameter.Value)
                 {
-                    string errorMessage = "Диаметр крышки не может превышать диаметр дна.";
+                    string errorMessage = "Р”РёР°РјРµС‚СЂ РєСЂС‹С€РєРё РЅРµ РјРѕР¶РµС‚ РїСЂРµРІС‹С€Р°С‚СЊ РґРёР°РјРµС‚СЂ РґРЅР°.";
                     _errors[ParameterType.DiameterLid] = errorMessage;
                     tb_diameterLid.BackColor = Color.FromArgb(217, 84, 77);
                     limit4_Label.ForeColor = Color.FromArgb(217, 84, 77);
@@ -221,7 +224,7 @@ namespace KettlePlugin
             {
                 if (_parameters.AllParameters[ParameterType.HeightHandle].Value > heightBase.Value)
                 {
-                    string errorMessage = "Высота ручки не может превышать высоту чайника.";
+                    string errorMessage = "Р’С‹СЃРѕС‚Р° СЂСѓС‡РєРё РЅРµ РјРѕР¶РµС‚ РїСЂРµРІС‹С€Р°С‚СЊ РІС‹СЃРѕС‚Сѓ С‡Р°Р№РЅРёРєР°.";
                     _errors[ParameterType.HeightHandle] = errorMessage;
                     tb_handleHeight.BackColor = Color.FromArgb(217, 84, 77);
                     limit5_Label.ForeColor = Color.FromArgb(217, 84, 77);
@@ -256,7 +259,7 @@ namespace KettlePlugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -280,7 +283,7 @@ namespace KettlePlugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -303,7 +306,7 @@ namespace KettlePlugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -319,7 +322,7 @@ namespace KettlePlugin
                     if (rbHeightBase.Checked) var3 = _parameters.Calculations(2, var1, var2);
                     if (rbVolume.Checked) var3 = _parameters.Calculations(3, var1, var2);
 
-                    // Записываем рассчитанное значение в текстбокс
+                    // Р—Р°РїРёСЃС‹РІР°РµРј СЂР°СЃСЃС‡РёС‚Р°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ С‚РµРєСЃС‚Р±РѕРєСЃ
                     tb_var3.Text = var3.ToString();
                 }
             }
@@ -333,7 +336,7 @@ namespace KettlePlugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -345,7 +348,7 @@ namespace KettlePlugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -362,17 +365,16 @@ namespace KettlePlugin
                 this.tb_diameterLid.BackColor == SystemColors.Window ||
                 this.tb_handleHeight.BackColor == SystemColors.Window)
             {
-                MessageBox.Show("Невозможно построить модель. Проверьте параметры на ошибки и заполните все поля.",
-                        "Ошибка построения",
+                MessageBox.Show("РќРµРІРѕР·РјРѕР¶РЅРѕ РїРѕСЃС‚СЂРѕРёС‚СЊ РјРѕРґРµР»СЊ. РџСЂРѕРІРµСЂСЊС‚Рµ РїР°СЂР°РјРµС‚СЂС‹ РЅР° РѕС€РёР±РєРё Рё Р·Р°РїРѕР»РЅРёС‚Рµ РІСЃРµ РїРѕР»СЏ.",
+                        "РћС€РёР±РєР° РїРѕСЃС‚СЂРѕРµРЅРёСЏ",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
             }
             else
             {
-                int color = _color.ToArgb();
+                int color = pbChoiceColor.BackColor.ToArgb();
                 this._builder.Build(this._parameters, color);
             }
         }
-
     }
 }

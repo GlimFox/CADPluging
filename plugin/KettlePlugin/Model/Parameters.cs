@@ -27,13 +27,24 @@ namespace KettlePlugin
         {
             try
             {
-                this._parameter = new Dictionary<ParameterType, Parameter>()
+                // Инициализация словаря, если он пуст
+                if (_parameter == null)
                 {
-                    { parameterType, parameter },
-                };
-                this.AllParameters.Remove(parameterType);
-                this.AllParameters.Add(parameterType, parameter);
-                this.ValidateParameters();
+                    _parameter = new Dictionary<ParameterType, Parameter>();
+                }
+
+                // Обновление или добавление параметра
+                if (_parameter.ContainsKey(parameterType))
+                {
+                    _parameter[parameterType] = parameter;
+                }
+                else
+                {
+                    _parameter.Add(parameterType, parameter);
+                }
+
+                // Вызов валидации
+                ValidateParameters();
             }
             catch (Exception ex)
             {

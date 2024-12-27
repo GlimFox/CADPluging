@@ -1,4 +1,7 @@
-﻿namespace KettlePlugin
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace KettlePlugin
 {
     partial class MainForm
     {
@@ -29,396 +32,427 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            groupBox1 = new GroupBox();
-            limit3_Label = new Label();
-            rbVolume = new RadioButton();
-            limit2_Label = new Label();
-            rbHeightBase = new RadioButton();
-            limit1_Label = new Label();
-            hint3_Label = new Label();
-            rbBottomDiameter = new RadioButton();
-            label1 = new Label();
-            equalLabel = new Label();
-            tb_var1 = new TextBox();
-            var3_Label = new Label();
-            var1_Label = new Label();
-            hint1_Label = new Label();
-            tb_var3 = new TextBox();
-            var2_Label = new Label();
-            hint2_Label = new Label();
-            tb_var2 = new TextBox();
-            groupBox2 = new GroupBox();
-            limit5_Label = new Label();
-            limit4_Label = new Label();
-            lid_Label = new Label();
-            color_Label = new Label();
-            tb_diameterLid = new TextBox();
-            handle_Label = new Label();
-            hint4_Label = new Label();
-            tb_handleHeight = new TextBox();
-            hint5_Label = new Label();
-            pbChoiceColor = new PictureBox();
-            button_Build = new Button();
-            colorDialog1 = new ColorDialog();
-            lbErrors = new ListBox();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbChoiceColor).BeginInit();
-            SuspendLayout();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.limit3_Label = new System.Windows.Forms.Label();
+            this.rbVolume = new System.Windows.Forms.RadioButton();
+            this.limit2_Label = new System.Windows.Forms.Label();
+            this.rbHeightBase = new System.Windows.Forms.RadioButton();
+            this.limit1_Label = new System.Windows.Forms.Label();
+            this.hint3_Label = new System.Windows.Forms.Label();
+            this.rbBottomDiameter = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.equalLabel = new System.Windows.Forms.Label();
+            this.tb_var1 = new System.Windows.Forms.TextBox();
+            this.var3_Label = new System.Windows.Forms.Label();
+            this.var1_Label = new System.Windows.Forms.Label();
+            this.hint1_Label = new System.Windows.Forms.Label();
+            this.tb_var3 = new System.Windows.Forms.TextBox();
+            this.var2_Label = new System.Windows.Forms.Label();
+            this.hint2_Label = new System.Windows.Forms.Label();
+            this.tb_var2 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.limit5_Label = new System.Windows.Forms.Label();
+            this.limit4_Label = new System.Windows.Forms.Label();
+            this.lid_Label = new System.Windows.Forms.Label();
+            this.color_Label = new System.Windows.Forms.Label();
+            this.tb_diameterLid = new System.Windows.Forms.TextBox();
+            this.handle_Label = new System.Windows.Forms.Label();
+            this.hint4_Label = new System.Windows.Forms.Label();
+            this.tb_handleHeight = new System.Windows.Forms.TextBox();
+            this.hint5_Label = new System.Windows.Forms.Label();
+            this.pbChoiceColor = new System.Windows.Forms.PictureBox();
+            this.button_Build = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.lbErrors = new System.Windows.Forms.ListBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbChoiceColor)).BeginInit();
+            this.SuspendLayout();
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(limit3_Label);
-            groupBox1.Controls.Add(rbVolume);
-            groupBox1.Controls.Add(limit2_Label);
-            groupBox1.Controls.Add(rbHeightBase);
-            groupBox1.Controls.Add(limit1_Label);
-            groupBox1.Controls.Add(hint3_Label);
-            groupBox1.Controls.Add(rbBottomDiameter);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(equalLabel);
-            groupBox1.Controls.Add(tb_var1);
-            groupBox1.Controls.Add(var3_Label);
-            groupBox1.Controls.Add(var1_Label);
-            groupBox1.Controls.Add(hint1_Label);
-            groupBox1.Controls.Add(tb_var3);
-            groupBox1.Controls.Add(var2_Label);
-            groupBox1.Controls.Add(hint2_Label);
-            groupBox1.Controls.Add(tb_var2);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(513, 205);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Параметры основания";
+            this.groupBox1.Controls.Add(this.limit3_Label);
+            this.groupBox1.Controls.Add(this.rbVolume);
+            this.groupBox1.Controls.Add(this.limit2_Label);
+            this.groupBox1.Controls.Add(this.rbHeightBase);
+            this.groupBox1.Controls.Add(this.limit1_Label);
+            this.groupBox1.Controls.Add(this.hint3_Label);
+            this.groupBox1.Controls.Add(this.rbBottomDiameter);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.equalLabel);
+            this.groupBox1.Controls.Add(this.tb_var1);
+            this.groupBox1.Controls.Add(this.var3_Label);
+            this.groupBox1.Controls.Add(this.var1_Label);
+            this.groupBox1.Controls.Add(this.hint1_Label);
+            this.groupBox1.Controls.Add(this.tb_var3);
+            this.groupBox1.Controls.Add(this.var2_Label);
+            this.groupBox1.Controls.Add(this.hint2_Label);
+            this.groupBox1.Controls.Add(this.tb_var2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 10);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(513, 164);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Параметры основания";
             // 
             // limit3_Label
             // 
-            limit3_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            limit3_Label.Font = new Font("Segoe UI", 7F);
-            limit3_Label.Location = new Point(342, 146);
-            limit3_Label.Margin = new Padding(0);
-            limit3_Label.Name = "limit3_Label";
-            limit3_Label.Size = new Size(125, 18);
-            limit3_Label.TabIndex = 30;
-            limit3_Label.Text = "от х до у";
-            limit3_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.limit3_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.limit3_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit3_Label.Location = new System.Drawing.Point(342, 117);
+            this.limit3_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit3_Label.Name = "limit3_Label";
+            this.limit3_Label.Size = new System.Drawing.Size(125, 14);
+            this.limit3_Label.TabIndex = 30;
+            this.limit3_Label.Text = "от х до у";
+            this.limit3_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // rbVolume
             // 
-            rbVolume.AutoSize = true;
-            rbVolume.Location = new Point(280, 55);
-            rbVolume.Name = "rbVolume";
-            rbVolume.Size = new Size(140, 24);
-            rbVolume.TabIndex = 3;
-            rbVolume.Text = "Объем чайника";
-            rbVolume.UseVisualStyleBackColor = true;
-            rbVolume.CheckedChanged += Volume_CheckedChanged;
+            this.rbVolume.AutoSize = true;
+            this.rbVolume.Location = new System.Drawing.Point(280, 44);
+            this.rbVolume.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbVolume.Name = "rbVolume";
+            this.rbVolume.Size = new System.Drawing.Size(130, 20);
+            this.rbVolume.TabIndex = 3;
+            this.rbVolume.Text = "Объем чайника";
+            this.rbVolume.UseVisualStyleBackColor = true;
+            this.rbVolume.CheckedChanged += new System.EventHandler(this.Volume_CheckedChanged);
             // 
             // limit2_Label
             // 
-            limit2_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            limit2_Label.Font = new Font("Segoe UI", 7F);
-            limit2_Label.Location = new Point(149, 172);
-            limit2_Label.Margin = new Padding(0);
-            limit2_Label.Name = "limit2_Label";
-            limit2_Label.Size = new Size(125, 15);
-            limit2_Label.TabIndex = 29;
-            limit2_Label.Text = "от х до у";
-            limit2_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.limit2_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.limit2_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit2_Label.Location = new System.Drawing.Point(149, 138);
+            this.limit2_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit2_Label.Name = "limit2_Label";
+            this.limit2_Label.Size = new System.Drawing.Size(125, 14);
+            this.limit2_Label.TabIndex = 29;
+            this.limit2_Label.Text = "от х до у";
+            this.limit2_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // rbHeightBase
             // 
-            rbHeightBase.AutoSize = true;
-            rbHeightBase.Location = new Point(132, 55);
-            rbHeightBase.Name = "rbHeightBase";
-            rbHeightBase.Size = new Size(142, 24);
-            rbHeightBase.TabIndex = 2;
-            rbHeightBase.Text = "Высота чайника";
-            rbHeightBase.UseVisualStyleBackColor = true;
-            rbHeightBase.CheckedChanged += HeightBase_CheckedChanged;
+            this.rbHeightBase.AutoSize = true;
+            this.rbHeightBase.Location = new System.Drawing.Point(132, 44);
+            this.rbHeightBase.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbHeightBase.Name = "rbHeightBase";
+            this.rbHeightBase.Size = new System.Drawing.Size(134, 20);
+            this.rbHeightBase.TabIndex = 2;
+            this.rbHeightBase.Text = "Высота чайника";
+            this.rbHeightBase.UseVisualStyleBackColor = true;
+            this.rbHeightBase.CheckedChanged += new System.EventHandler(this.HeightBase_CheckedChanged);
             // 
             // limit1_Label
             // 
-            limit1_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            limit1_Label.Font = new Font("Segoe UI", 7F);
-            limit1_Label.Location = new Point(149, 125);
-            limit1_Label.Margin = new Padding(0);
-            limit1_Label.Name = "limit1_Label";
-            limit1_Label.Size = new Size(125, 17);
-            limit1_Label.TabIndex = 28;
-            limit1_Label.Text = "от х до у";
-            limit1_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.limit1_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.limit1_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit1_Label.Location = new System.Drawing.Point(149, 100);
+            this.limit1_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit1_Label.Name = "limit1_Label";
+            this.limit1_Label.Size = new System.Drawing.Size(125, 14);
+            this.limit1_Label.TabIndex = 28;
+            this.limit1_Label.Text = "от х до у";
+            this.limit1_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // hint3_Label
             // 
-            hint3_Label.AutoSize = true;
-            hint3_Label.Location = new Point(473, 122);
-            hint3_Label.Name = "hint3_Label";
-            hint3_Label.Size = new Size(31, 20);
-            hint3_Label.TabIndex = 39;
-            hint3_Label.Text = "мм";
+            this.hint3_Label.AutoSize = true;
+            this.hint3_Label.Location = new System.Drawing.Point(473, 98);
+            this.hint3_Label.Name = "hint3_Label";
+            this.hint3_Label.Size = new System.Drawing.Size(25, 16);
+            this.hint3_Label.TabIndex = 39;
+            this.hint3_Label.Text = "мм";
             // 
             // rbBottomDiameter
             // 
-            rbBottomDiameter.AutoSize = true;
-            rbBottomDiameter.Checked = true;
-            rbBottomDiameter.Location = new Point(6, 55);
-            rbBottomDiameter.Name = "rbBottomDiameter";
-            rbBottomDiameter.Size = new Size(120, 24);
-            rbBottomDiameter.TabIndex = 1;
-            rbBottomDiameter.TabStop = true;
-            rbBottomDiameter.Text = "Диаметр дна";
-            rbBottomDiameter.UseVisualStyleBackColor = true;
-            rbBottomDiameter.CheckedChanged += BottomDiameter_CheckedChanged;
+            this.rbBottomDiameter.AutoSize = true;
+            this.rbBottomDiameter.Checked = true;
+            this.rbBottomDiameter.Location = new System.Drawing.Point(6, 44);
+            this.rbBottomDiameter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbBottomDiameter.Name = "rbBottomDiameter";
+            this.rbBottomDiameter.Size = new System.Drawing.Size(112, 20);
+            this.rbBottomDiameter.TabIndex = 1;
+            this.rbBottomDiameter.TabStop = true;
+            this.rbBottomDiameter.Text = "Диаметр дна";
+            this.rbBottomDiameter.UseVisualStyleBackColor = true;
+            this.rbBottomDiameter.CheckedChanged += new System.EventHandler(this.BottomDiameter_CheckedChanged);
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 32);
-            label1.Name = "label1";
-            label1.Size = new Size(236, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Выберите рассчетный параметр";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(220, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Выберите рассчетный параметр";
             // 
             // equalLabel
             // 
-            equalLabel.AutoSize = true;
-            equalLabel.Location = new Point(317, 122);
-            equalLabel.Name = "equalLabel";
-            equalLabel.Size = new Size(19, 20);
-            equalLabel.TabIndex = 37;
-            equalLabel.Text = "=";
+            this.equalLabel.AutoSize = true;
+            this.equalLabel.Location = new System.Drawing.Point(317, 98);
+            this.equalLabel.Name = "equalLabel";
+            this.equalLabel.Size = new System.Drawing.Size(14, 16);
+            this.equalLabel.TabIndex = 37;
+            this.equalLabel.Text = "=";
             // 
             // tb_var1
             // 
-            tb_var1.Location = new Point(149, 98);
-            tb_var1.Name = "tb_var1";
-            tb_var1.Size = new Size(125, 27);
-            tb_var1.TabIndex = 29;
-            tb_var1.KeyPress += TBVar1_KeyPress;
-            tb_var1.Leave += TBVar1_Leave;
+            this.tb_var1.Location = new System.Drawing.Point(149, 78);
+            this.tb_var1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb_var1.Name = "tb_var1";
+            this.tb_var1.Size = new System.Drawing.Size(125, 22);
+            this.tb_var1.TabIndex = 29;
+            this.tb_var1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBVar1_KeyPress);
+            this.tb_var1.Leave += new System.EventHandler(this.TBVar1_Leave);
             // 
             // var3_Label
             // 
-            var3_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            var3_Label.Location = new Point(342, 96);
-            var3_Label.Name = "var3_Label";
-            var3_Label.Size = new Size(0, 0);
-            var3_Label.TabIndex = 36;
-            var3_Label.Text = "var3";
-            var3_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.var3_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.var3_Label.Location = new System.Drawing.Point(342, 77);
+            this.var3_Label.Name = "var3_Label";
+            this.var3_Label.Size = new System.Drawing.Size(0, 0);
+            this.var3_Label.TabIndex = 36;
+            this.var3_Label.Text = "var3";
+            this.var3_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // var1_Label
             // 
-            var1_Label.AutoSize = true;
-            var1_Label.Location = new Point(10, 105);
-            var1_Label.Name = "var1_Label";
-            var1_Label.Size = new Size(37, 20);
-            var1_Label.TabIndex = 28;
-            var1_Label.Text = "var1";
+            this.var1_Label.AutoSize = true;
+            this.var1_Label.Location = new System.Drawing.Point(10, 84);
+            this.var1_Label.Name = "var1_Label";
+            this.var1_Label.Size = new System.Drawing.Size(33, 16);
+            this.var1_Label.TabIndex = 28;
+            this.var1_Label.Text = "var1";
             // 
             // hint1_Label
             // 
-            hint1_Label.AutoSize = true;
-            hint1_Label.Location = new Point(280, 101);
-            hint1_Label.Name = "hint1_Label";
-            hint1_Label.Size = new Size(31, 20);
-            hint1_Label.TabIndex = 31;
-            hint1_Label.Text = "мм";
+            this.hint1_Label.AutoSize = true;
+            this.hint1_Label.Location = new System.Drawing.Point(280, 81);
+            this.hint1_Label.Name = "hint1_Label";
+            this.hint1_Label.Size = new System.Drawing.Size(25, 16);
+            this.hint1_Label.TabIndex = 31;
+            this.hint1_Label.Text = "мм";
             // 
             // tb_var3
             // 
-            tb_var3.Enabled = false;
-            tb_var3.Location = new Point(342, 119);
-            tb_var3.Name = "tb_var3";
-            tb_var3.Size = new Size(125, 27);
-            tb_var3.TabIndex = 35;
-            tb_var3.TextChanged += TBVar3_TextChanged;
+            this.tb_var3.Enabled = false;
+            this.tb_var3.Location = new System.Drawing.Point(342, 95);
+            this.tb_var3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb_var3.Name = "tb_var3";
+            this.tb_var3.Size = new System.Drawing.Size(125, 22);
+            this.tb_var3.TabIndex = 35;
+            this.tb_var3.TextChanged += new System.EventHandler(this.TBVar3_TextChanged);
             // 
             // var2_Label
             // 
-            var2_Label.AutoSize = true;
-            var2_Label.Location = new Point(10, 149);
-            var2_Label.Name = "var2_Label";
-            var2_Label.Size = new Size(37, 20);
-            var2_Label.TabIndex = 32;
-            var2_Label.Text = "var2";
+            this.var2_Label.AutoSize = true;
+            this.var2_Label.Location = new System.Drawing.Point(10, 119);
+            this.var2_Label.Name = "var2_Label";
+            this.var2_Label.Size = new System.Drawing.Size(33, 16);
+            this.var2_Label.TabIndex = 32;
+            this.var2_Label.Text = "var2";
             // 
             // hint2_Label
             // 
-            hint2_Label.AutoSize = true;
-            hint2_Label.Location = new Point(280, 145);
-            hint2_Label.Name = "hint2_Label";
-            hint2_Label.Size = new Size(31, 20);
-            hint2_Label.TabIndex = 34;
-            hint2_Label.Text = "мм";
+            this.hint2_Label.AutoSize = true;
+            this.hint2_Label.Location = new System.Drawing.Point(280, 116);
+            this.hint2_Label.Name = "hint2_Label";
+            this.hint2_Label.Size = new System.Drawing.Size(25, 16);
+            this.hint2_Label.TabIndex = 34;
+            this.hint2_Label.Text = "мм";
             // 
             // tb_var2
             // 
-            tb_var2.Location = new Point(149, 142);
-            tb_var2.Name = "tb_var2";
-            tb_var2.Size = new Size(125, 27);
-            tb_var2.TabIndex = 33;
-            tb_var2.KeyPress += TBVar2_KeyPress;
-            tb_var2.Leave += TBVar2_Leave;
+            this.tb_var2.Location = new System.Drawing.Point(149, 114);
+            this.tb_var2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb_var2.Name = "tb_var2";
+            this.tb_var2.Size = new System.Drawing.Size(125, 22);
+            this.tb_var2.TabIndex = 33;
+            this.tb_var2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBVar2_KeyPress);
+            this.tb_var2.Leave += new System.EventHandler(this.TBVar2_Leave);
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(limit5_Label);
-            groupBox2.Controls.Add(limit4_Label);
-            groupBox2.Controls.Add(lid_Label);
-            groupBox2.Controls.Add(color_Label);
-            groupBox2.Controls.Add(tb_diameterLid);
-            groupBox2.Controls.Add(handle_Label);
-            groupBox2.Controls.Add(hint4_Label);
-            groupBox2.Controls.Add(tb_handleHeight);
-            groupBox2.Controls.Add(hint5_Label);
-            groupBox2.Controls.Add(pbChoiceColor);
-            groupBox2.Location = new Point(12, 223);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(513, 163);
-            groupBox2.TabIndex = 1;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Другие параметры";
+            this.groupBox2.Controls.Add(this.limit5_Label);
+            this.groupBox2.Controls.Add(this.limit4_Label);
+            this.groupBox2.Controls.Add(this.lid_Label);
+            this.groupBox2.Controls.Add(this.color_Label);
+            this.groupBox2.Controls.Add(this.tb_diameterLid);
+            this.groupBox2.Controls.Add(this.handle_Label);
+            this.groupBox2.Controls.Add(this.hint4_Label);
+            this.groupBox2.Controls.Add(this.tb_handleHeight);
+            this.groupBox2.Controls.Add(this.hint5_Label);
+            this.groupBox2.Controls.Add(this.pbChoiceColor);
+            this.groupBox2.Location = new System.Drawing.Point(12, 178);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(513, 130);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Другие параметры";
             // 
             // limit5_Label
             // 
-            limit5_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            limit5_Label.Font = new Font("Segoe UI", 7F);
-            limit5_Label.Location = new Point(138, 102);
-            limit5_Label.Margin = new Padding(0);
-            limit5_Label.Name = "limit5_Label";
-            limit5_Label.Size = new Size(139, 17);
-            limit5_Label.TabIndex = 22;
-            limit5_Label.Text = "от 70 до 150, <= высоты";
-            limit5_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.limit5_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.limit5_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit5_Label.Location = new System.Drawing.Point(138, 82);
+            this.limit5_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit5_Label.Name = "limit5_Label";
+            this.limit5_Label.Size = new System.Drawing.Size(139, 14);
+            this.limit5_Label.TabIndex = 22;
+            this.limit5_Label.Text = "от 70 до 150, <= высоты";
+            this.limit5_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // limit4_Label
             // 
-            limit4_Label.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            limit4_Label.Font = new Font("Segoe UI", 7F);
-            limit4_Label.Location = new Point(145, 59);
-            limit4_Label.Margin = new Padding(0);
-            limit4_Label.Name = "limit4_Label";
-            limit4_Label.Size = new Size(125, 16);
-            limit4_Label.TabIndex = 18;
-            limit4_Label.Text = "от 75 до 300, <= дна";
-            limit4_Label.TextAlign = ContentAlignment.MiddleCenter;
+            this.limit4_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.limit4_Label.BackColor = System.Drawing.Color.Transparent;
+            this.limit4_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit4_Label.Location = new System.Drawing.Point(143, 47);
+            this.limit4_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit4_Label.Name = "limit4_Label";
+            this.limit4_Label.Size = new System.Drawing.Size(129, 12);
+            this.limit4_Label.TabIndex = 18;
+            this.limit4_Label.Text = "от 75 до 300, <= дна";
+            this.limit4_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lid_Label
             // 
-            lid_Label.AutoSize = true;
-            lid_Label.Location = new Point(6, 35);
-            lid_Label.Name = "lid_Label";
-            lid_Label.Size = new Size(129, 20);
-            lid_Label.TabIndex = 25;
-            lid_Label.Text = "Диаметр крышки";
+            this.lid_Label.AutoSize = true;
+            this.lid_Label.Location = new System.Drawing.Point(6, 27);
+            this.lid_Label.Name = "lid_Label";
+            this.lid_Label.Size = new System.Drawing.Size(115, 16);
+            this.lid_Label.TabIndex = 25;
+            this.lid_Label.Text = "Диаметр крышки";
             // 
             // color_Label
             // 
-            color_Label.AutoSize = true;
-            color_Label.Location = new Point(6, 129);
-            color_Label.Name = "color_Label";
-            color_Label.Size = new Size(104, 20);
-            color_Label.TabIndex = 31;
-            color_Label.Text = "Цвет чайника";
+            this.color_Label.AutoSize = true;
+            this.color_Label.Location = new System.Drawing.Point(6, 103);
+            this.color_Label.Name = "color_Label";
+            this.color_Label.Size = new System.Drawing.Size(97, 16);
+            this.color_Label.TabIndex = 31;
+            this.color_Label.Text = "Цвет чайника";
             // 
             // tb_diameterLid
             // 
-            tb_diameterLid.Location = new Point(145, 32);
-            tb_diameterLid.Name = "tb_diameterLid";
-            tb_diameterLid.Size = new Size(125, 27);
-            tb_diameterLid.TabIndex = 26;
-            tb_diameterLid.KeyPress += TBDiameterLid_KeyPress;
-            tb_diameterLid.Leave += TBDiameterLid_Leave;
+            this.tb_diameterLid.Location = new System.Drawing.Point(145, 25);
+            this.tb_diameterLid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb_diameterLid.Name = "tb_diameterLid";
+            this.tb_diameterLid.Size = new System.Drawing.Size(125, 22);
+            this.tb_diameterLid.TabIndex = 26;
+            this.tb_diameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBDiameterLid_KeyPress);
+            this.tb_diameterLid.Leave += new System.EventHandler(this.TBDiameterLid_Leave);
             // 
             // handle_Label
             // 
-            handle_Label.AutoSize = true;
-            handle_Label.Location = new Point(6, 80);
-            handle_Label.Name = "handle_Label";
-            handle_Label.Size = new Size(103, 20);
-            handle_Label.TabIndex = 28;
-            handle_Label.Text = "Высота ручки";
+            this.handle_Label.AutoSize = true;
+            this.handle_Label.Location = new System.Drawing.Point(6, 64);
+            this.handle_Label.Name = "handle_Label";
+            this.handle_Label.Size = new System.Drawing.Size(97, 16);
+            this.handle_Label.TabIndex = 28;
+            this.handle_Label.Text = "Высота ручки";
             // 
             // hint4_Label
             // 
-            hint4_Label.AutoSize = true;
-            hint4_Label.Location = new Point(276, 35);
-            hint4_Label.Name = "hint4_Label";
-            hint4_Label.Size = new Size(31, 20);
-            hint4_Label.TabIndex = 27;
-            hint4_Label.Text = "мм";
+            this.hint4_Label.AutoSize = true;
+            this.hint4_Label.Location = new System.Drawing.Point(276, 28);
+            this.hint4_Label.Name = "hint4_Label";
+            this.hint4_Label.Size = new System.Drawing.Size(25, 16);
+            this.hint4_Label.TabIndex = 27;
+            this.hint4_Label.Text = "мм";
             // 
             // tb_handleHeight
             // 
-            tb_handleHeight.Location = new Point(145, 75);
-            tb_handleHeight.Name = "tb_handleHeight";
-            tb_handleHeight.Size = new Size(125, 27);
-            tb_handleHeight.TabIndex = 29;
-            tb_handleHeight.KeyPress += TBHandleHeight_KeyPress;
-            tb_handleHeight.Leave += TBHandleHeight_Leave;
+            this.tb_handleHeight.Location = new System.Drawing.Point(145, 60);
+            this.tb_handleHeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tb_handleHeight.Name = "tb_handleHeight";
+            this.tb_handleHeight.Size = new System.Drawing.Size(125, 22);
+            this.tb_handleHeight.TabIndex = 29;
+            this.tb_handleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBHandleHeight_KeyPress);
+            this.tb_handleHeight.Leave += new System.EventHandler(this.TBHandleHeight_Leave);
             // 
             // hint5_Label
             // 
-            hint5_Label.AutoSize = true;
-            hint5_Label.Location = new Point(276, 78);
-            hint5_Label.Name = "hint5_Label";
-            hint5_Label.Size = new Size(31, 20);
-            hint5_Label.TabIndex = 30;
-            hint5_Label.Text = "мм";
+            this.hint5_Label.AutoSize = true;
+            this.hint5_Label.Location = new System.Drawing.Point(276, 62);
+            this.hint5_Label.Name = "hint5_Label";
+            this.hint5_Label.Size = new System.Drawing.Size(25, 16);
+            this.hint5_Label.TabIndex = 30;
+            this.hint5_Label.Text = "мм";
             // 
             // pbChoiceColor
             // 
-            pbChoiceColor.BackColor = Color.Gray;
-            pbChoiceColor.BorderStyle = BorderStyle.FixedSingle;
-            pbChoiceColor.Location = new Point(145, 122);
-            pbChoiceColor.Name = "pbChoiceColor";
-            pbChoiceColor.Size = new Size(27, 27);
-            pbChoiceColor.TabIndex = 32;
-            pbChoiceColor.TabStop = false;
-            pbChoiceColor.Click += pbChoiceColor_Click;
+            this.pbChoiceColor.BackColor = System.Drawing.Color.Gray;
+            this.pbChoiceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbChoiceColor.Location = new System.Drawing.Point(145, 98);
+            this.pbChoiceColor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pbChoiceColor.Name = "pbChoiceColor";
+            this.pbChoiceColor.Size = new System.Drawing.Size(27, 22);
+            this.pbChoiceColor.TabIndex = 32;
+            this.pbChoiceColor.TabStop = false;
+            this.pbChoiceColor.Click += new System.EventHandler(this.PBChoiceColor_Click);
             // 
             // button_Build
             // 
-            button_Build.Location = new Point(400, 392);
-            button_Build.Name = "button_Build";
-            button_Build.Size = new Size(125, 29);
-            button_Build.TabIndex = 26;
-            button_Build.Text = "Построить";
-            button_Build.TextAlign = ContentAlignment.TopCenter;
-            button_Build.UseVisualStyleBackColor = true;
-            button_Build.Click += Build_Click;
+            this.button_Build.Location = new System.Drawing.Point(400, 314);
+            this.button_Build.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Build.Name = "button_Build";
+            this.button_Build.Size = new System.Drawing.Size(125, 23);
+            this.button_Build.TabIndex = 26;
+            this.button_Build.Text = "Построить";
+            this.button_Build.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button_Build.UseVisualStyleBackColor = true;
+            this.button_Build.Click += new System.EventHandler(this.Build_Click);
             // 
             // lbErrors
             // 
-            lbErrors.BackColor = SystemColors.Window;
-            lbErrors.ForeColor = Color.Red;
-            lbErrors.FormattingEnabled = true;
-            lbErrors.Location = new Point(12, 392);
-            lbErrors.Name = "lbErrors";
-            lbErrors.Size = new Size(382, 104);
-            lbErrors.TabIndex = 27;
+            this.lbErrors.BackColor = System.Drawing.SystemColors.Window;
+            this.lbErrors.ForeColor = System.Drawing.Color.Red;
+            this.lbErrors.FormattingEnabled = true;
+            this.lbErrors.ItemHeight = 16;
+            this.lbErrors.Location = new System.Drawing.Point(12, 314);
+            this.lbErrors.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbErrors.Name = "lbErrors";
+            this.lbErrors.Size = new System.Drawing.Size(382, 84);
+            this.lbErrors.TabIndex = 27;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(539, 516);
-            Controls.Add(lbErrors);
-            Controls.Add(button_Build);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "MainForm";
-            Text = "Чайник";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbChoiceColor).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(539, 413);
+            this.Controls.Add(this.lbErrors);
+            this.Controls.Add(this.button_Build);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "MainForm";
+            this.Text = "Чайник";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbChoiceColor)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

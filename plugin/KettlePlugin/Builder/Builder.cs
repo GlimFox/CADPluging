@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Security.Cryptography;
 using Kompas;
-using System;
 using System.Collections.Generic;
-using KompasAPI7;
-using Kompas;
 using Kompas6Constants3D;
 using Kompas6Constants;
-using System.Security.Cryptography;
 using Kompas6API5;
 using Kompas6API3D5COM;
 using Kompas6API2D5COM;
 using KompasLibrary;
 using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics;
 
 namespace KettlePlugin
 {
@@ -36,12 +33,15 @@ namespace KettlePlugin
         /// <param name="legType">Тип ножек</param>
         public void Build(Parameters parameters, int color)
         {
+            // Открываем CAD и создаём новый файл
             _wrapper.OpenCAD();
+            _wrapper.CreateFile();
 
-            IPart7 part = _wrapper.CreatePart();
-            BuildBase(part, parameters);
-            //BuildButt(part, parameters);
-
+            BuildBase(parameters);
+            BuildHandle(parameters);
+            BuildLid(parameters);
+            BuildSpout(parameters);
+            _wrapper.SetModelColor(color);
         }
 
         /// <summary>
@@ -50,173 +50,104 @@ namespace KettlePlugin
         /// <param name="part">Часть топора, к которой добавляется обух </param>
         /// <param name="parameters">Параметры конструкции</param>
 
-        private void BuildBase(IPart7 part, Parameters parameters)
+        private void BuildBase(Parameters parameters)
         {
-            if (part == null)
-            {
-                throw new ArgumentNullException(nameof(part), "Часть не может быть null.");
-            }
 
             // Получаем параметры: высота и диаметр основания
             double height = parameters.AllParameters[ParameterType.HeightBase].Value;
             double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
             double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
 
-            var plane = _wrapper.GetSidePlane(part, ksObj3dTypeEnum.o3d_planeXOZ);
-            ISketch sketch = this._wrapper.CreateSketchOnPlane(part, plane, "Основание чайника");
 
-            // Создаем линии
+            double[,] pointsArray = {
+                { 0, -height/2, -diameter/2, -height/2, 1 }, // Дно
+                { -diameter / 2, -height / 2, -diameter / 2, height / 2, 1 }, // Вертикальная линия
+                { -diameter / 2 + 1, height / 2 + 1, -lid / 2 - 1, height / 2 + 1, 1 }, // Переход к отверстию
+                { -lid / 2, height / 2 + 2, -lid / 2, height / 2 + 2.4, 1 }, // Чуть поднять отверстие
+                { -lid / 2, height / 2 + 2.4, 0, height / 2 + 2.4, 1 }, // Стенки отверстия
+                { 0, -height / 2, 0, height / 2 + 2.4, 3 } // Вспомогательная осевая линия
+            };
 
-            // 0 -height/2          -diameter/2 -height/2
-            // -diameter/2 -height/2    -diameter/2 height/2-2.4
-            // -diameter/2 height/2-2.4     -lid/2 height/2-1.4
-            // -lid/2 height/2      0 height/2
+            _wrapper.CreateSketch(1); // Создание эскиза на плоскости
+            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0)); // Рисуем стороны
 
-            _wrapper.CreateLine(sketch, 0, -height/2, -diameter/2, -height/2); // Дно
-            _wrapper.CreateLine(sketch, -diameter/2, -height/2, -diameter/2, height/2+1); // Вертикальная линия
-            _wrapper.CreateLine(sketch, -diameter/2, height/2+1, -lid/2, height/2+1); // Под переход к стенке
-            _wrapper.CreateLine(sketch, -lid/2, height/2+2.4, 0, height/2+2.4); // Под отверстие в чайнике
-            
-            
+            // Добавляем 2 скругления для линий 2/3 и 3/4
+            _wrapper.CreateArc(-diameter / 2 + 1, height / 2 + 1, -diameter / 2, height / 2, 90);
+            _wrapper.CreateArc(-lid / 2 - 1, height / 2 + 1, -lid / 2, height / 2 + 2, 90);
+            //_wrapper.CreateArc(-diameter / 2, height / 2, -diameter / 2 + 1, height / 2 + 1, 180, 90);
+            //_wrapper.CreateArc(-lid / 2, height / 2 + 2, -lid / 2 - 1, height / 2 + 1, 0, 270);
 
-            // Добавляем скругления
-            //sketchEditor.CreateFillet(line1, line2, 6); // Верхний левый угол
-            //sketchEditor.CreateFillet(line3, line4, 12); // Нижний правый угол
+            _wrapper.Spin();
+            //_wrapper.Extrusion(3, 1); // Выдавливание эскиза на глубину 10 мм
+        }
+        private void BuildHandle(Parameters parameters)
+        {
+            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
+            double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
+            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
+            double handle = parameters.AllParameters[ParameterType.HeightHandle].Value;
 
-            //sketchEditor.EndEdit();
+            double xC = (-diameter / 2 - lid / 2) / 2;
 
-            // Выполняем вращение профиля
+            double[,] pointsArray = {
+                {xC, height/2, xC, height/2+handle-4.5, 1 }, // Высота ручки
+                {xC+4.5, height/2+handle, -xC-4.5, height/2+handle, 1 }, // Держательная часть
+                {-xC, height/2+handle-4.5, -xC, height/2, 1 }, // Вторая высота ручки
+            };
+
+            _wrapper.CreateSketch(1); // Создание эскиза на плоскости
+            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0)); // Рисуем стороны
+
+            _wrapper.CreateArc(xC + 4.5, height / 2 + handle, xC, height / 2 + handle - 4.5, 90);
+            _wrapper.CreateArc(-xC, height / 2 + handle - 4.5, -xC - 4.5, height / 2 + handle, 90);
+
+            _wrapper.Extrusion(2, 14);
+            //_wrapper.Extrusion(3, 10); // Выдавливание эскиза на глубину 10 мм
+
+            // _wrapper.BuildArc(-lid / 2 - 1, height / 2 + 1, -lid / 2, height / 2 + 2, 90);
+
+            // Добавляем 2 скругления для линий 2/3 и 3/4
+            //_wrapper.BuildArc(-diameter / 2 + 1, height / 2 + 1, -diameter / 2, height / 2, 90);
+            //_wrapper.BuildArc(-lid / 2 - 1, height / 2 + 1, -lid / 2, height / 2 + 2, 90);
 
         }
 
+        private void BuildLid(Parameters parameters)
+        {
+            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
+            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
 
-        //private void BuildButt(IPart7 part, Parameters parameters)
-        //{
-        //    if (parameters.AllParameters.TryGetValue(ParameterType.LenghtBlade, out Parameter LenghtBladeParameter))
-        //    {
-        //        double LenghtBladeValue = LenghtBladeParameter.Value;
+            _wrapper.CreateOffsetPlane(2, height / 2 + 2.5);
+            _wrapper.CreateSketch();
 
-        //        if (parameters.AllParameters.TryGetValue(ParameterType.WidthButt, out Parameter WidthButtParameter))
-        //        {
-        //            double WidthButtValue = WidthButtParameter.Value;
+            _wrapper.CreateCircle(lid / 2 + 1, 0, 0);
+            _wrapper.Extrusion(3, 2);
 
-        //            if (parameters.AllParameters.TryGetValue(ParameterType.LenghtButt, out Parameter LenghtButtParameter))
-        //            {
-        //                double LenghtButtValue = LenghtButtParameter.Value;
+            _wrapper.CreateSketch(1);
 
-        //                if (parameters.AllParameters.TryGetValue(ParameterType.ThicknessButt, out Parameter ThicknessButtParameter))
-        //                {
-        //                    double ThicknessButtValue = ThicknessButtParameter.Value;
+            double xC = (-lid / 2) / 2;
+            double[,] pointsArray = {
+                {xC, height/2+4.5, xC, height/2+10.5, 1 }, // Высота ручки
+                {xC+2, height/2+12.5, -xC-2,  height/2+12.5, 1 }, // Держательная часть
+                {-xC, height/2+4.5, -xC, height/2+10.5, 1 }, // Вторая высота ручки
+            };
+            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0)); // Рисуем стороны
 
-        //                    if (parameters.AllParameters.TryGetValue(ParameterType.LengthHandle, out Parameter LengthHandleParameter))
-        //                    {
+            _wrapper.CreateArc(xC + 2, height / 2 + 12.5, xC, height / 2 + 10.5, 90);
+            _wrapper.CreateArc(-xC, height / 2 + 10.5, -xC - 2, height / 2 + 12.5, 90);
 
+            _wrapper.Extrusion(2, 7);
+        }
 
-        //                        // Создаем прямоугольник сверху обуха
-        //                        ISketch topRectangleSketch = _wrapper.CreateSketch(part, "Эскиз: прямоугольник сверху обуха");
+        private void BuildSpout(Parameters parameters)
+        {
+            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
+            double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
+            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
+            double handle = parameters.AllParameters[ParameterType.HeightHandle].Value;
 
-        //                        double rectangleWidth = WidthButtValue;       // Ширина прямоугольника
-        //                        double rectangleHeight = ThicknessButtValue; // Высота прямоугольника
-
-        //                        // Центрируем прямоугольник относительно оси Z
-        //                        double xStart = -rectangleWidth / 2;
-        //                        double yStart = -rectangleHeight / 2;
-
-        //                        // Рисуем прямоугольник
-        //                        _wrapper.CreateRectangle(topRectangleSketch, xStart, yStart, rectangleWidth, rectangleHeight);
-        //                        //выдавливаем
-        //                        _wrapper.ExtrudeSketch(topRectangleSketch, LenghtButtValue, "Прямоугольник на обухе", false);
-
-
-
-
-        //                        // Параметры трапеции (равнобедренная)
-        //                        double topBase = LenghtButtValue;    // Верхняя основа (меньшая сторона)
-        //                        double bottomBase = LenghtBladeValue; // Нижняя основа (большая сторона)
-        //                        double height = WidthButtValue;     // Высота трапеции
-
-        //                        object sidePlane = _wrapper.GetSidePlane(part, Kompas6Constants3D.ksObj3dTypeEnum.o3d_planeXOZ);
-
-        //                        // Создаем эскиз на боковой плоскости
-        //                        ISketch trapezoidSketch = _wrapper.CreateSketchOnPlane(part, sidePlane, "Эскиз: равнобедренная трапеция");
-
-        //                        // Смещение эскиза трапеции
-        //                        double offsetX = -WidthButtValue / 2; // Смещение по оси X (конец прямоугольника)
-        //                        double offsetY = -LenghtButtValue / 2; // Смещение по оси Y (центр прямоугольника)
-
-        //                        // Координаты для равнобедренной трапеции (с учётом смещений)
-        //                        double x1 = offsetX;                        // Левая вершина верхней основы
-        //                        double y1 = offsetY - (topBase / 2);        // Верхняя основа центрирована по Y
-
-        //                        double x2 = offsetX;                        // Правая вершина верхней основы
-        //                        double y2 = offsetY + (topBase / 2);
-
-        //                        double x3 = offsetX - height;               // Левая вершина нижней основы
-        //                        double y3 = offsetY - (bottomBase / 2);     // Нижняя основа центрирована по Y
-
-        //                        double x4 = offsetX - height;               // Правая вершина нижней основы
-        //                        double y4 = offsetY + (bottomBase / 2);
-
-        //                        // Рисуем трапецию
-        //                        _wrapper.CreateLine(trapezoidSketch, x1, y1, x2, y2); // Верхняя основа
-        //                        _wrapper.CreateLine(trapezoidSketch, x2, y2, x4, y4); // Правая боковая сторона
-        //                        _wrapper.CreateLine(trapezoidSketch, x4, y4, x3, y3); // Нижняя основа
-        //                        _wrapper.CreateLine(trapezoidSketch, x3, y3, x1, y1); // Левая боковая сторона
-
-        //                        // Выдавливаем трапецию
-        //                        _wrapper.ExtrudeSketch(trapezoidSketch, ThicknessButtValue / 2, "Равнобедренная трапеция на боковой плоскости", false);
-        //                        _wrapper.ExtrudeSketch(trapezoidSketch, -ThicknessButtValue / 2, "Равнобедренная трапеция на боковой плоскости", false);
-
-
-
-        //                        object sidePlane_1 = _wrapper.GetSidePlane(part, Kompas6Constants3D.ksObj3dTypeEnum.o3d_planeXOY);
-        //                        // Создаем эскиз на боковой плоскости
-        //                        ISketch triangleSketch = _wrapper.CreateSketchOnPlane(part, sidePlane_1, "Эскиз: Треугольник для выреза");
-
-        //                        double x1_ = -LenghtButtValue / 2;
-        //                        double y1_ = ThicknessButtValue / 2;
-
-        //                        double x2_ = -LenghtButtValue * 1.5;
-        //                        double y2_ = ThicknessButtValue / 2;
-
-        //                        double x3_ = -LenghtButtValue * 1.5;
-        //                        double y3_ = 0;
-
-        //                        _wrapper.CreateLine(triangleSketch, x1_, y1_, x2_, y2_);
-        //                        _wrapper.CreateLine(triangleSketch, x2_, y2_, x3_, y3_);
-        //                        _wrapper.CreateLine(triangleSketch, x3_, y3_, x1_, y1_);
-
-        //                        _wrapper.CutExtrudeSymmetric(triangleSketch, 250, "Симметричное вырезание");
-
-
-        //                        // Создаем эскиз на боковой плоскости
-        //                        ISketch triangleSketch_2 = _wrapper.CreateSketchOnPlane(part, sidePlane_1, "Эскиз: Треугольник для выреза");
-
-        //                        double x1_1 = -LenghtButtValue / 2;
-        //                        double y1_1 = -ThicknessButtValue / 2;
-
-        //                        double x2_1 = -LenghtButtValue * 1.5;
-        //                        double y2_1 = -ThicknessButtValue / 2;
-
-        //                        double x3_1 = -LenghtButtValue * 1.5;
-        //                        double y3_1 = 0;
-
-        //                        _wrapper.CreateLine(triangleSketch_2, x1_1, y1_1, x2_1, y2_1);
-        //                        _wrapper.CreateLine(triangleSketch_2, x2_1, y2_1, x3_1, y3_1);
-        //                        _wrapper.CreateLine(triangleSketch_2, x3_1, y3_1, x1_1, y1_1);
-
-        //                        _wrapper.CutExtrudeSymmetric(triangleSketch_2, 250, "Симметричное вырезание");
-
-        //                    }
-        //                }
-
-        //            }
-
-
-        //        }
-
-        //    }
-
-        //}
+            // Создание скетчей и выдавливание по секциям
+            _wrapper.CreateLoftedElement(height, diameter, lid, handle);
+        }
     }
 }
