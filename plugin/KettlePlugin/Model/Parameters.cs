@@ -6,10 +6,19 @@ using System.Runtime.CompilerServices;
 
 namespace KettlePlugin
 {
+    /// <summary>
+    /// Класс, представляющий набор параметров и операции над ними.
+    /// </summary>
     public class Parameters
     {
+        /// <summary>
+        /// Словарь, содержащий параметры модели, ключ - тип параметра, значение - сам параметр.
+        /// </summary>
         private Dictionary<ParameterType, Parameter> _parameter { get; set; }
 
+        /// <summary>
+        /// Геттер и сеттер параметров модели.
+        /// </summary>
         public Dictionary<ParameterType, Parameter> AllParameters
         {
             get
@@ -23,6 +32,12 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Устанавливает параметр в словарь. Если уже существует - обновляется.
+        /// </summary>
+        /// <param name="parameterType">Тип параметра.</param>
+        /// <param name="parameter">Объект параметра.</param>
+        /// <exception cref="ArgumentException">Выбрасывается, если параметр не прошел валидацию.</exception>
         public void SetParameter(ParameterType parameterType, Parameter parameter)
         {
             try
@@ -52,6 +67,10 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Выполняет валидацию параметров модели.
+        /// </summary>
+        /// <exception cref="ArgumentException">Выбрасывается, если параметры не соответствуют ограничениям.</exception>
         private void ValidateParameters()
         {
             string exception = string.Empty;
@@ -127,7 +146,13 @@ namespace KettlePlugin
             }
         }
 
-
+        /// <summary>
+        /// Выполняет расчёты параметров чайника в зависимости от входных данных.
+        /// </summary>
+        /// <param name="i">Тип расчёта (1 - диаметр дна, 2 - высота, 3 - объём).</param>
+        /// <param name="var1">Первое значение (например, объём или диаметр).</param>
+        /// <param name="var2">Второе значение (например, высота).</param>
+        /// <returns>Результат расчёта.</returns>
         public double Calculations(int i, double var1, double var2)
         {
             double calc = 0;

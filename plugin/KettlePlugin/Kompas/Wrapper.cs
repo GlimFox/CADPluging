@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Kompas6API5;
-using Kompas6Constants;
 using Kompas6Constants3D;
-using stdole;
 
 namespace Kompas
 {
@@ -29,14 +20,14 @@ namespace Kompas
         /// <summary>
         /// Поле для хранения выбранного эскиза.
         /// </summary>
-        private Kompas6API5.ksEntity _sketchEntity;
+        private Kompas6API5.ksEntity _sketch;
 
         /// <summary>
         /// Поле для хранения выбранной плоскости.
         /// </summary>
         private Kompas6API5.ksEntity _plane;
 
-
+        #region AppFunctions
 
         /// <summary>
         /// Создание документа в компасе.
@@ -86,12 +77,12 @@ namespace Kompas
                 throw new Exception("Не удалось запустить или подключиться к Kompas3D.");
             }
         }
+        #endregion
 
         /// <summary>
         /// Создание эскиза в компасе.
         /// </summary>
         /// <param name="plane">Выбранная плоскость.</param>
-
         public void CreateSketch(int plane)
         {
             if (this._part == null)
@@ -99,37 +90,39 @@ namespace Kompas
                 throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием эскиза.");
             }
 
-            ksSketchDefinition sketchDef;
-            this._sketchEntity = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
-            sketchDef = (ksSketchDefinition)this._sketchEntity.GetDefinition();
+            // Создаем эскиз и помещаем его в _sketch
+            ksSketchDefinition sketch;
+            this._sketch = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
+            sketch = (ksSketchDefinition)this._sketch.GetDefinition();
 
-            // Выбираем плоскость
-            if (plane == 1)
+            #region ChoicePlane
+            if (plane == 1) // XOY
             {
                 this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
             }
-            else if (plane == 2)
+            else if (plane == 2) // XOZ
             {
                 this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
             }
-            else if (plane == 3)
+            else if (plane == 3) // YOZ
             {
                 this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
             }
+            #endregion
             else
             {
                 throw new ArgumentException("Некорректная плоскость. Допустимые значения: 1, 2, 3.");
             }
 
             // Устанавливаем плоскость для эскиза
-            sketchDef.SetPlane(this._plane);
+            sketch.SetPlane(this._plane);
 
             // Создаем эскиз
-            this._sketchEntity.Create();
+            this._sketch.Create();
 
             // Выходим из режима редактирования
-            ksDocument2D sketchEdit = (ksDocument2D)sketchDef.BeginEdit();
-            sketchDef.EndEdit();
+            ksDocument2D sketchEdit = (ksDocument2D)sketch.BeginEdit();
+            sketch.EndEdit();
         }
 
         /// <summary>
@@ -149,19 +142,19 @@ namespace Kompas
                 throw new ArgumentNullException(nameof(_plane), "Плоскость не должна быть null.");
             }
 
-            ksSketchDefinition sketchDef;
-            this._sketchEntity = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
-            sketchDef = (ksSketchDefinition)this._sketchEntity.GetDefinition();
+            ksSketchDefinition sketch;
+            this._sketch = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
+            sketch = (ksSketchDefinition)this._sketch.GetDefinition();
 
             // Устанавливаем пользовательскую плоскость для эскиза
-            sketchDef.SetPlane(_plane);
+            sketch.SetPlane(_plane);
 
             // Создаем эскиз
-            this._sketchEntity.Create();
+            this._sketch.Create();
 
             // Выходим из режима редактирования
-            ksDocument2D sketchEdit = (ksDocument2D)sketchDef.BeginEdit();
-            sketchDef.EndEdit();
+            ksDocument2D sketchEdit = (ksDocument2D)sketch.BeginEdit();
+            sketch.EndEdit();
         }
 
 
@@ -174,9 +167,9 @@ namespace Kompas
         public void CreateLine(double[,] pointsArray, int start, int count)
         {
             ksDocument2D document2D;
-            ksSketchDefinition sketchDef;
-            sketchDef = (ksSketchDefinition)this._sketchEntity.GetDefinition();
-            document2D = (ksDocument2D)sketchDef.BeginEdit();
+            ksSketchDefinition sketch;
+            sketch = (ksSketchDefinition)this._sketch.GetDefinition();
+            document2D = (ksDocument2D)sketch.BeginEdit();
             if (document2D != null)
             {
                 for (int i = start; i < start + count; i++)
@@ -189,7 +182,7 @@ namespace Kompas
                         (int)pointsArray[i, 4]);
                 }
 
-                sketchDef.EndEdit();
+                sketch.EndEdit();
             }
         }
 
@@ -206,7 +199,7 @@ namespace Kompas
         {
             ksDocument2D document2D;
             ksSketchDefinition sketch;
-            sketch = (ksSketchDefinition)this._sketchEntity.GetDefinition();
+            sketch = (ksSketchDefinition)this._sketch.GetDefinition();
             document2D = (ksDocument2D)sketch.BeginEdit();
 
             if (document2D == null) throw new ArgumentNullException(nameof(document2D));
@@ -247,7 +240,7 @@ namespace Kompas
                 {
                     rotateDef.directionType = (short)Direction_Type.dtNormal;
                     rotateDef.SetSideParam(false, 360);
-                    rotateDef.SetSketch(this._sketchEntity);  // эскиз операции вращения
+                    rotateDef.SetSketch(this._sketch);  // эскиз операции вращения
                     entityRotate.Create();              // создать операцию
                 }
             }
@@ -274,7 +267,7 @@ namespace Kompas
                             (ksCutExtrusionDefinition)entityCutExtrusion.GetDefinition();
                         if (cutExtrusionDef != null)
                         {
-                            cutExtrusionDef.SetSketch(this._sketchEntity);
+                            cutExtrusionDef.SetSketch(this._sketch);
                             cutExtrusionDef.directionType = (short)Direction_Type.dtBoth;
                             cutExtrusionDef.SetSideParam(
                                 true,
@@ -308,7 +301,7 @@ namespace Kompas
                             0,
                             false);
                         extrusionDef.SetThinParam(true, (short)Direction_Type.dtBoth, 2, 0);
-                        extrusionDef.SetSketch(this._sketchEntity);   // эскиз операции выдавливания
+                        extrusionDef.SetSketch(this._sketch);   // эскиз операции выдавливания
                         entityExtrusion.Create();                    // создать операцию
                     }
                 }
@@ -329,7 +322,7 @@ namespace Kompas
                         ksThinParam thinProp = (ksThinParam)extrusionDef.ThinParam();
                         if (extrusionProp != null && thinProp != null)
                         {
-                            extrusionDef.SetSketch(this._sketchEntity);
+                            extrusionDef.SetSketch(this._sketch);
 
                             extrusionProp.direction = (short)Direction_Type.dtNormal;
                             extrusionProp.typeNormal = (short)End_Type.etBlind;
@@ -339,21 +332,6 @@ namespace Kompas
 
                             entityExtrusion.Create();
                         }
-                    }
-                }
-            }
-            else if (parameter == 4) // 360-degree cut
-            {
-                ksEntity entityCutRotate = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_cutRotated);
-                if (entityCutRotate != null)
-                {
-                    ksCutRotatedDefinition cutRotateDef = (ksCutRotatedDefinition)entityCutRotate.GetDefinition();
-                    if (cutRotateDef != null)
-                    {
-                        cutRotateDef.directionType = (short)Direction_Type.dtNormal;
-                        cutRotateDef.SetSideParam(false, 360); // Set full rotation
-                        cutRotateDef.SetSketch(this._sketchEntity); // Link the sketch for rotation
-                        entityCutRotate.Create(); // Create the cut operation
                     }
                 }
             }
@@ -374,15 +352,16 @@ namespace Kompas
 
             // Получаем базовую плоскость
             ksEntity basePlane = null;
-            if (basePlaneType == 1)
+
+            if (basePlaneType == 1) // XOY
             {
                 basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
             }
-            else if (basePlaneType == 2)
+            else if (basePlaneType == 2) // XOZ
             {
                 basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
             }
-            else if (basePlaneType == 3)
+            else if (basePlaneType == 3) // YOZ
             {
                 basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
             }
@@ -403,14 +382,15 @@ namespace Kompas
                 ksPlaneOffsetDefinition offsetPlaneDef = (ksPlaneOffsetDefinition)offsetPlaneEntity.GetDefinition();
                 if (offsetPlaneDef != null)
                 {
-                    offsetPlaneDef.direction = true; // Направление смещения (true - положительное, false - отрицательное)
-                    offsetPlaneDef.offset = offset; // Устанавливаем смещение
+                    offsetPlaneDef.direction = true; // Направление смещения (true/false)
+                    offsetPlaneDef.offset = offset; // Устанавливаем смещение на значение "offset"
                     offsetPlaneDef.SetPlane(basePlane); // Устанавливаем базовую плоскость
-                    offsetPlaneEntity.Create(); // Создаем смещенную плоскость
+
+                    // Создаем смещенную плоскость
+                    offsetPlaneEntity.Create();
 
                     // Сохраняем ссылку на смещенную плоскость
                     this._plane = offsetPlaneEntity;
-                    Console.WriteLine("Смещенная плоскость создана успешно.");
                 }
                 else
                 {
@@ -434,7 +414,7 @@ namespace Kompas
         {
             ksDocument2D document2D;
             ksSketchDefinition sketchDef;
-            sketchDef = (ksSketchDefinition)this._sketchEntity.GetDefinition();
+            sketchDef = (ksSketchDefinition)this._sketch.GetDefinition();
             document2D = (ksDocument2D)sketchDef.BeginEdit();
             if (document2D != null)
             {
@@ -444,7 +424,6 @@ namespace Kompas
         }
 
 
-        // FIX SMALL SPOUT PN BIG TEAPOAT
         /// <summary>
         /// Выдавливает объект по сечениям.
         /// </summary>
@@ -460,37 +439,41 @@ namespace Kompas
                 throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием элемента.");
             }
 
-            ksEntity section1;
-            ksEntity section2;
-            ksEntity guideCurve;
+            ksEntity section1; // Первый объект сечения
+            ksEntity section2; // Второй объект сечения
+            ksEntity guideCurve; // Направляющая кривая
 
-            // Создаем первое сечение
+            // Задаем соотношение радиусов от создаваемого объема
+            double radius1 = diameter/15+height/13;
+            double radius2 = radius1 / 2;
+
+            // Создаем окружность для первого сечения
             this.CreateSketch(3);
-            if (this._sketchEntity == null)
+            if (this._sketch == null)
             {
                 throw new Exception("Не удалось создать эскиз для первого сечения.");
             }
-            section1 = this._sketchEntity;
-            this.CreateCircle(28, 0, -(height / 9));
+            section1 = this._sketch;
+            this.CreateCircle(radius1, 0, -(height / 4));
 
-            // Создаем второе сечение
+            // Создаем окружность для второго сечения
             this.CreateOffsetPlane(2, height / 2 + 2.5);
             this.CreateSketch();
-            if (this._sketchEntity == null)
+            if (this._sketch == null)
             {
                 throw new Exception("Не удалось создать эскиз для второго сечения.");
             }
-            section2 = this._sketchEntity;
-            this.CreateCircle(8, -diameter * 1.15, 0);
+            section2 = this._sketch;
+            this.CreateCircle(radius2, -diameter * 1.15, 0);
 
             // Создаем направляющую кривую
             this.CreateSketch(1);
-            if (this._sketchEntity == null)
+            if (this._sketch == null)
             {
                 throw new Exception("Не удалось создать эскиз для направляющей кривой.");
             }
-            guideCurve = this._sketchEntity;
-            this.CreateArc(-diameter * 1.15, height / 2 + 2.5, 0, -(height / 10), 120);
+            guideCurve = this._sketch;
+            this.CreateArc(-diameter * 1.2, height / 2 + 2.5, 0, -(height / 4), 120);
 
             // Создаем сущность элемента по сечениям
             ksEntity loftEntity = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossLoft);
@@ -540,14 +523,15 @@ namespace Kompas
             {
                 throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед изменением цвета.");
             }
-            // Преобразуем цвет из RRGGBB в BGR(если API требует обратного порядка)
+
+            // Преобразуем цвет из RRGGBB в BGR
             int reversedColor = ((color & 0xFF) << 16) | (color & 0xFF00) | ((color >> 16) & 0xFF);
 
             // Устанавливаем цвет модели с расширенными параметрами
             bool result = this._part.SetAdvancedColor(
-                reversedColor,
-                ambient: 1,        // Уровень окружающего света (от 0 до 1, больше для более яркого эффекта)
-                diffuse: 1         // Уровень рассеянного света (от 0 до 1)
+                reversedColor,     // Заданный
+                ambient: 1,        // Уровень окружающего света
+                diffuse: 1         // Уровень рассеянного света
             );
 
             if (!result)
@@ -555,6 +539,7 @@ namespace Kompas
                 throw new Exception("Не удалось установить цвет для модели.");
             }
 
+            // Обновляем деталь
             _part.Update();
         }
     }

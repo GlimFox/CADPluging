@@ -7,8 +7,19 @@ namespace KettlePlugin
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Построитель для создания модели.
+        /// </summary>
         private Builder _builder = new Builder();
+
+        /// <summary>
+        /// Параметры модели.
+        /// </summary>
         private Parameters _parameters = new Parameters();
+
+        /// <summary>
+        /// Цвет модели.
+        /// </summary>
         private Color _color;
 
         /// <summary>
@@ -16,6 +27,9 @@ namespace KettlePlugin
         /// </summary>
         private Dictionary<ParameterType, string> _errors = new Dictionary<ParameterType, string>();
 
+        /// <summary>
+        /// Конструктор формы.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -91,7 +105,10 @@ namespace KettlePlugin
                 hint3_Label.Text = "л";
             }
         }
-
+        
+        /// <summary>
+        /// Обновляет список ошибок на форме.
+        /// </summary>
         private void UpdateErrorList()
         {
             lbErrors.Items.Clear();
@@ -102,6 +119,9 @@ namespace KettlePlugin
         }
 
         #region TEXTBOX_KEYPRESS
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле Var1.
+        /// </summary>
         private void TBVar1_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Проверка на цифры и запятую
@@ -111,6 +131,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле Var2.
+        /// </summary>
         private void TBVar2_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Проверка на цифры и запятую
@@ -120,6 +143,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле DiameterLid.
+        /// </summary>
         private void TBDiameterLid_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Проверка на цифры и запятую
@@ -129,6 +155,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле HandleHeight.
+        /// </summary>
         private void TBHandleHeight_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Проверка на цифры и запятую
@@ -139,6 +168,9 @@ namespace KettlePlugin
         }
         #endregion
 
+        /// <summary>
+        /// Вызывает диалог выбора цвета.
+        /// </summary>
         private void PBChoiceColor_Click(object sender, EventArgs e)
         {
             colorDialog1 = new ColorDialog();
@@ -147,21 +179,36 @@ namespace KettlePlugin
             pbChoiceColor.BackColor = colorDialog1.Color;
         }
 
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки BottomDiameter.
+        /// </summary>
         private void BottomDiameter_CheckedChanged(object sender, EventArgs e)
         {
             CheckChange(true);
         }
 
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки HeightBase.
+        /// </summary>
         private void HeightBase_CheckedChanged(object sender, EventArgs e)
         {
             CheckChange(true);
         }
 
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки Volume.
+        /// </summary>
         private void Volume_CheckedChanged(object sender, EventArgs e)
         {
             CheckChange(true);
         }
 
+        /// <summary>
+        /// Изменяет цвет текста и подсказок в зависимости от валидации параметров.
+        /// </summary>
+        /// <param name="parameterType">Тип параметра.</param>
+        /// <param name="textBox">Текстовое поле.</param>
+        /// <param name="limitLabel">Метка ограничения.</param>
         private void ColorChanges(ParameterType parameterType, TextBox textBox, Label limitLabel)
         {
             try
@@ -200,7 +247,10 @@ namespace KettlePlugin
             UpdateErrorList();
         }
 
-
+        /// <summary>
+        /// Валидирует параметры, зависящие друг от друга.
+        /// </summary>
+        /// <param name="parameterType">Тип параметра.</param>
         private void ValidateDependentParameters(ParameterType parameterType)
         {
             if (parameterType == ParameterType.DiameterLid &&
@@ -238,7 +288,9 @@ namespace KettlePlugin
             UpdateErrorList();
         }
 
-
+        /// <summary>
+        /// Обработчик события выхода из текстового поля Var1.
+        /// </summary>
         private void TBVar1_Leave(object sender, EventArgs e)
         {
             try
@@ -263,6 +315,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обработчик события выхода из текстового поля Var2.
+        /// </summary>
         private void TBVar2_Leave(object sender, EventArgs e)
         {
             try
@@ -287,6 +342,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обработчик события изменения текста в текстовом поле Var3.
+        /// </summary>
         private void TBVar3_TextChanged(object sender, EventArgs e)
         {
             try
@@ -310,6 +368,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Рассчитывает значение для Var3 на основе Var1 и Var2.
+        /// </summary>
         private void CalculateVar3()
         {
             if (tb_var1.Text != null && tb_var2.Text != null)
@@ -328,6 +389,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обработчик события выхода из текстового поля DiameterLid.
+        /// </summary>
         private void TBDiameterLid_Leave(object sender, EventArgs e)
         {
             try
@@ -340,6 +404,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обработчик события выхода из текстового поля HandleHeight.
+        /// </summary>
         private void TBHandleHeight_Leave(object sender, EventArgs e)
         {
             try
@@ -352,6 +419,9 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Обработчик события нажатия кнопки построения модели.
+        /// </summary>
         private void Build_Click(object sender, EventArgs e)
         {
             if (this.tb_var1.BackColor == Color.FromArgb(217, 84, 77) ||

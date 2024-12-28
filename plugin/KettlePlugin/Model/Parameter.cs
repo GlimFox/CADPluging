@@ -6,14 +6,30 @@ using System.Threading.Tasks;
 
 namespace KettlePlugin
 {
+    /// <summary>
+    /// Класс, представляющий параметр с минимальным, максимальным и текущим значением.
+    /// </summary>
     public class Parameter
     {
+        /// <summary>
+        /// Минимально допустимое значение параметра.
+        /// </summary>
         private double _minValue;
 
+        /// <summary>
+        /// Максимально допустимое значение параметра.
+        /// </summary>
         private double _maxValue;
 
+        /// <summary>
+        /// Текущее значение параметра.
+        /// </summary>
         private double _value;
 
+        /// <summary>
+        /// Получает или задает минимально допустимое значение параметра.
+        /// </summary>
+        // Что-то про публичность и гет сет, поправить
         public double MinValue
         {
             get
@@ -27,6 +43,10 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Получает или задает максимально допустимое значение параметра.
+        /// </summary>
+        // Что-то про публичность и гет сет, поправить
         public double MaxValue
         {
             get
@@ -40,6 +60,11 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Получает или задает текущее значение параметра.
+        /// При установке значения выполняется проверка на соответствие диапазону.
+        /// </summary>
+        /// <exception cref="ArgumentException">Выбрасывается, если значение выходит за пределы допустимого диапазона.</exception>
         public double Value
         {
             get
@@ -61,6 +86,10 @@ namespace KettlePlugin
             }
         }
 
+        /// <summary>
+        /// Проверяет текущее значение на соответствие заданным минимальному и максимальному значениям.
+        /// </summary>
+        /// <exception cref="ArgumentException">Выбрасывается, если значение выходит за пределы допустимого диапазона.</exception>
         private void Validator()
         {
             if (this.Value < this._minValue || this.Value > this._maxValue)
