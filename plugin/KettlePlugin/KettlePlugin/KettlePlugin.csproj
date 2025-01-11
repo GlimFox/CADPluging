@@ -57,6 +57,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ru.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -87,6 +90,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{a32800e4-a8bf-487d-bac2-acbd485a93dc}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StressTests\StressTests.csproj">
+      <Project>{6f640d6c-d24f-4148-a5f6-194e848cc7d9}</Project>
+      <Name>StressTests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

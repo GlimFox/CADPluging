@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KettlePlugin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,34 +30,30 @@ namespace KettlePlugin
         /// <summary>
         /// Получает или задает минимально допустимое значение параметра.
         /// </summary>
-        // Что-то про публичность и гет сет, поправить
         public double MinValue
         {
             get
             {
-                return this._minValue;
+                return _minValue;
             }
-
             set
             {
-                this._minValue = value;
+                _minValue = value;
             }
         }
 
         /// <summary>
         /// Получает или задает максимально допустимое значение параметра.
         /// </summary>
-        // Что-то про публичность и гет сет, поправить
         public double MaxValue
         {
             get
             {
-                return this._maxValue;
+                return _maxValue;
             }
-
             set
             {
-                this._maxValue = value;
+                _maxValue = value;
             }
         }
 

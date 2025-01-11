@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using KettlePlugin;
+using NickStrupat;
 
 namespace StressTests
 {
@@ -23,55 +25,34 @@ namespace StressTests
                 {
                     { ParameterType.Volume, new Parameter { MinValue = 0.63, MaxValue = 56.55, Value = 0.63 } },
                     { ParameterType.HeightBase, new Parameter { MinValue = 80, MaxValue = 450, Value = 80 } },
-                    { ParameterType.DiameterLid, new Parameter { MinValue = 75, MaxValue = 300, Value = 100 } },
-                    { ParameterType.HeightHandle, new Parameter { MinValue = 70, MaxValue = 150, Value = 120 } },
-                    //{ ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 100 } },
+                    { ParameterType.DiameterLid, new Parameter { MinValue = 75, MaxValue = 300, Value = 75 } },
+                    { ParameterType.HeightHandle, new Parameter { MinValue = 70, MaxValue = 150, Value = 70 } },
+                    { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 100 } },
                 }
             };
 
+            var builder = new Builder();
             var stopWatch = new Stopwatch();
+
             Process currentProcess = Process.GetCurrentProcess();
             var count = 0;
-            var logFilePath = "stress_test_log.txt";
-            var streamWriter = new StreamWriter(logFilePath);
-
+            var streamWriter = new StreamWriter("log.txt");
             const double gigabyteInByte = 0.000000000931322574615478515625;
-
-            Console.WriteLine("Начало стресс-тестирования. Лог записывается в файл: " + logFilePath);
 
             while (true)
             {
-                try
-                {
-                    // Запуск таймера
-                    stopWatch.Start();
+                stopWatch.Start();
+                builder.Build(parameters, 000000, 0);
+                stopWatch.Stop();
 
-                    // Выполняем целевые действия (вызов метода SetParameter)
-                    parameters.SetParameter(ParameterType.DiameterBottom,
-                        new Parameter { MinValue = 100, MaxValue = 400, Value = 200 });
+                var computerInfo = new ComputerInfo();
+                var usedMemory = (computerInfo.TotalPhysicalMemory
+                                  - computerInfo.AvailablePhysicalMemory)
+                                 * gigabyteInByte;
 
-                    // Останавливаем таймер
-                    stopWatch.Stop();
-
-                    // Рассчитываем используемую память
-                    var usedMemory = (currentProcess.WorkingSet64 * gigabyteInByte);
-
-                    // Логируем результаты
-                    streamWriter.WriteLine($"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t{usedMemory:F2} ГБ");
-                    streamWriter.Flush();
-
-                    // Выводим результаты в консоль для отслеживания
-                    Console.WriteLine($"Итерация: {count}, Время выполнения: {stopWatch.Elapsed}, Используемая память: {usedMemory:F2} ГБ");
-
-                    // Сбрасываем таймер
-                    stopWatch.Reset();
-                }
-                catch (Exception ex)
-                {
-                    // Логируем ошибку и продолжаем
-                    streamWriter.WriteLine($"Ошибка на итерации {count}: {ex.Message}");
-                    Console.WriteLine($"Ошибка на итерации {count}: {ex.Message}");
-                }
+                streamWriter.WriteLine($"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t{usedMemory:F2}");
+                streamWriter.Flush();
+                stopWatch.Reset();
             }
         }
     }

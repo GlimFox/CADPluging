@@ -7,6 +7,8 @@ namespace Kompas
 {
     public class Wrapper
     {
+        #region Features
+
         /// <summary>
         /// Поле для хранения приложения Компас.
         /// </summary>
@@ -26,6 +28,8 @@ namespace Kompas
         /// Поле для хранения выбранной плоскости.
         /// </summary>
         private Kompas6API5.ksEntity _plane;
+
+        #endregion
 
         #region AppFunctions
 
@@ -80,7 +84,7 @@ namespace Kompas
         #endregion
 
         /// <summary>
-        /// Создание эскиза в компасе.
+        /// Создание эскиза (скетча) в компасе.
         /// </summary>
         /// <param name="plane">Выбранная плоскость.</param>
         public void CreateSketch(int plane)
@@ -126,10 +130,10 @@ namespace Kompas
         }
 
         /// <summary>
-        /// Создание скетча на созданной плоскости.
+        /// Создание эскиза (скетча) на созданной плоскости.
         /// </summary>
-        /// <exception cref="Exception"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception">Ошибка инициализации</exception>
+        /// <exception cref="ArgumentNullException">Ошибка значения NULL</exception>
         public void CreateSketch()
         {
             if (this._part == null)
@@ -156,7 +160,6 @@ namespace Kompas
             ksDocument2D sketchEdit = (ksDocument2D)sketch.BeginEdit();
             sketch.EndEdit();
         }
-
 
         /// <summary>
         /// Создание линии в компасе.
@@ -189,11 +192,11 @@ namespace Kompas
         /// <summary>
         /// Создание окружности.
         /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        /// <param name="angleInDegrees"></param>
+        /// <param name="x1">X-координата первой окружности</param>
+        /// <param name="y1">Y-координата первой окружности</param>
+        /// <param name="x2">X-координата второй окружности</param>
+        /// <param name="y2">Y-координата второй окружности</param>
+        /// <param name="angleInDegrees">Угол в градусах</param>
         /// <exception cref="ArgumentNullException"></exception>
         public void CreateArc(double x1, double y1, double x2, double y2, int angleInDegrees)
         {
@@ -240,8 +243,8 @@ namespace Kompas
                 {
                     rotateDef.directionType = (short)Direction_Type.dtNormal;
                     rotateDef.SetSideParam(false, 360);
-                    rotateDef.SetSketch(this._sketch);  // эскиз операции вращения
-                    entityRotate.Create();              // создать операцию
+                    rotateDef.SetSketch(this._sketch);
+                    entityRotate.Create();
                 }
             }
         }
@@ -253,36 +256,8 @@ namespace Kompas
         /// <param name="length">Глубина выдавливания.</param>
         public void Extrusion(int parameter, double length)
         {
+            // Выдавливание
             if (parameter == 1)
-            {
-                ksEntity entityExtrusion =
-                    (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossExtrusion);
-                if (entityExtrusion != null)
-                {
-                    ksEntity entityCutExtrusion =
-                        (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
-                    if (entityCutExtrusion != null)
-                    {
-                        ksCutExtrusionDefinition cutExtrusionDef =
-                            (ksCutExtrusionDefinition)entityCutExtrusion.GetDefinition();
-                        if (cutExtrusionDef != null)
-                        {
-                            cutExtrusionDef.SetSketch(this._sketch);
-                            cutExtrusionDef.directionType = (short)Direction_Type.dtBoth;
-                            cutExtrusionDef.SetSideParam(
-                                true,
-                                (short)End_Type.etBlind,
-                                length,
-                                0,
-                                false);
-                            cutExtrusionDef.SetThinParam(false, 0, 0, 0);
-                        }
-
-                        entityCutExtrusion.Create(); // создадим операцию вырезание выдавливанием
-                    }
-                }
-            }
-            else if (parameter == 2)
             {
                 ksEntity entityExtrusion =
                     (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossExtrusion);
@@ -295,18 +270,20 @@ namespace Kompas
                     {
                         extrusionDef.directionType = (short)Direction_Type.dtMiddlePlane;
                         extrusionDef.SetSideParam(
-                            true, // прямое направление
-                            (short)End_Type.etBlind,    // строго на глубину
+                            true,
+                            (short)End_Type.etBlind,    
                             length,
                             0,
                             false);
                         extrusionDef.SetThinParam(true, (short)Direction_Type.dtBoth, 2, 0);
-                        extrusionDef.SetSketch(this._sketch);   // эскиз операции выдавливания
-                        entityExtrusion.Create();                    // создать операцию
+                        extrusionDef.SetSketch(this._sketch);
+                        entityExtrusion.Create();
                     }
                 }
             }
-            else if (parameter == 3)
+
+            // Выдавливание по траектории
+            else if (parameter == 2)
             {
                 ksEntity entityExtrusion =
                     (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossExtrusion);
@@ -405,7 +382,7 @@ namespace Kompas
 
 
         /// <summary>
-        /// Рисует окружность в эскизе.
+        /// Создание окружности в эскизе.
         /// </summary>
         /// <param name="x">Координата центра X.</param>
         /// <param name="y">Координата центра Y.</param>
@@ -425,18 +402,19 @@ namespace Kompas
 
 
         /// <summary>
-        /// Выдавливает объект по сечениям.
+        /// Выдавливание объекта по сечениям.
         /// </summary>
-        /// <param name="height"></param>
-        /// <param name="diameter"></param>
-        /// <param name="lid"></param>
-        /// <param name="handle"></param>
+        /// <param name="height">Высота чайника</param>
+        /// <param name="diameter">Диаметр дна</param>
+        /// <param name="lid">Диаметр крышки</param>
+        /// <param name="handle">Высота ручки</param>
         /// <exception cref="Exception"></exception>
         public void CreateLoftedElement(double height, double diameter, double lid, double handle)
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием элемента.");
+                throw new Exception("Деталь (_part) не была инициализирована. " +
+                    "Вызовите CreateFile() перед созданием элемента.");
             }
 
             ksEntity section1; // Первый объект сечения
@@ -521,7 +499,8 @@ namespace Kompas
         {
             if (_part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед изменением цвета.");
+                throw new Exception("Деталь (_part) не была инициализирована. " +
+                    "Вызовите CreateFile() перед изменением цвета.");
             }
 
             // Преобразуем цвет из RRGGBB в BGR

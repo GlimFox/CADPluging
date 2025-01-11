@@ -2,11 +2,15 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using StressTests;
 
 namespace KettlePlugin
 {
     public partial class MainForm : Form
     {
+        #region Features
+
         /// <summary>
         /// Построитель для создания модели.
         /// </summary>
@@ -27,14 +31,22 @@ namespace KettlePlugin
         /// </summary>
         private Dictionary<ParameterType, string> _errors = new Dictionary<ParameterType, string>();
 
+
+        #endregion
+
         /// <summary>
-        /// Конструктор формы.
+        /// Конструктор главной формы.
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
+            // Выполняем проверку выбранной формулы
             CheckChange(true);
+
+            // Настройки для выполнения стресс-тестирования
+            //StressTester stress = new StressTester();
+            //stress.StressTesting();
 
             this._parameters.AllParameters = new Dictionary<ParameterType, Parameter>
             {
@@ -45,8 +57,11 @@ namespace KettlePlugin
                 { ParameterType.Volume, new Parameter { MinValue = 0.63, MaxValue = 56.55 } }
             };
 
+            // Начальное значение формы ручки - прямая ручка
+            cb_handleForm.SelectedIndex = 0;
         }
 
+        #region SupportFunctions
         /// <summary>
         /// Функция для изменения полей при выборе другой формулы.
         /// </summary>
@@ -56,8 +71,13 @@ namespace KettlePlugin
             if (isNeedClear)
             {
                 tb_var1.Text = null;
+                tb_var1.BackColor = Color.White;
                 tb_var2.Text = null;
+                tb_var2.BackColor = Color.White;
                 tb_var3.Text = null;
+                tb_var3.BackColor = Color.White;
+
+                UpdateErrorList();
             }
 
 
@@ -105,7 +125,28 @@ namespace KettlePlugin
                 hint3_Label.Text = "л";
             }
         }
-        
+
+        /// <summary>
+        /// Рассчитывает значение для Var3 на основе Var1 и Var2.
+        /// </summary>
+        private void CalculateVar3()
+        {
+            if (tb_var1.Text != null && tb_var2.Text != null)
+            {
+                double var1, var2, var3 = 0;
+                if (double.TryParse(tb_var1.Text, out var1) && double.TryParse(tb_var2.Text, out var2))
+                {
+
+                    if (rbBottomDiameter.Checked) var3 = _parameters.Calculations(1, var1, var2);
+                    if (rbHeightBase.Checked) var3 = _parameters.Calculations(2, var1, var2);
+                    if (rbVolume.Checked) var3 = _parameters.Calculations(3, var1, var2);
+
+                    // Записываем рассчитанное значение в текстбокс
+                    tb_var3.Text = var3.ToString();
+                }
+            }
+        }
+
         /// <summary>
         /// Обновляет список ошибок на форме.
         /// </summary>
@@ -118,58 +159,8 @@ namespace KettlePlugin
             }
         }
 
-        #region TEXTBOX_KEYPRESS
         /// <summary>
-        /// Обрабатывает ввод в текстовое поле Var1.
-        /// </summary>
-        private void TBVar1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает ввод в текстовое поле Var2.
-        /// </summary>
-        private void TBVar2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает ввод в текстовое поле DiameterLid.
-        /// </summary>
-        private void TBDiameterLid_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает ввод в текстовое поле HandleHeight.
-        /// </summary>
-        private void TBHandleHeight_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// Вызывает диалог выбора цвета.
+        /// Обработчик выбора цвета чайника.
         /// </summary>
         private void PBChoiceColor_Click(object sender, EventArgs e)
         {
@@ -179,29 +170,9 @@ namespace KettlePlugin
             pbChoiceColor.BackColor = colorDialog1.Color;
         }
 
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки BottomDiameter.
-        /// </summary>
-        private void BottomDiameter_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckChange(true);
-        }
+        #endregion
 
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки HeightBase.
-        /// </summary>
-        private void HeightBase_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckChange(true);
-        }
-
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки Volume.
-        /// </summary>
-        private void Volume_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckChange(true);
-        }
+        #region ValidationFunctions
 
         /// <summary>
         /// Изменяет цвет текста и подсказок в зависимости от валидации параметров.
@@ -253,6 +224,7 @@ namespace KettlePlugin
         /// <param name="parameterType">Тип параметра.</param>
         private void ValidateDependentParameters(ParameterType parameterType)
         {
+            // Проверка, что диаметр дна > диаметра крышки
             if (parameterType == ParameterType.DiameterLid &&
                 _parameters.AllParameters.TryGetValue(ParameterType.DiameterBottom, out var bottomDiameter))
             {
@@ -269,6 +241,7 @@ namespace KettlePlugin
                 }
             }
 
+            // Проверка, что высота чанйика > высоты ручки
             if (parameterType == ParameterType.HeightHandle &&
                 _parameters.AllParameters.TryGetValue(ParameterType.HeightBase, out var heightBase))
             {
@@ -287,6 +260,87 @@ namespace KettlePlugin
 
             UpdateErrorList();
         }
+
+        #endregion
+
+        #region TextBox_KeyPress
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле Var1.
+        /// </summary>
+        private void TBVar1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Проверка на цифры и запятую
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле Var2.
+        /// </summary>
+        private void TBVar2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Проверка на цифры и запятую
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле DiameterLid.
+        /// </summary>
+        private void TBDiameterLid_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Проверка на цифры и запятую
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает ввод в текстовое поле HandleHeight.
+        /// </summary>
+        private void TBHandleHeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Проверка на цифры и запятую
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
+
+        #region RadioButtons_CheckedChanged
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки BottomDiameter.
+        /// </summary>
+        private void BottomDiameter_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckChange(true);
+        }
+
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки HeightBase.
+        /// </summary>
+        private void HeightBase_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckChange(true);
+        }
+
+        /// <summary>
+        /// Обработчик события изменения выбора радиокнопки Volume.
+        /// </summary>
+        private void Volume_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckChange(true);
+        }
+
+        #endregion
+
+        #region TextBox_Leave
 
         /// <summary>
         /// Обработчик события выхода из текстового поля Var1.
@@ -369,27 +423,6 @@ namespace KettlePlugin
         }
 
         /// <summary>
-        /// Рассчитывает значение для Var3 на основе Var1 и Var2.
-        /// </summary>
-        private void CalculateVar3()
-        {
-            if (tb_var1.Text != null && tb_var2.Text != null)
-            {
-                double var1, var2, var3 = 0;
-                if (double.TryParse(tb_var1.Text, out var1) && double.TryParse(tb_var2.Text, out var2))
-                {
-
-                    if (rbBottomDiameter.Checked) var3 = _parameters.Calculations(1, var1, var2);
-                    if (rbHeightBase.Checked) var3 = _parameters.Calculations(2, var1, var2);
-                    if (rbVolume.Checked) var3 = _parameters.Calculations(3, var1, var2);
-
-                    // Записываем рассчитанное значение в текстбокс
-                    tb_var3.Text = var3.ToString();
-                }
-            }
-        }
-
-        /// <summary>
         /// Обработчик события выхода из текстового поля DiameterLid.
         /// </summary>
         private void TBDiameterLid_Leave(object sender, EventArgs e)
@@ -418,6 +451,8 @@ namespace KettlePlugin
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        
+        #endregion
 
         /// <summary>
         /// Обработчик события нажатия кнопки построения модели.
@@ -443,7 +478,7 @@ namespace KettlePlugin
             else
             {
                 int color = pbChoiceColor.BackColor.ToArgb();
-                this._builder.Build(this._parameters, color);
+                this._builder.Build(this._parameters, color, cb_handleForm.SelectedIndex);
             }
         }
     }
