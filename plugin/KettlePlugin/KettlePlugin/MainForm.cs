@@ -22,15 +22,9 @@ namespace KettlePlugin
         private Parameters _parameters = new Parameters();
 
         /// <summary>
-        /// Цвет модели.
-        /// </summary>
-        private Color _color;
-
-        /// <summary>
         /// Словарь, содержащий строки ошибок валидации.
         /// </summary>
         private Dictionary<ParameterType, string> _errors = new Dictionary<ParameterType, string>();
-
 
         #endregion
 
@@ -48,20 +42,12 @@ namespace KettlePlugin
             //StressTester stress = new StressTester();
             //stress.StressTesting();
 
-            this._parameters.AllParameters = new Dictionary<ParameterType, Parameter>
-            {
-                { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400 } },
-                { ParameterType.DiameterLid, new Parameter { MinValue = 75, MaxValue = 300 } },
-                { ParameterType.HeightBase, new Parameter { MinValue = 80, MaxValue = 450 } },
-                { ParameterType.HeightHandle, new Parameter { MinValue = 70, MaxValue = 150 } },
-                { ParameterType.Volume, new Parameter { MinValue = 0.63, MaxValue = 56.55 } }
-            };
-
             // Начальное значение формы ручки - прямая ручка
             cb_handleForm.SelectedIndex = 0;
         }
 
         #region SupportFunctions
+
         /// <summary>
         /// Функция для изменения полей при выборе другой формулы.
         /// </summary>
@@ -263,11 +249,14 @@ namespace KettlePlugin
 
         #endregion
 
-        #region TextBox_KeyPress
+        #region Handlers
+
         /// <summary>
-        /// Обрабатывает ввод в текстовое поле Var1.
+        /// Единый обработчик ввода в текстовое поле.
         /// </summary>
-        private void TBVar1_KeyPress(object sender, KeyPressEventArgs e)
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события нажатия клавиши.</param>
+        private void TextBoxKeyPressHandler(object sender, KeyPressEventArgs e)
         {
             // Проверка на цифры и запятую
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
@@ -277,67 +266,15 @@ namespace KettlePlugin
         }
 
         /// <summary>
-        /// Обрабатывает ввод в текстовое поле Var2.
+        /// Единый обработчик изменения выбора радиокнопки.
         /// </summary>
-        private void TBVar2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает ввод в текстовое поле DiameterLid.
-        /// </summary>
-        private void TBDiameterLid_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает ввод в текстовое поле HandleHeight.
-        /// </summary>
-        private void TBHandleHeight_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
-            }
-        }
-        #endregion
-
-        #region RadioButtons_CheckedChanged
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки BottomDiameter.
-        /// </summary>
-        private void BottomDiameter_CheckedChanged(object sender, EventArgs e)
+        /// <param name="sender">Источник события (радиокнопка).</param>
+        /// <param name="e">Аргументы события изменения выбора.</param>
+        private void RadioButtonCheckedChangedHandler(object sender, EventArgs e)
         {
             CheckChange(true);
         }
-
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки HeightBase.
-        /// </summary>
-        private void HeightBase_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckChange(true);
-        }
-
-        /// <summary>
-        /// Обработчик события изменения выбора радиокнопки Volume.
-        /// </summary>
-        private void Volume_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckChange(true);
-        }
-
+        
         #endregion
 
         #region TextBox_Leave
@@ -345,6 +282,8 @@ namespace KettlePlugin
         /// <summary>
         /// Обработчик события выхода из текстового поля Var1.
         /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события выхода из текстового поля.</param>
         private void TBVar1_Leave(object sender, EventArgs e)
         {
             try
@@ -372,6 +311,8 @@ namespace KettlePlugin
         /// <summary>
         /// Обработчик события выхода из текстового поля Var2.
         /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события выхода из текстового поля.</param>
         private void TBVar2_Leave(object sender, EventArgs e)
         {
             try
@@ -399,6 +340,8 @@ namespace KettlePlugin
         /// <summary>
         /// Обработчик события изменения текста в текстовом поле Var3.
         /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события изменения текста.</param>
         private void TBVar3_TextChanged(object sender, EventArgs e)
         {
             try
@@ -425,6 +368,8 @@ namespace KettlePlugin
         /// <summary>
         /// Обработчик события выхода из текстового поля DiameterLid.
         /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события выхода из текстового поля.</param>
         private void TBDiameterLid_Leave(object sender, EventArgs e)
         {
             try
@@ -440,6 +385,8 @@ namespace KettlePlugin
         /// <summary>
         /// Обработчик события выхода из текстового поля HandleHeight.
         /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события выхода из текстового поля.</param>
         private void TBHandleHeight_Leave(object sender, EventArgs e)
         {
             try
@@ -451,12 +398,14 @@ namespace KettlePlugin
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         #endregion
 
         /// <summary>
         /// Обработчик события нажатия кнопки построения модели.
         /// </summary>
+        /// <param name="sender">Источник события (кнопка).</param>
+        /// <param name="e">Аргументы события нажатия на кнопку.</param>
         private void Build_Click(object sender, EventArgs e)
         {
             if (this.tb_var1.BackColor == Color.FromArgb(217, 84, 77) ||

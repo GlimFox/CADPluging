@@ -23,11 +23,11 @@ namespace StressTests
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.Volume, new Parameter { MinValue = 0.63, MaxValue = 56.55, Value = 0.63 } },
-                    { ParameterType.HeightBase, new Parameter { MinValue = 80, MaxValue = 450, Value = 80 } },
-                    { ParameterType.DiameterLid, new Parameter { MinValue = 75, MaxValue = 300, Value = 75 } },
-                    { ParameterType.HeightHandle, new Parameter { MinValue = 70, MaxValue = 150, Value = 70 } },
-                    { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 100 } },
+                    { ParameterType.Volume, new Parameter ( 0.63, 56.55, 0.63) },
+                    { ParameterType.HeightBase, new Parameter ( 80, 450, 80 ) },
+                    { ParameterType.DiameterLid, new Parameter ( 75, 300, 75 ) },
+                    { ParameterType.HeightHandle, new Parameter ( 70, 150, 70 ) },
+                    { ParameterType.DiameterBottom, new Parameter ( 100, 400, 100 ) },
                 }
             };
 

@@ -9,9 +9,6 @@ namespace UnitTest.ParametersTest
     /// <summary>
     /// Класс Unit тестов для проверки корректности работы класса <see cref="Parameters"/>.
     /// </summary>
-    /// <summary>
-    /// Класс Unit тестов для проверки корректности работы класса <see cref="Parameters"/>.
-    /// </summary>
     [TestFixture]
     public class ParametersTests
     {
@@ -26,10 +23,9 @@ namespace UnitTest.ParametersTest
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 150 } }
+                    { ParameterType.DiameterBottom, new Parameter (100, 400, 150) }
                 }
             };
-
             Assert.IsNotNull(parameters.AllParameters);
             Assert.AreEqual(1, parameters.AllParameters.Count);
         }
@@ -44,7 +40,7 @@ namespace UnitTest.ParametersTest
             var parameters = new Parameters();
             var newParameters = new Dictionary<ParameterType, Parameter>
             {
-                { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 150 } }
+                { ParameterType.DiameterBottom, new Parameter (100, 400, 150) }
             };
 
             parameters.AllParameters = newParameters;
@@ -63,10 +59,10 @@ namespace UnitTest.ParametersTest
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 150 } }
+                    { ParameterType.DiameterBottom, new Parameter(100, 400, 150) }
                 }
             };
-            var newParameter = new Parameter { MinValue = 100, MaxValue = 400, Value = 200 };
+            var newParameter = new Parameter (100, 400, 200);
 
             parameters.SetParameter(ParameterType.DiameterBottom, newParameter);
 
@@ -84,8 +80,8 @@ namespace UnitTest.ParametersTest
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter { MinValue = 100, MaxValue = 400, Value = 150 } },
-                    { ParameterType.DiameterLid, new Parameter { MinValue = 75, MaxValue = 300, Value = 200 } }
+                    { ParameterType.DiameterBottom, new Parameter (100, 400, 150) },
+                    { ParameterType.DiameterLid, new Parameter (75, 300, 200 ) }
                 }
             };
 

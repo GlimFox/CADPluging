@@ -17,8 +17,7 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест геттера MaxValue. Проверяет работу get у MaxValue.")]
         public void MaxValue_Get_ReturnsCorrectValue()
         {
-            var parameter = new Parameter { MaxValue = 100 };
-
+            var parameter = new Parameter (10, 100);
             Assert.AreEqual(100, parameter.MaxValue);
         }
 
@@ -29,10 +28,8 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест сеттера MaxValue. Проверяет работу set у MaxValue.")]
         public void MaxValue_Set_SetsCorrectValue()
         {
-            var parameter = new Parameter();
-            parameter.MaxValue = 200;
-
-            Assert.AreEqual(200, parameter.MaxValue);
+            var parameter = new Parameter(10, 100);
+            Assert.AreEqual(100, parameter.MaxValue);
         }
 
         /// <summary>
@@ -42,9 +39,9 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест геттера MinValue. Проверяет работу get у MinValue.")]
         public void MinValue_Get_ReturnsCorrectValue()
         {
-            var parameter = new Parameter { MinValue = 50 };
+            var parameter = new Parameter(10, 100);
 
-            Assert.AreEqual(50, parameter.MinValue);
+            Assert.AreEqual(10, parameter.MinValue);
         }
 
         /// <summary>
@@ -54,10 +51,9 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест сеттера MinValue. Проверяет работу set у MinValue.")]
         public void MinValue_Set_SetsCorrectValue()
         {
-            var parameter = new Parameter();
-            parameter.MinValue = 30;
+            var parameter = new Parameter(10, 100);
 
-            Assert.AreEqual(30, parameter.MinValue);
+            Assert.AreEqual(10, parameter.MinValue);
         }
 
         /// <summary>
@@ -67,7 +63,7 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест геттера Value. Проверяет работу get у Value.")]
         public void Value_Get_ReturnsCorrectValue()
         {
-            var parameter = new Parameter { MinValue = 10, MaxValue = 50, Value = 25 };
+            var parameter = new Parameter (10, 50, 25);
 
             Assert.AreEqual(25, parameter.Value);
         }
@@ -79,7 +75,7 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Позитивный тест сеттера Value. Проверяет работу set у Value.")]
         public void Value_SetWithinMinMax_DoesNotThrowException()
         {
-            var parameter = new Parameter { MinValue = 10, MaxValue = 50 };
+            var parameter = new Parameter (10, 50);
 
             Assert.DoesNotThrow(() => parameter.Value = 25);
             Assert.AreEqual(25, parameter.Value);
@@ -92,7 +88,7 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Негативный тест Validator. Проверяет вызов исключения при Value < MinValue.")]
         public void Value_SetBelowMinValue_ThrowsArgumentException()
         {
-            var parameter = new Parameter { MinValue = 10, MaxValue = 50 };
+            var parameter = new Parameter (10, 50);
 
             var ex = Assert.Throws<ArgumentException>(() => parameter.Value = 5);
             Assert.That(ex.Message, Is.EqualTo("Ошибка минимального/максимального значения!"));
@@ -105,7 +101,7 @@ namespace UnitTest.ParametersTest
         [Test(Description = "Негативный тест Validator. Проверяет вызов исключения при Value > MaxValue.")]
         public void Value_SetAboveMaxValue_ThrowsArgumentException()
         {
-            var parameter = new Parameter { MinValue = 10, MaxValue = 50 };
+            var parameter = new Parameter (10, 50);
 
             var ex = Assert.Throws<ArgumentException>(() => parameter.Value = 60);
             Assert.That(ex.Message, Is.EqualTo("Ошибка минимального/максимального значения!"));

@@ -32,11 +32,8 @@ namespace KettlePlugin
         /// </summary>
         public double MinValue
         {
-            get
-            {
-                return _minValue;
-            }
-            set
+            get => _minValue;
+            private set
             {
                 _minValue = value;
             }
@@ -47,11 +44,8 @@ namespace KettlePlugin
         /// </summary>
         public double MaxValue
         {
-            get
-            {
-                return _maxValue;
-            }
-            set
+            get => _maxValue;
+            private set
             {
                 _maxValue = value;
             }
@@ -81,6 +75,31 @@ namespace KettlePlugin
                     throw new ArgumentException(e.Message);
                 }
             }
+        }
+
+        /// <summary>
+        /// Конструктор параметра.
+        /// Только для минимального и максимального значений.
+        /// </summary>
+        /// <param name="minValue">Минимальное значение параметра.</param>
+        /// <param name="maxValue">Максимальное значение параметра.</param>
+        public Parameter(double minValue, double maxValue)
+        {
+            MinValue = minValue;
+            MaxValue = maxValue;
+        }
+
+        /// <summary>
+        /// Конструктор параметра.
+        /// </summary>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <param name="value"></param>
+        public Parameter(double minValue, double maxValue, double value)
+        {
+            MinValue = minValue;
+            MaxValue = maxValue;
+            Value = value;
         }
 
         /// <summary>

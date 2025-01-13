@@ -135,6 +135,7 @@ namespace KettlePlugin
             //Выдавливаем ручку
             _wrapper.Extrusion(1, 14);
         }
+        
         /// <summary>
         /// Построение крышки чайника.
         /// </summary>

@@ -14,7 +14,14 @@ namespace KettlePlugin
         /// <summary>
         /// Словарь, содержащий параметры модели, ключ - тип параметра, значение - сам параметр.
         /// </summary>
-        private Dictionary<ParameterType, Parameter> _parameter { get; set; }
+        private Dictionary<ParameterType, Parameter> _parameter = new Dictionary<ParameterType, Parameter>
+        {
+            { ParameterType.DiameterBottom, new Parameter (100, 400)},
+            { ParameterType.DiameterLid, new Parameter (75, 300)},
+            { ParameterType.HeightBase, new Parameter (80, 450)},
+            { ParameterType.HeightHandle, new Parameter (70, 150)},
+            { ParameterType.Volume, new Parameter (0.63, 56.55)}
+        };
 
         /// <summary>
         /// Геттер и сеттер параметров модели.

@@ -123,7 +123,7 @@ namespace KettlePlugin
             this.rbVolume.TabIndex = 3;
             this.rbVolume.Text = "Объем чайника";
             this.rbVolume.UseVisualStyleBackColor = true;
-            this.rbVolume.CheckedChanged += new System.EventHandler(this.Volume_CheckedChanged);
+            this.rbVolume.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChangedHandler);
             // 
             // limit2_Label
             // 
@@ -131,7 +131,7 @@ namespace KettlePlugin
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.limit2_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.limit2_Label.Location = new System.Drawing.Point(149, 145);
+            this.limit2_Label.Location = new System.Drawing.Point(149, 143);
             this.limit2_Label.Margin = new System.Windows.Forms.Padding(0);
             this.limit2_Label.Name = "limit2_Label";
             this.limit2_Label.Size = new System.Drawing.Size(125, 14);
@@ -149,7 +149,7 @@ namespace KettlePlugin
             this.rbHeightBase.TabIndex = 2;
             this.rbHeightBase.Text = "Высота чайника";
             this.rbHeightBase.UseVisualStyleBackColor = true;
-            this.rbHeightBase.CheckedChanged += new System.EventHandler(this.HeightBase_CheckedChanged);
+            this.rbHeightBase.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChangedHandler);
             // 
             // limit1_Label
             // 
@@ -157,7 +157,7 @@ namespace KettlePlugin
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.limit1_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.limit1_Label.Location = new System.Drawing.Point(149, 102);
+            this.limit1_Label.Location = new System.Drawing.Point(149, 100);
             this.limit1_Label.Margin = new System.Windows.Forms.Padding(0);
             this.limit1_Label.Name = "limit1_Label";
             this.limit1_Label.Size = new System.Drawing.Size(125, 14);
@@ -186,7 +186,7 @@ namespace KettlePlugin
             this.rbBottomDiameter.TabStop = true;
             this.rbBottomDiameter.Text = "Диаметр дна";
             this.rbBottomDiameter.UseVisualStyleBackColor = true;
-            this.rbBottomDiameter.CheckedChanged += new System.EventHandler(this.BottomDiameter_CheckedChanged);
+            this.rbBottomDiameter.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChangedHandler);
             // 
             // label1
             // 
@@ -208,12 +208,12 @@ namespace KettlePlugin
             // 
             // tb_var1
             // 
-            this.tb_var1.Location = new System.Drawing.Point(149, 78);
+            this.tb_var1.Location = new System.Drawing.Point(145, 78);
             this.tb_var1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_var1.Name = "tb_var1";
             this.tb_var1.Size = new System.Drawing.Size(125, 22);
             this.tb_var1.TabIndex = 29;
-            this.tb_var1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBVar1_KeyPress);
+            this.tb_var1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
             this.tb_var1.Leave += new System.EventHandler(this.TBVar1_Leave);
             // 
             // var3_Label
@@ -231,7 +231,7 @@ namespace KettlePlugin
             // var1_Label
             // 
             this.var1_Label.AutoSize = true;
-            this.var1_Label.Location = new System.Drawing.Point(10, 81);
+            this.var1_Label.Location = new System.Drawing.Point(6, 81);
             this.var1_Label.Name = "var1_Label";
             this.var1_Label.Size = new System.Drawing.Size(33, 16);
             this.var1_Label.TabIndex = 28;
@@ -240,7 +240,7 @@ namespace KettlePlugin
             // hint1_Label
             // 
             this.hint1_Label.AutoSize = true;
-            this.hint1_Label.Location = new System.Drawing.Point(277, 81);
+            this.hint1_Label.Location = new System.Drawing.Point(276, 81);
             this.hint1_Label.Name = "hint1_Label";
             this.hint1_Label.Size = new System.Drawing.Size(25, 16);
             this.hint1_Label.TabIndex = 31;
@@ -259,7 +259,7 @@ namespace KettlePlugin
             // var2_Label
             // 
             this.var2_Label.AutoSize = true;
-            this.var2_Label.Location = new System.Drawing.Point(10, 123);
+            this.var2_Label.Location = new System.Drawing.Point(6, 123);
             this.var2_Label.Name = "var2_Label";
             this.var2_Label.Size = new System.Drawing.Size(33, 16);
             this.var2_Label.TabIndex = 32;
@@ -268,7 +268,7 @@ namespace KettlePlugin
             // hint2_Label
             // 
             this.hint2_Label.AutoSize = true;
-            this.hint2_Label.Location = new System.Drawing.Point(277, 123);
+            this.hint2_Label.Location = new System.Drawing.Point(276, 123);
             this.hint2_Label.Name = "hint2_Label";
             this.hint2_Label.Size = new System.Drawing.Size(25, 16);
             this.hint2_Label.TabIndex = 34;
@@ -276,12 +276,12 @@ namespace KettlePlugin
             // 
             // tb_var2
             // 
-            this.tb_var2.Location = new System.Drawing.Point(149, 121);
+            this.tb_var2.Location = new System.Drawing.Point(145, 121);
             this.tb_var2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_var2.Name = "tb_var2";
             this.tb_var2.Size = new System.Drawing.Size(125, 22);
             this.tb_var2.TabIndex = 33;
-            this.tb_var2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBVar2_KeyPress);
+            this.tb_var2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
             this.tb_var2.Leave += new System.EventHandler(this.TBVar2_Leave);
             // 
             // groupBox2
@@ -326,7 +326,7 @@ namespace KettlePlugin
             "Изогнутая ручка (вверх)"});
             this.cb_handleForm.Location = new System.Drawing.Point(145, 109);
             this.cb_handleForm.Name = "cb_handleForm";
-            this.cb_handleForm.Size = new System.Drawing.Size(156, 22);
+            this.cb_handleForm.Size = new System.Drawing.Size(156, 24);
             this.cb_handleForm.TabIndex = 33;
             // 
             // limit5_Label
@@ -377,7 +377,7 @@ namespace KettlePlugin
             this.tb_diameterLid.Name = "tb_diameterLid";
             this.tb_diameterLid.Size = new System.Drawing.Size(125, 22);
             this.tb_diameterLid.TabIndex = 26;
-            this.tb_diameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBDiameterLid_KeyPress);
+            this.tb_diameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
             this.tb_diameterLid.Leave += new System.EventHandler(this.TBDiameterLid_Leave);
             // 
             // handle_Label
@@ -405,7 +405,7 @@ namespace KettlePlugin
             this.tb_handleHeight.Name = "tb_handleHeight";
             this.tb_handleHeight.Size = new System.Drawing.Size(125, 22);
             this.tb_handleHeight.TabIndex = 29;
-            this.tb_handleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBHandleHeight_KeyPress);
+            this.tb_handleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
             this.tb_handleHeight.Leave += new System.EventHandler(this.TBHandleHeight_Leave);
             // 
             // hint5_Label
