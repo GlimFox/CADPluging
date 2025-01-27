@@ -9,7 +9,7 @@ namespace KettlePlugin
 {
     public partial class MainForm : Form
     {
-        #region Features
+        #region Features (Свойства)
 
         /// <summary>
         /// Построитель для создания модели.
@@ -46,7 +46,7 @@ namespace KettlePlugin
             cb_handleForm.SelectedIndex = 0;
         }
 
-        #region SupportFunctions
+        #region SupportFunctions (Вспомогательные функции)
 
         /// <summary>
         /// Функция для изменения полей при выборе другой формулы.
@@ -158,7 +158,7 @@ namespace KettlePlugin
 
         #endregion
 
-        #region ValidationFunctions
+        #region ValidationFunctions (Функции валидации)
 
         /// <summary>
         /// Изменяет цвет текста и подсказок в зависимости от валидации параметров.
@@ -249,7 +249,7 @@ namespace KettlePlugin
 
         #endregion
 
-        #region Handlers
+        #region Handlers (Обработчики событий)
 
         /// <summary>
         /// Единый обработчик ввода в текстовое поле.
@@ -274,131 +274,83 @@ namespace KettlePlugin
         {
             CheckChange(true);
         }
+
+        /// <summary>
+        /// Единный обработчик выхода из текстового поля.
+        /// </summary>
+        /// <param name="sender">Источник события (текстовое поле).</param>
+        /// <param name="e">Аргументы события выхода из текстового поля.</param>
+        private void TextBoxLeaveHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is TextBox textBox)
+                {
+                    switch (textBox.Name)
+                    {
+                        case "tb_var1":
+                            if (rbBottomDiameter.Checked)
+                            {
+                                ColorChanges(ParameterType.Volume, textBox, limit1_Label);
+                            }
+                            else if (rbHeightBase.Checked || rbVolume.Checked)
+                            {
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit1_Label);
+                            }
+                            break;
+
+                        case "tb_var2":
+                            if (rbBottomDiameter.Checked)
+                            {
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2_Label);
+                            }
+                            else if (rbHeightBase.Checked)
+                            {
+                                ColorChanges(ParameterType.Volume, textBox, limit2_Label);
+                            }
+                            else if (rbVolume.Checked)
+                            {
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2_Label);
+                            }
+                            break;
+
+                        case "tb_var3":
+                            if (rbBottomDiameter.Checked)
+                            {
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit3_Label);
+                            }
+                            else if (rbHeightBase.Checked)
+                            {
+                                ColorChanges(ParameterType.HeightBase, textBox, limit3_Label);
+                            }
+                            else if (rbVolume.Checked)
+                            {
+                                ColorChanges(ParameterType.Volume, textBox, limit3_Label);
+                            }
+                            break;
+
+                        case "tb_diameterLid":
+                            ColorChanges(ParameterType.DiameterLid, textBox, limit4_Label);
+                            break;
+
+                        case "tb_handleHeight":
+                            ColorChanges(ParameterType.HeightHandle, textBox, limit5_Label);
+                            break;
+                    }
+
+                    // Пересчет Var3, если это поле нужное для расчета
+                    if (textBox.Name == "tb_var1" || textBox.Name == "tb_var2")
+                    {
+                        CalculateVar3();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         
-        #endregion
-
-        #region TextBox_Leave
-
-        /// <summary>
-        /// Обработчик события выхода из текстового поля Var1.
-        /// </summary>
-        /// <param name="sender">Источник события (текстовое поле).</param>
-        /// <param name="e">Аргументы события выхода из текстового поля.</param>
-        private void TBVar1_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbBottomDiameter.Checked)
-                {
-                    ColorChanges(ParameterType.Volume, tb_var1, limit1_Label);
-                }
-                else if (rbHeightBase.Checked)
-                {
-                    ColorChanges(ParameterType.DiameterBottom, tb_var1, limit1_Label);
-                }
-                else if (rbVolume.Checked)
-                {
-                    ColorChanges(ParameterType.DiameterBottom, tb_var1, limit1_Label);
-                }
-                CalculateVar3();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Обработчик события выхода из текстового поля Var2.
-        /// </summary>
-        /// <param name="sender">Источник события (текстовое поле).</param>
-        /// <param name="e">Аргументы события выхода из текстового поля.</param>
-        private void TBVar2_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbBottomDiameter.Checked)
-                {
-                    ColorChanges(ParameterType.HeightBase, tb_var2, limit2_Label);
-                }
-                else if (rbHeightBase.Checked)
-                {
-                    ColorChanges(ParameterType.Volume, tb_var2, limit2_Label);
-                }
-                else if (rbVolume.Checked)
-                {
-                    ColorChanges(ParameterType.HeightBase, tb_var2, limit2_Label);
-                }
-                CalculateVar3();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Обработчик события изменения текста в текстовом поле Var3.
-        /// </summary>
-        /// <param name="sender">Источник события (текстовое поле).</param>
-        /// <param name="e">Аргументы события изменения текста.</param>
-        private void TBVar3_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rbBottomDiameter.Checked)
-                {
-                    ColorChanges(ParameterType.DiameterBottom, tb_var3, limit3_Label);
-                }
-                else if (rbHeightBase.Checked)
-                {
-                    ColorChanges(ParameterType.HeightBase, tb_var3, limit3_Label);
-                }
-                else if (rbVolume.Checked)
-                {
-                    ColorChanges(ParameterType.Volume, tb_var3, limit3_Label);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Обработчик события выхода из текстового поля DiameterLid.
-        /// </summary>
-        /// <param name="sender">Источник события (текстовое поле).</param>
-        /// <param name="e">Аргументы события выхода из текстового поля.</param>
-        private void TBDiameterLid_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                ColorChanges(ParameterType.DiameterLid, tb_diameterLid, limit4_Label);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Обработчик события выхода из текстового поля HandleHeight.
-        /// </summary>
-        /// <param name="sender">Источник события (текстовое поле).</param>
-        /// <param name="e">Аргументы события выхода из текстового поля.</param>
-        private void TBHandleHeight_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                ColorChanges(ParameterType.HeightHandle, tb_handleHeight, limit5_Label);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         #endregion
 
         /// <summary>

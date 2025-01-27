@@ -214,7 +214,7 @@ namespace KettlePlugin
             this.tb_var1.Size = new System.Drawing.Size(125, 22);
             this.tb_var1.TabIndex = 29;
             this.tb_var1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_var1.Leave += new System.EventHandler(this.TBVar1_Leave);
+            this.tb_var1.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // var3_Label
             // 
@@ -254,7 +254,7 @@ namespace KettlePlugin
             this.tb_var3.Name = "tb_var3";
             this.tb_var3.Size = new System.Drawing.Size(125, 22);
             this.tb_var3.TabIndex = 35;
-            this.tb_var3.TextChanged += new System.EventHandler(this.TBVar3_TextChanged);
+            this.tb_var3.TextChanged += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // var2_Label
             // 
@@ -282,7 +282,7 @@ namespace KettlePlugin
             this.tb_var2.Size = new System.Drawing.Size(125, 22);
             this.tb_var2.TabIndex = 33;
             this.tb_var2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_var2.Leave += new System.EventHandler(this.TBVar2_Leave);
+            this.tb_var2.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // groupBox2
             // 
@@ -378,7 +378,7 @@ namespace KettlePlugin
             this.tb_diameterLid.Size = new System.Drawing.Size(125, 22);
             this.tb_diameterLid.TabIndex = 26;
             this.tb_diameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_diameterLid.Leave += new System.EventHandler(this.TBDiameterLid_Leave);
+            this.tb_diameterLid.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // handle_Label
             // 
@@ -406,7 +406,7 @@ namespace KettlePlugin
             this.tb_handleHeight.Size = new System.Drawing.Size(125, 22);
             this.tb_handleHeight.TabIndex = 29;
             this.tb_handleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_handleHeight.Leave += new System.EventHandler(this.TBHandleHeight_Leave);
+            this.tb_handleHeight.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // hint5_Label
             // 
