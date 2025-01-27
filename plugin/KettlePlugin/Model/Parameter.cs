@@ -50,7 +50,8 @@ namespace KettlePlugin
         /// Получает или задает текущее значение параметра.
         /// При установке значения выполняется проверка на соответствие диапазону.
         /// </summary>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение выходит за пределы допустимого диапазона.</exception>
+        /// <exception cref="ArgumentException">Выбрасывается, 
+        /// если значение выходит за пределы допустимого диапазона.</exception>
         public double Value
         {
             get
@@ -100,7 +101,8 @@ namespace KettlePlugin
         /// <summary>
         /// Проверяет текущее значение на соответствие заданным минимальному и максимальному значениям.
         /// </summary>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение выходит за пределы допустимого диапазона.</exception>
+        /// <exception cref="ArgumentException">Выбрасывается, 
+        /// если значение выходит за пределы допустимого диапазона.</exception>
         private void Validator()
         {
             if (this.Value < this._minValue || this.Value > this._maxValue)

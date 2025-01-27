@@ -72,7 +72,8 @@ namespace UnitTest.ParametersTest
         /// Негативный тест ValidateParameters.
         /// Проверяет вызов исключения при некорректных зависимостях.
         /// </summary>
-        [Test(Description = "Негативный тест ValidateParameters. Проверяет вызов исключения при некорректных зависимостях.")]
+        [Test(Description = "Негативный тест ValidateParameters. " +
+            "Проверяет вызов исключения при некорректных зависимостях.")]
         public void ValidateParameters_InvalidDependentValues_ThrowsArgumentException()
         {
             var parameters = new Parameters

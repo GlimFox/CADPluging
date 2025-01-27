@@ -32,10 +32,13 @@ namespace KettlePlugin
             _wrapper.OpenCAD();
             _wrapper.CreateFile();
 
+            // Вызываем основные методы для построения чайника
             BuildBase(parameters);
             BuildHandle(parameters, handleForm);
             BuildLid(parameters);
             BuildSpout(parameters);
+
+            // Устанавливаем цвет чайника
             _wrapper.SetModelColor(color);
         }
 
@@ -45,28 +48,40 @@ namespace KettlePlugin
         /// <param name="parameters">Параметры конструкции</param>
         private void BuildBase(Parameters parameters)
         {
-            // Получаем параметры: высота и диаметр основания
+            // Получаем параметры: высота и диаметры основания и крышки
             double height = parameters.AllParameters[ParameterType.HeightBase].Value;
-            double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
+            double bottom = parameters.AllParameters[ParameterType.DiameterBottom].Value;
             double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
 
+            // Задаем параметры для отверстия
+            double offsetHole = 1;
+            double heightHole = offsetHole + 1.4;
 
+            // Массив точек (делим размеры на 2, так как отсчет идет от 0;0)
             double[,] pointsArray = {
-                { 0, -height/2, -diameter/2, -height/2, 1 }, // Дно
-                { -diameter / 2, -height / 2, -diameter / 2, height / 2, 1 }, // Вертикальная линия
-                { -diameter / 2 + 1, height / 2 + 1, -lid / 2 - 1, height / 2 + 1, 1 }, // Переход к отверстию
-                { -lid / 2, height / 2 + 2, -lid / 2, height / 2 + 2.4, 1 }, // Чуть поднять отверстие
-                { -lid / 2, height / 2 + 2.4, 0, height / 2 + 2.4, 1 }, // Стенки отверстия
-                { 0, -height / 2, 0, height / 2 + 2.4, 3 } // Вспомогательная осевая линия
+                // Линия дна
+                { 0, -height / 2, -bottom / 2, -height / 2, 1 },
+                // Вертикальная линия
+                { -bottom / 2, -height / 2, -bottom / 2, height / 2, 1 },
+                // Переход к отверстию
+                { -bottom / 2 + offsetHole, height / 2 + offsetHole, -lid / 2 - offsetHole, height / 2 + offsetHole, 1 }, 
+                // Поднятие отверстия
+                { -lid / 2, height / 2 + 2, -lid / 2, height / 2 + heightHole, 1 }, 
+                // Стенки отверстия
+                { -lid / 2, height / 2 + heightHole, 0, height / 2 + heightHole, 1 }, 
+                // Вспомогательная линия (3 в конце) вдоль оси OY
+                { 0, -height / 2, 0, height / 2 + heightHole, 3 } 
             };
 
-            _wrapper.CreateSketch(1); // Создание эскиза на плоскости
-            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0)); // Рисуем стороны
+            // Создание эскиза и линий на плоскости
+            _wrapper.CreateSketch(1); 
+            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0));
 
-            // Добавляем 2 скругления для линий 2/3 и 3/4
-            _wrapper.CreateArc(-diameter / 2 + 1, height / 2 + 1, -diameter / 2, height / 2, 90);
-            _wrapper.CreateArc(-lid / 2 - 1, height / 2 + 1, -lid / 2, height / 2 + 2, 90);
+            // Добавляем 2 скругления дугами между линий 2/3 и 3/4
+            _wrapper.CreateArc(-bottom / 2 + offsetHole, height / 2 + offsetHole, -bottom / 2, height / 2, 90);
+            _wrapper.CreateArc(-lid / 2 - offsetHole, height / 2 + offsetHole, -lid / 2, height / 2 + 2, 90);
 
+            // Выдавливание вращением
             _wrapper.Spin();
         }
 
@@ -78,12 +93,15 @@ namespace KettlePlugin
         {
             // Получаем параметры: высота, диаметр, диаметр крышки, высота ручки
             double height = parameters.AllParameters[ParameterType.HeightBase].Value;
-            double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
+            double bottom = parameters.AllParameters[ParameterType.DiameterBottom].Value;
             double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
             double handle = parameters.AllParameters[ParameterType.HeightHandle].Value;
 
+            // Задаем параметр смещения для ручки
+            double offsetHandle = 4.5;
+
             // Высчитываем среднее значение длины между дном и крышкой
-            double xC = (-diameter / 2 - lid / 2) / 2;
+            double xC = (-bottom / 2 - lid / 2) / 2;
 
             // Точки для высоты ручки
             double[,] pointsArray = {
@@ -99,41 +117,54 @@ namespace KettlePlugin
             {
                 case 0: // Прямая ручка
                     //Создаем прямую линию ручки
-                    double[,] horizontalPoint = {{xC+4.5, height/2+handle, -xC-4.5, height/2+handle, 1 }};
+                    double[,] horizontalPoint = {{xC + offsetHandle, height / 2 + handle, 
+                        -xC - offsetHandle, height / 2 + handle, 1 }};
                     _wrapper.CreateLine(horizontalPoint, 0, 1);
 
                     // Создаем скругления дугами
-                    _wrapper.CreateArc(xC + 4.5, height / 2 + handle, xC, height / 2 + handle - 4.5, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - 4.5, -xC - 4.5, height / 2 + handle, 90);
-                    _wrapper.Extrusion(1, 14);
+                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle, 
+                        xC, height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
+                        -xC - offsetHandle, height / 2 + handle, 90);
 
                     break;
 
                 case 1: // Изогнутая ручка (вниз)
                     // Создаем волнистую форму ручки
-                    _wrapper.CreateArc(xC + lid/4, height / 2 + handle - 4.5, xC, height / 2 + handle - 4.5, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - 4.5, -xC - lid/4, height / 2 + handle - 4.5, 90);
-                    _wrapper.CreateArc(xC + lid / 4, height / 2 + handle - 4.5, -xC - lid / 4, height / 2 + handle - 4.5, 90);
+                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 
+                        xC, height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
+                        -xC - lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 
+                        -xC - lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 90);
 
                     break;
 
                 case 2: // Изогнутая ручка (вверх)
                     // Создаем скругления дугами
-                    _wrapper.CreateArc(xC + 4.5, height / 2 + handle, xC, height / 2 + handle - 4.5, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - 4.5, -xC - 4.5, height / 2 + handle, 90);
+                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle,
+                        xC, height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
+                        -xC - offsetHandle, height / 2 + handle, 90);
 
                     // Создаем волнистую форму ручки
-                    _wrapper.CreateArc(xC + 4.5, height / 2 + handle, xC + lid / 4, height / 2 + handle + 9,  90);
-                    _wrapper.CreateArc(-xC - lid / 4, height / 2 + handle + 9, xC + lid / 4, height / 2 + handle + 9, 90);
-                    _wrapper.CreateArc(-xC - lid / 4, height / 2 + handle + 9, -xC - 4.5, height / 2 + handle, 90);
+                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle, 
+                        xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2,  90);
+                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 
+                        xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 90);
+                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 
+                        -xC - offsetHandle, height / 2 + handle, 90);
 
                     break;
 
                 default:
                     throw new ArgumentException("Недопустимая форма ручки.");
             }
-            //Выдавливаем ручку
-            _wrapper.Extrusion(1, 14);
+
+            int lenghtHandle = 14;
+
+            //Выдавливаем ручку (тип выдавливания, длина ручки)
+            _wrapper.Extrusion(1, lenghtHandle);
         }
         
         /// <summary>
@@ -142,29 +173,49 @@ namespace KettlePlugin
         /// <param name="parameters">Параметры модели.</param>
         private void BuildLid(Parameters parameters)
         {
+            // Получаем параметры: диаметр крышки, высота чайника
             double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
             double height = parameters.AllParameters[ParameterType.HeightBase].Value;
 
-            _wrapper.CreateOffsetPlane(2, height / 2 + 2.5);
+            // Задаем параметр смещения для плоскости
+            double offset = 2.5;
+
+            // Создаем плоскость по смещению
+            _wrapper.CreateOffsetPlane(2, height / 2 + offset);
             _wrapper.CreateSketch();
 
+            // Создаем окружность на плоскости
             _wrapper.CreateCircle(lid / 2 + 1, 0, 0);
             _wrapper.Extrusion(2, 2);
 
+            // Создаем скетч на плоскости
             _wrapper.CreateSketch(1);
 
+            // Высчитываем центр окружности
             double xC = (-lid / 2) / 2;
-            double[,] pointsArray = {
-                {xC, height/2+4.5, xC, height/2+10.5, 1 }, // Высота ручки
-                {xC+2, height/2+12.5, -xC-2,  height/2+12.5, 1 }, // Держательная часть
-                {-xC, height/2+4.5, -xC, height/2+10.5, 1 }, // Вторая высота ручки
-            };
-            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0)); // Рисуем стороны
 
+            // Создаем массив точек
+            double[,] pointsArray = {
+                // Высота ручки
+                {xC, height / 2 + 4.5, xC, height / 2 + 10.5, 1 },
+                // Держательная часть
+                {xC + 2, height/2 + 12.5, -xC - 2, height / 2 + 12.5, 1 },
+                // Вторая высота ручки
+                {-xC, height / 2 + 4.5, -xC, height / 2 + 10.5, 1 },
+            };
+
+            // Создаем стороны линиями
+            _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0));
+
+            // Создаем скругления дугами
             _wrapper.CreateArc(xC + 2, height / 2 + 12.5, xC, height / 2 + 10.5, 90);
             _wrapper.CreateArc(-xC, height / 2 + 10.5, -xC - 2, height / 2 + 12.5, 90);
 
-            _wrapper.Extrusion(1, 7);
+            // Задаем параметр длины для выдавливания
+            int lenght = 7;
+
+            // Выдавливаем
+            _wrapper.Extrusion(1, lenght);
         }
 
         /// <summary>

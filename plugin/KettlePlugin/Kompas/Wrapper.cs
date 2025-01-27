@@ -5,6 +5,9 @@ using Kompas6Constants3D;
 
 namespace Kompas
 {
+    /// <summary>
+    /// Класс-обертка для работы с API Kompas3D.
+    /// </summary>
     public class Wrapper
     {
         #region Features
@@ -91,7 +94,8 @@ namespace Kompas
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием эскиза.");
+                throw new Exception("Деталь (_part) не была инициализирована. " +
+                    "Вызовите CreateFile() перед созданием эскиза.");
             }
 
             // Создаем эскиз и помещаем его в _sketch
@@ -138,7 +142,8 @@ namespace Kompas
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием эскиза.");
+                throw new Exception("Деталь (_part) не была инициализирована. " +
+                    "Вызовите CreateFile() перед созданием эскиза.");
             }
 
             if (_plane == null)
@@ -324,7 +329,8 @@ namespace Kompas
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. Вызовите CreateFile() перед созданием смещенной плоскости.");
+                throw new Exception("Деталь (_part) не была инициализирована. " +
+                    "Вызовите CreateFile() перед созданием смещенной плоскости.");
             }
 
             // Получаем базовую плоскость
@@ -344,7 +350,8 @@ namespace Kompas
             }
             else
             {
-                throw new ArgumentException("Некорректный тип базовой плоскости. Допустимые значения: 1, 2, 3.");
+                throw new ArgumentException("Некорректный тип базовой плоскости. " +
+                    "Допустимые значения: 1, 2, 3.");
             }
 
             if (basePlane == null)

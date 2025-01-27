@@ -33,37 +33,37 @@ namespace KettlePlugin
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.limit3_Label = new System.Windows.Forms.Label();
+            this.limit3Label = new System.Windows.Forms.Label();
             this.rbVolume = new System.Windows.Forms.RadioButton();
-            this.limit2_Label = new System.Windows.Forms.Label();
+            this.limit2Label = new System.Windows.Forms.Label();
             this.rbHeightBase = new System.Windows.Forms.RadioButton();
-            this.limit1_Label = new System.Windows.Forms.Label();
-            this.hint3_Label = new System.Windows.Forms.Label();
+            this.limit1Label = new System.Windows.Forms.Label();
+            this.hint3Label = new System.Windows.Forms.Label();
             this.rbBottomDiameter = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.equalLabel = new System.Windows.Forms.Label();
-            this.tb_var1 = new System.Windows.Forms.TextBox();
+            this.tbVar1 = new System.Windows.Forms.TextBox();
             this.var3_Label = new System.Windows.Forms.Label();
-            this.var1_Label = new System.Windows.Forms.Label();
-            this.hint1_Label = new System.Windows.Forms.Label();
-            this.tb_var3 = new System.Windows.Forms.TextBox();
-            this.var2_Label = new System.Windows.Forms.Label();
-            this.hint2_Label = new System.Windows.Forms.Label();
-            this.tb_var2 = new System.Windows.Forms.TextBox();
+            this.var1Label = new System.Windows.Forms.Label();
+            this.hint1Label = new System.Windows.Forms.Label();
+            this.tbVar3 = new System.Windows.Forms.TextBox();
+            this.var2Label = new System.Windows.Forms.Label();
+            this.hint2Label = new System.Windows.Forms.Label();
+            this.tbVar2 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.handleForm_Label = new System.Windows.Forms.Label();
-            this.cb_handleForm = new System.Windows.Forms.ComboBox();
+            this.handleFormLabel = new System.Windows.Forms.Label();
+            this.cbHandleForm = new System.Windows.Forms.ComboBox();
             this.limit5_Label = new System.Windows.Forms.Label();
             this.limit4_Label = new System.Windows.Forms.Label();
-            this.lid_Label = new System.Windows.Forms.Label();
-            this.color_Label = new System.Windows.Forms.Label();
-            this.tb_diameterLid = new System.Windows.Forms.TextBox();
-            this.handle_Label = new System.Windows.Forms.Label();
-            this.hint4_Label = new System.Windows.Forms.Label();
-            this.tb_handleHeight = new System.Windows.Forms.TextBox();
-            this.hint5_Label = new System.Windows.Forms.Label();
+            this.lidLabel = new System.Windows.Forms.Label();
+            this.colorLabel = new System.Windows.Forms.Label();
+            this.tbDiameterLid = new System.Windows.Forms.TextBox();
+            this.handleLabel = new System.Windows.Forms.Label();
+            this.hint4Label = new System.Windows.Forms.Label();
+            this.tbHandleHeight = new System.Windows.Forms.TextBox();
+            this.hint5Label = new System.Windows.Forms.Label();
             this.pbChoiceColor = new System.Windows.Forms.PictureBox();
-            this.button_Build = new System.Windows.Forms.Button();
+            this.buttonBuild = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.lbErrors = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
@@ -73,23 +73,23 @@ namespace KettlePlugin
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.limit3_Label);
+            this.groupBox1.Controls.Add(this.limit3Label);
             this.groupBox1.Controls.Add(this.rbVolume);
-            this.groupBox1.Controls.Add(this.limit2_Label);
+            this.groupBox1.Controls.Add(this.limit2Label);
             this.groupBox1.Controls.Add(this.rbHeightBase);
-            this.groupBox1.Controls.Add(this.limit1_Label);
-            this.groupBox1.Controls.Add(this.hint3_Label);
+            this.groupBox1.Controls.Add(this.limit1Label);
+            this.groupBox1.Controls.Add(this.hint3Label);
             this.groupBox1.Controls.Add(this.rbBottomDiameter);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.equalLabel);
-            this.groupBox1.Controls.Add(this.tb_var1);
+            this.groupBox1.Controls.Add(this.tbVar1);
             this.groupBox1.Controls.Add(this.var3_Label);
-            this.groupBox1.Controls.Add(this.var1_Label);
-            this.groupBox1.Controls.Add(this.hint1_Label);
-            this.groupBox1.Controls.Add(this.tb_var3);
-            this.groupBox1.Controls.Add(this.var2_Label);
-            this.groupBox1.Controls.Add(this.hint2_Label);
-            this.groupBox1.Controls.Add(this.tb_var2);
+            this.groupBox1.Controls.Add(this.var1Label);
+            this.groupBox1.Controls.Add(this.hint1Label);
+            this.groupBox1.Controls.Add(this.tbVar3);
+            this.groupBox1.Controls.Add(this.var2Label);
+            this.groupBox1.Controls.Add(this.hint2Label);
+            this.groupBox1.Controls.Add(this.tbVar2);
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
@@ -99,19 +99,19 @@ namespace KettlePlugin
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Параметры основания";
             // 
-            // limit3_Label
+            // limit3Label
             // 
-            this.limit3_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.limit3Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.limit3_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.limit3_Label.Location = new System.Drawing.Point(342, 117);
-            this.limit3_Label.Margin = new System.Windows.Forms.Padding(0);
-            this.limit3_Label.Name = "limit3_Label";
-            this.limit3_Label.Size = new System.Drawing.Size(125, 14);
-            this.limit3_Label.TabIndex = 30;
-            this.limit3_Label.Text = "от х до у";
-            this.limit3_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.limit3Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit3Label.Location = new System.Drawing.Point(342, 117);
+            this.limit3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit3Label.Name = "limit3Label";
+            this.limit3Label.Size = new System.Drawing.Size(125, 14);
+            this.limit3Label.TabIndex = 30;
+            this.limit3Label.Text = "от х до у";
+            this.limit3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // rbVolume
             // 
@@ -125,19 +125,19 @@ namespace KettlePlugin
             this.rbVolume.UseVisualStyleBackColor = true;
             this.rbVolume.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChangedHandler);
             // 
-            // limit2_Label
+            // limit2Label
             // 
-            this.limit2_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.limit2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.limit2_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.limit2_Label.Location = new System.Drawing.Point(149, 143);
-            this.limit2_Label.Margin = new System.Windows.Forms.Padding(0);
-            this.limit2_Label.Name = "limit2_Label";
-            this.limit2_Label.Size = new System.Drawing.Size(125, 14);
-            this.limit2_Label.TabIndex = 29;
-            this.limit2_Label.Text = "от х до у";
-            this.limit2_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.limit2Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit2Label.Location = new System.Drawing.Point(149, 143);
+            this.limit2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit2Label.Name = "limit2Label";
+            this.limit2Label.Size = new System.Drawing.Size(125, 14);
+            this.limit2Label.TabIndex = 29;
+            this.limit2Label.Text = "от х до у";
+            this.limit2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // rbHeightBase
             // 
@@ -151,28 +151,28 @@ namespace KettlePlugin
             this.rbHeightBase.UseVisualStyleBackColor = true;
             this.rbHeightBase.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChangedHandler);
             // 
-            // limit1_Label
+            // limit1Label
             // 
-            this.limit1_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.limit1Label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.limit1_Label.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.limit1_Label.Location = new System.Drawing.Point(149, 100);
-            this.limit1_Label.Margin = new System.Windows.Forms.Padding(0);
-            this.limit1_Label.Name = "limit1_Label";
-            this.limit1_Label.Size = new System.Drawing.Size(125, 14);
-            this.limit1_Label.TabIndex = 28;
-            this.limit1_Label.Text = "от х до у";
-            this.limit1_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.limit1Label.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.limit1Label.Location = new System.Drawing.Point(149, 100);
+            this.limit1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.limit1Label.Name = "limit1Label";
+            this.limit1Label.Size = new System.Drawing.Size(125, 14);
+            this.limit1Label.TabIndex = 28;
+            this.limit1Label.Text = "от х до у";
+            this.limit1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // hint3_Label
+            // hint3Label
             // 
-            this.hint3_Label.AutoSize = true;
-            this.hint3_Label.Location = new System.Drawing.Point(473, 98);
-            this.hint3_Label.Name = "hint3_Label";
-            this.hint3_Label.Size = new System.Drawing.Size(25, 16);
-            this.hint3_Label.TabIndex = 39;
-            this.hint3_Label.Text = "мм";
+            this.hint3Label.AutoSize = true;
+            this.hint3Label.Location = new System.Drawing.Point(473, 98);
+            this.hint3Label.Name = "hint3Label";
+            this.hint3Label.Size = new System.Drawing.Size(25, 16);
+            this.hint3Label.TabIndex = 39;
+            this.hint3Label.Text = "мм";
             // 
             // rbBottomDiameter
             // 
@@ -206,15 +206,15 @@ namespace KettlePlugin
             this.equalLabel.TabIndex = 37;
             this.equalLabel.Text = "=";
             // 
-            // tb_var1
+            // tbVar1
             // 
-            this.tb_var1.Location = new System.Drawing.Point(145, 78);
-            this.tb_var1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tb_var1.Name = "tb_var1";
-            this.tb_var1.Size = new System.Drawing.Size(125, 22);
-            this.tb_var1.TabIndex = 29;
-            this.tb_var1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_var1.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
+            this.tbVar1.Location = new System.Drawing.Point(145, 78);
+            this.tbVar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbVar1.Name = "tbVar1";
+            this.tbVar1.Size = new System.Drawing.Size(125, 22);
+            this.tbVar1.TabIndex = 29;
+            this.tbVar1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
+            this.tbVar1.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // var3_Label
             // 
@@ -228,75 +228,75 @@ namespace KettlePlugin
             this.var3_Label.Text = "var3";
             this.var3_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // var1_Label
+            // var1Label
             // 
-            this.var1_Label.AutoSize = true;
-            this.var1_Label.Location = new System.Drawing.Point(6, 81);
-            this.var1_Label.Name = "var1_Label";
-            this.var1_Label.Size = new System.Drawing.Size(33, 16);
-            this.var1_Label.TabIndex = 28;
-            this.var1_Label.Text = "var1";
+            this.var1Label.AutoSize = true;
+            this.var1Label.Location = new System.Drawing.Point(6, 81);
+            this.var1Label.Name = "var1Label";
+            this.var1Label.Size = new System.Drawing.Size(33, 16);
+            this.var1Label.TabIndex = 28;
+            this.var1Label.Text = "var1";
             // 
-            // hint1_Label
+            // hint1Label
             // 
-            this.hint1_Label.AutoSize = true;
-            this.hint1_Label.Location = new System.Drawing.Point(276, 81);
-            this.hint1_Label.Name = "hint1_Label";
-            this.hint1_Label.Size = new System.Drawing.Size(25, 16);
-            this.hint1_Label.TabIndex = 31;
-            this.hint1_Label.Text = "мм";
+            this.hint1Label.AutoSize = true;
+            this.hint1Label.Location = new System.Drawing.Point(276, 81);
+            this.hint1Label.Name = "hint1Label";
+            this.hint1Label.Size = new System.Drawing.Size(25, 16);
+            this.hint1Label.TabIndex = 31;
+            this.hint1Label.Text = "мм";
             // 
-            // tb_var3
+            // tbVar3
             // 
-            this.tb_var3.Enabled = false;
-            this.tb_var3.Location = new System.Drawing.Point(342, 95);
-            this.tb_var3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tb_var3.Name = "tb_var3";
-            this.tb_var3.Size = new System.Drawing.Size(125, 22);
-            this.tb_var3.TabIndex = 35;
-            this.tb_var3.TextChanged += new System.EventHandler(this.TextBoxLeaveHandler);
+            this.tbVar3.Enabled = false;
+            this.tbVar3.Location = new System.Drawing.Point(342, 95);
+            this.tbVar3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbVar3.Name = "tbVar3";
+            this.tbVar3.Size = new System.Drawing.Size(125, 22);
+            this.tbVar3.TabIndex = 35;
+            this.tbVar3.TextChanged += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
-            // var2_Label
+            // var2Label
             // 
-            this.var2_Label.AutoSize = true;
-            this.var2_Label.Location = new System.Drawing.Point(6, 123);
-            this.var2_Label.Name = "var2_Label";
-            this.var2_Label.Size = new System.Drawing.Size(33, 16);
-            this.var2_Label.TabIndex = 32;
-            this.var2_Label.Text = "var2";
+            this.var2Label.AutoSize = true;
+            this.var2Label.Location = new System.Drawing.Point(6, 123);
+            this.var2Label.Name = "var2Label";
+            this.var2Label.Size = new System.Drawing.Size(33, 16);
+            this.var2Label.TabIndex = 32;
+            this.var2Label.Text = "var2";
             // 
-            // hint2_Label
+            // hint2Label
             // 
-            this.hint2_Label.AutoSize = true;
-            this.hint2_Label.Location = new System.Drawing.Point(276, 123);
-            this.hint2_Label.Name = "hint2_Label";
-            this.hint2_Label.Size = new System.Drawing.Size(25, 16);
-            this.hint2_Label.TabIndex = 34;
-            this.hint2_Label.Text = "мм";
+            this.hint2Label.AutoSize = true;
+            this.hint2Label.Location = new System.Drawing.Point(276, 123);
+            this.hint2Label.Name = "hint2Label";
+            this.hint2Label.Size = new System.Drawing.Size(25, 16);
+            this.hint2Label.TabIndex = 34;
+            this.hint2Label.Text = "мм";
             // 
-            // tb_var2
+            // tbVar2
             // 
-            this.tb_var2.Location = new System.Drawing.Point(145, 121);
-            this.tb_var2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tb_var2.Name = "tb_var2";
-            this.tb_var2.Size = new System.Drawing.Size(125, 22);
-            this.tb_var2.TabIndex = 33;
-            this.tb_var2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_var2.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
+            this.tbVar2.Location = new System.Drawing.Point(145, 121);
+            this.tbVar2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbVar2.Name = "tbVar2";
+            this.tbVar2.Size = new System.Drawing.Size(125, 22);
+            this.tbVar2.TabIndex = 33;
+            this.tbVar2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
+            this.tbVar2.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.handleForm_Label);
-            this.groupBox2.Controls.Add(this.cb_handleForm);
+            this.groupBox2.Controls.Add(this.handleFormLabel);
+            this.groupBox2.Controls.Add(this.cbHandleForm);
             this.groupBox2.Controls.Add(this.limit5_Label);
             this.groupBox2.Controls.Add(this.limit4_Label);
-            this.groupBox2.Controls.Add(this.lid_Label);
-            this.groupBox2.Controls.Add(this.color_Label);
-            this.groupBox2.Controls.Add(this.tb_diameterLid);
-            this.groupBox2.Controls.Add(this.handle_Label);
-            this.groupBox2.Controls.Add(this.hint4_Label);
-            this.groupBox2.Controls.Add(this.tb_handleHeight);
-            this.groupBox2.Controls.Add(this.hint5_Label);
+            this.groupBox2.Controls.Add(this.lidLabel);
+            this.groupBox2.Controls.Add(this.colorLabel);
+            this.groupBox2.Controls.Add(this.tbDiameterLid);
+            this.groupBox2.Controls.Add(this.handleLabel);
+            this.groupBox2.Controls.Add(this.hint4Label);
+            this.groupBox2.Controls.Add(this.tbHandleHeight);
+            this.groupBox2.Controls.Add(this.hint5Label);
             this.groupBox2.Controls.Add(this.pbChoiceColor);
             this.groupBox2.Location = new System.Drawing.Point(12, 178);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -307,27 +307,27 @@ namespace KettlePlugin
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Другие параметры";
             // 
-            // handleForm_Label
+            // handleFormLabel
             // 
-            this.handleForm_Label.AutoSize = true;
-            this.handleForm_Label.Location = new System.Drawing.Point(6, 112);
-            this.handleForm_Label.Name = "handleForm_Label";
-            this.handleForm_Label.Size = new System.Drawing.Size(93, 16);
-            this.handleForm_Label.TabIndex = 34;
-            this.handleForm_Label.Text = "Форма ручки";
+            this.handleFormLabel.AutoSize = true;
+            this.handleFormLabel.Location = new System.Drawing.Point(6, 112);
+            this.handleFormLabel.Name = "handleFormLabel";
+            this.handleFormLabel.Size = new System.Drawing.Size(93, 16);
+            this.handleFormLabel.TabIndex = 34;
+            this.handleFormLabel.Text = "Форма ручки";
             // 
-            // cb_handleForm
+            // cbHandleForm
             // 
-            this.cb_handleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_handleForm.FormattingEnabled = true;
-            this.cb_handleForm.Items.AddRange(new object[] {
+            this.cbHandleForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHandleForm.FormattingEnabled = true;
+            this.cbHandleForm.Items.AddRange(new object[] {
             "Прямая ручка",
             "Изогнутая ручка (вниз)",
             "Изогнутая ручка (вверх)"});
-            this.cb_handleForm.Location = new System.Drawing.Point(145, 109);
-            this.cb_handleForm.Name = "cb_handleForm";
-            this.cb_handleForm.Size = new System.Drawing.Size(156, 24);
-            this.cb_handleForm.TabIndex = 33;
+            this.cbHandleForm.Location = new System.Drawing.Point(145, 109);
+            this.cbHandleForm.Name = "cbHandleForm";
+            this.cbHandleForm.Size = new System.Drawing.Size(156, 24);
+            this.cbHandleForm.TabIndex = 33;
             // 
             // limit5_Label
             // 
@@ -352,70 +352,70 @@ namespace KettlePlugin
             this.limit4_Label.Text = "от 75 до 300, <= дна";
             this.limit4_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lid_Label
+            // lidLabel
             // 
-            this.lid_Label.AutoSize = true;
-            this.lid_Label.Location = new System.Drawing.Point(6, 27);
-            this.lid_Label.Name = "lid_Label";
-            this.lid_Label.Size = new System.Drawing.Size(115, 16);
-            this.lid_Label.TabIndex = 25;
-            this.lid_Label.Text = "Диаметр крышки";
+            this.lidLabel.AutoSize = true;
+            this.lidLabel.Location = new System.Drawing.Point(6, 27);
+            this.lidLabel.Name = "lidLabel";
+            this.lidLabel.Size = new System.Drawing.Size(115, 16);
+            this.lidLabel.TabIndex = 25;
+            this.lidLabel.Text = "Диаметр крышки";
             // 
-            // color_Label
+            // colorLabel
             // 
-            this.color_Label.AutoSize = true;
-            this.color_Label.Location = new System.Drawing.Point(6, 143);
-            this.color_Label.Name = "color_Label";
-            this.color_Label.Size = new System.Drawing.Size(97, 16);
-            this.color_Label.TabIndex = 31;
-            this.color_Label.Text = "Цвет чайника";
+            this.colorLabel.AutoSize = true;
+            this.colorLabel.Location = new System.Drawing.Point(6, 143);
+            this.colorLabel.Name = "colorLabel";
+            this.colorLabel.Size = new System.Drawing.Size(97, 16);
+            this.colorLabel.TabIndex = 31;
+            this.colorLabel.Text = "Цвет чайника";
             // 
-            // tb_diameterLid
+            // tbDiameterLid
             // 
-            this.tb_diameterLid.Location = new System.Drawing.Point(145, 25);
-            this.tb_diameterLid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tb_diameterLid.Name = "tb_diameterLid";
-            this.tb_diameterLid.Size = new System.Drawing.Size(125, 22);
-            this.tb_diameterLid.TabIndex = 26;
-            this.tb_diameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_diameterLid.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
+            this.tbDiameterLid.Location = new System.Drawing.Point(145, 25);
+            this.tbDiameterLid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbDiameterLid.Name = "tbDiameterLid";
+            this.tbDiameterLid.Size = new System.Drawing.Size(125, 22);
+            this.tbDiameterLid.TabIndex = 26;
+            this.tbDiameterLid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
+            this.tbDiameterLid.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
-            // handle_Label
+            // handleLabel
             // 
-            this.handle_Label.AutoSize = true;
-            this.handle_Label.Location = new System.Drawing.Point(6, 70);
-            this.handle_Label.Name = "handle_Label";
-            this.handle_Label.Size = new System.Drawing.Size(97, 16);
-            this.handle_Label.TabIndex = 28;
-            this.handle_Label.Text = "Высота ручки";
+            this.handleLabel.AutoSize = true;
+            this.handleLabel.Location = new System.Drawing.Point(6, 70);
+            this.handleLabel.Name = "handleLabel";
+            this.handleLabel.Size = new System.Drawing.Size(97, 16);
+            this.handleLabel.TabIndex = 28;
+            this.handleLabel.Text = "Высота ручки";
             // 
-            // hint4_Label
+            // hint4Label
             // 
-            this.hint4_Label.AutoSize = true;
-            this.hint4_Label.Location = new System.Drawing.Point(276, 27);
-            this.hint4_Label.Name = "hint4_Label";
-            this.hint4_Label.Size = new System.Drawing.Size(25, 16);
-            this.hint4_Label.TabIndex = 27;
-            this.hint4_Label.Text = "мм";
+            this.hint4Label.AutoSize = true;
+            this.hint4Label.Location = new System.Drawing.Point(276, 27);
+            this.hint4Label.Name = "hint4Label";
+            this.hint4Label.Size = new System.Drawing.Size(25, 16);
+            this.hint4Label.TabIndex = 27;
+            this.hint4Label.Text = "мм";
             // 
-            // tb_handleHeight
+            // tbHandleHeight
             // 
-            this.tb_handleHeight.Location = new System.Drawing.Point(145, 66);
-            this.tb_handleHeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tb_handleHeight.Name = "tb_handleHeight";
-            this.tb_handleHeight.Size = new System.Drawing.Size(125, 22);
-            this.tb_handleHeight.TabIndex = 29;
-            this.tb_handleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
-            this.tb_handleHeight.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
+            this.tbHandleHeight.Location = new System.Drawing.Point(145, 66);
+            this.tbHandleHeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbHandleHeight.Name = "tbHandleHeight";
+            this.tbHandleHeight.Size = new System.Drawing.Size(125, 22);
+            this.tbHandleHeight.TabIndex = 29;
+            this.tbHandleHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxKeyPressHandler);
+            this.tbHandleHeight.Leave += new System.EventHandler(this.TextBoxLeaveHandler);
             // 
-            // hint5_Label
+            // hint5Label
             // 
-            this.hint5_Label.AutoSize = true;
-            this.hint5_Label.Location = new System.Drawing.Point(276, 69);
-            this.hint5_Label.Name = "hint5_Label";
-            this.hint5_Label.Size = new System.Drawing.Size(25, 16);
-            this.hint5_Label.TabIndex = 30;
-            this.hint5_Label.Text = "мм";
+            this.hint5Label.AutoSize = true;
+            this.hint5Label.Location = new System.Drawing.Point(276, 69);
+            this.hint5Label.Name = "hint5Label";
+            this.hint5Label.Size = new System.Drawing.Size(25, 16);
+            this.hint5Label.TabIndex = 30;
+            this.hint5Label.Text = "мм";
             // 
             // pbChoiceColor
             // 
@@ -429,17 +429,17 @@ namespace KettlePlugin
             this.pbChoiceColor.TabStop = false;
             this.pbChoiceColor.Click += new System.EventHandler(this.PBChoiceColor_Click);
             // 
-            // button_Build
+            // buttonBuild
             // 
-            this.button_Build.Location = new System.Drawing.Point(402, 364);
-            this.button_Build.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_Build.Name = "button_Build";
-            this.button_Build.Size = new System.Drawing.Size(125, 23);
-            this.button_Build.TabIndex = 26;
-            this.button_Build.Text = "Построить";
-            this.button_Build.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button_Build.UseVisualStyleBackColor = true;
-            this.button_Build.Click += new System.EventHandler(this.Build_Click);
+            this.buttonBuild.Location = new System.Drawing.Point(402, 364);
+            this.buttonBuild.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonBuild.Name = "buttonBuild";
+            this.buttonBuild.Size = new System.Drawing.Size(125, 23);
+            this.buttonBuild.TabIndex = 26;
+            this.buttonBuild.Text = "Построить";
+            this.buttonBuild.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonBuild.UseVisualStyleBackColor = true;
+            this.buttonBuild.Click += new System.EventHandler(this.Build_Click);
             // 
             // lbErrors
             // 
@@ -458,7 +458,7 @@ namespace KettlePlugin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(539, 457);
             this.Controls.Add(this.lbErrors);
-            this.Controls.Add(this.button_Build);
+            this.Controls.Add(this.buttonBuild);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -484,34 +484,34 @@ namespace KettlePlugin
         private Label label1;
         private RadioButton rbVolume;
         private RadioButton rbHeightBase;
-        private Label hint3_Label;
+        private Label hint3Label;
         private Label equalLabel;
-        private TextBox tb_var1;
+        private TextBox tbVar1;
         private Label var3_Label;
-        private Label var1_Label;
-        private Label hint1_Label;
-        private TextBox tb_var3;
-        private Label var2_Label;
-        private Label hint2_Label;
-        private TextBox tb_var2;
-        private Label limit3_Label;
-        private Label limit2_Label;
-        private Label limit1_Label;
+        private Label var1Label;
+        private Label hint1Label;
+        private TextBox tbVar3;
+        private Label var2Label;
+        private Label hint2Label;
+        private TextBox tbVar2;
+        private Label limit3Label;
+        private Label limit2Label;
+        private Label limit1Label;
         private GroupBox groupBox2;
         private Label limit5_Label;
         private Label limit4_Label;
-        private Label lid_Label;
-        private Label color_Label;
-        private TextBox tb_diameterLid;
-        private Label handle_Label;
-        private Label hint4_Label;
-        private TextBox tb_handleHeight;
-        private Label hint5_Label;
+        private Label lidLabel;
+        private Label colorLabel;
+        private TextBox tbDiameterLid;
+        private Label handleLabel;
+        private Label hint4Label;
+        private TextBox tbHandleHeight;
+        private Label hint5Label;
         private PictureBox pbChoiceColor;
-        private Button button_Build;
+        private Button buttonBuild;
         private ColorDialog colorDialog1;
         private ListBox lbErrors;
-        private ComboBox cb_handleForm;
-        private Label handleForm_Label;
+        private ComboBox cbHandleForm;
+        private Label handleFormLabel;
     }
 }

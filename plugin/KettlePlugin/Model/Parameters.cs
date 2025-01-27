@@ -76,7 +76,8 @@ namespace KettlePlugin
         /// <summary>
         /// Выполняет валидацию параметров модели.
         /// </summary>
-        /// <exception cref="ArgumentException">Выбрасывается, если параметры не соответствуют ограничениям.</exception>
+        /// <exception cref="ArgumentException">Выбрасывается, 
+        /// если параметры не соответствуют ограничениям.</exception>
         private void ValidateParameters()
         {
             string exception = string.Empty;
@@ -94,7 +95,8 @@ namespace KettlePlugin
                     {
                         if (parameter.Value < diameterLid.Value)
                         {
-                            exception += $"Диаметр дна ({parameter.Value} мм) не может быть меньше диаметра крышки ({diameterLid.Value} мм).\n";
+                            exception += $"Диаметр дна ({parameter.Value} мм) " +
+                                $"не может быть меньше диаметра крышки ({diameterLid.Value} мм).\n";
                         }
                     }
                     break;
@@ -104,7 +106,8 @@ namespace KettlePlugin
                     {
                         if (parameter.Value > diameterBottom.Value)
                         {
-                            exception += $"Диаметр крышки ({parameter.Value} мм) не может быть больше диаметра дна ({diameterBottom.Value} мм).\n";
+                            exception += $"Диаметр крышки ({parameter.Value} мм) " +
+                                $"не может быть больше диаметра дна ({diameterBottom.Value} мм).\n";
                         }
                     }
                     break;
@@ -114,7 +117,8 @@ namespace KettlePlugin
                     {
                         if (handleHeight.Value > parameter.Value)
                         {
-                            exception += $"Высота ручки ({handleHeight.Value} мм) не может превышать высоту чайника ({parameter.Value} мм).\n";
+                            exception += $"Высота ручки ({handleHeight.Value} мм) " +
+                                $"не может превышать высоту чайника ({parameter.Value} мм).\n";
                         }
                     }
                     break;
@@ -126,7 +130,8 @@ namespace KettlePlugin
                         double calculatedVolume = Math.PI * Math.Pow(diameterBottom.Value / 2, 2) * height.Value / 1000;
                         if (Math.Abs(parameter.Value - calculatedVolume) > 0.01)
                         {
-                            exception += $"Объём ({parameter.Value} л) не соответствует диаметру дна ({diameterBottom.Value} мм) и высоте ({height.Value} мм). Пересчитайте объём.\n";
+                            exception += $"Объём ({parameter.Value} л) не соответствует диаметру дна " +
+                                $"({diameterBottom.Value} мм) и высоте ({height.Value} мм). Пересчитайте объём.\n";
                         }
                     }
                     break;
@@ -136,7 +141,8 @@ namespace KettlePlugin
                     {
                         if (parameter.Value > height.Value)
                         {
-                            exception += $"Высота ручки ({parameter.Value} мм) не может быть больше высоты чайника ({height.Value} мм).\n";
+                            exception += $"Высота ручки ({parameter.Value} мм) " +
+                                $"не может быть больше высоты чайника ({height.Value} мм).\n";
                         }
                     }
                     break;
@@ -154,6 +160,7 @@ namespace KettlePlugin
 
         /// <summary>
         /// Выполняет расчёты параметров чайника в зависимости от входных данных.
+        /// Значения 1000 и 1000000 нужны для превращения мм в дм
         /// </summary>
         /// <param name="i">Тип расчёта (1 - диаметр дна, 2 - высота, 3 - объём).</param>
         /// <param name="var1">Первое значение (например, объём или диаметр).</param>

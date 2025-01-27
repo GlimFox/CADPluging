@@ -42,7 +42,7 @@ namespace KettlePlugin
             //stress.StressTesting();
 
             // Начальное значение формы ручки - прямая ручка
-            cb_handleForm.SelectedIndex = 0;
+            cbHandleForm.SelectedIndex = 0;
         }
 
         #region SupportFunctions (Вспомогательные функции)
@@ -55,12 +55,12 @@ namespace KettlePlugin
         {
             if (isNeedClear)
             {
-                tb_var1.Text = null;
-                tb_var1.BackColor = Color.White;
-                tb_var2.Text = null;
-                tb_var2.BackColor = Color.White;
-                tb_var3.Text = null;
-                tb_var3.BackColor = Color.White;
+                tbVar1.Text = null;
+                tbVar1.BackColor = Color.White;
+                tbVar2.Text = null;
+                tbVar2.BackColor = Color.White;
+                tbVar3.Text = null;
+                tbVar3.BackColor = Color.White;
 
                 UpdateErrorList();
             }
@@ -68,46 +68,46 @@ namespace KettlePlugin
 
             if (rbBottomDiameter.Checked)
             {
-                var1_Label.Text = "Объём чайника";
-                limit1_Label.Text = "от 0,63 до 56,55";
-                hint1_Label.Text = "л";
+                var1Label.Text = "Объём чайника";
+                limit1Label.Text = "от 0,63 до 56,55";
+                hint1Label.Text = "л";
 
-                var2_Label.Text = "Высота чайника";
-                limit2_Label.Text = "от 80 до 450";
-                hint2_Label.Text = "мм";
+                var2Label.Text = "Высота чайника";
+                limit2Label.Text = "от 80 до 450";
+                hint2Label.Text = "мм";
 
                 var3_Label.Text = "Диаметр дна";
-                limit3_Label.Text = "от 100 до 400";
-                hint3_Label.Text = "мм";
-                tb_var1.Tag = "LidDiameter";
+                limit3Label.Text = "от 100 до 400";
+                hint3Label.Text = "мм";
+                tbVar1.Tag = "LidDiameter";
             }
             else if (rbHeightBase.Checked)
             {
-                var1_Label.Text = "Диаметр дна";
-                limit1_Label.Text = "от 100 до 400";
-                hint1_Label.Text = "мм";
+                var1Label.Text = "Диаметр дна";
+                limit1Label.Text = "от 100 до 400";
+                hint1Label.Text = "мм";
 
-                var2_Label.Text = "Объём чайника";
-                limit2_Label.Text = "от 0,63 до 56,55";
-                hint2_Label.Text = "л";
+                var2Label.Text = "Объём чайника";
+                limit2Label.Text = "от 0,63 до 56,55";
+                hint2Label.Text = "л";
 
                 var3_Label.Text = "Высота чайника";
-                limit3_Label.Text = "от 80 до 450";
-                hint3_Label.Text = "мм";
+                limit3Label.Text = "от 80 до 450";
+                hint3Label.Text = "мм";
             }
             else if (rbVolume.Checked)
             {
-                var1_Label.Text = "Диаметр дна";
-                limit1_Label.Text = "от 100 до 400";
-                hint1_Label.Text = "мм";
+                var1Label.Text = "Диаметр дна";
+                limit1Label.Text = "от 100 до 400";
+                hint1Label.Text = "мм";
 
-                var2_Label.Text = "Высота чайника";
-                limit2_Label.Text = "от 80 до 450";
-                hint2_Label.Text = "мм";
+                var2Label.Text = "Высота чайника";
+                limit2Label.Text = "от 80 до 450";
+                hint2Label.Text = "мм";
 
                 var3_Label.Text = "Объём чайника";
-                limit3_Label.Text = "от 0,63 до 56,55";
-                hint3_Label.Text = "л";
+                limit3Label.Text = "от 0,63 до 56,55";
+                hint3Label.Text = "л";
             }
         }
 
@@ -116,10 +116,10 @@ namespace KettlePlugin
         /// </summary>
         private void CalculateVar3()
         {
-            if (tb_var1.Text != null && tb_var2.Text != null)
+            if (tbVar1.Text != null && tbVar2.Text != null)
             {
                 double var1, var2, var3 = 0;
-                if (double.TryParse(tb_var1.Text, out var1) && double.TryParse(tb_var2.Text, out var2))
+                if (double.TryParse(tbVar1.Text, out var1) && double.TryParse(tbVar2.Text, out var2))
                 {
 
                     if (rbBottomDiameter.Checked) var3 = _parameters.Calculations(1, var1, var2);
@@ -127,7 +127,7 @@ namespace KettlePlugin
                     if (rbVolume.Checked) var3 = _parameters.Calculations(3, var1, var2);
 
                     // Записываем рассчитанное значение в текстбокс
-                    tb_var3.Text = var3.ToString();
+                    tbVar3.Text = var3.ToString();
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace KettlePlugin
                 {
                     string errorMessage = "Диаметр крышки не может превышать диаметр дна.";
                     _errors[ParameterType.DiameterLid] = errorMessage;
-                    tb_diameterLid.BackColor = Color.FromArgb(217, 84, 77);
+                    tbDiameterLid.BackColor = Color.FromArgb(217, 84, 77);
                     limit4_Label.ForeColor = Color.FromArgb(217, 84, 77);
                 }
                 else
@@ -234,7 +234,7 @@ namespace KettlePlugin
                 {
                     string errorMessage = "Высота ручки не может превышать высоту чайника.";
                     _errors[ParameterType.HeightHandle] = errorMessage;
-                    tb_handleHeight.BackColor = Color.FromArgb(217, 84, 77);
+                    tbHandleHeight.BackColor = Color.FromArgb(217, 84, 77);
                     limit5_Label.ForeColor = Color.FromArgb(217, 84, 77);
                 }
                 else
@@ -287,60 +287,56 @@ namespace KettlePlugin
                 {
                     switch (textBox.Name)
                     {
-                        case "tb_var1":
+                        case "tbVar1":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.Volume, textBox, limit1_Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit1Label);
                             }
                             else if (rbHeightBase.Checked || rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.DiameterBottom, textBox, limit1_Label);
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit1Label);
                             }
+                            CalculateVar3();
                             break;
 
-                        case "tb_var2":
+                        case "tbVar2":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase, textBox, limit2_Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2Label);
                             }
                             else if (rbHeightBase.Checked)
                             {
-                                ColorChanges(ParameterType.Volume, textBox, limit2_Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit2Label);
                             }
                             else if (rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase, textBox, limit2_Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2Label);
                             }
+                            CalculateVar3();
                             break;
 
-                        case "tb_var3":
+                        case "tbVar3":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.DiameterBottom, textBox, limit3_Label);
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit3Label);
                             }
                             else if (rbHeightBase.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase, textBox, limit3_Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit3Label);
                             }
                             else if (rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.Volume, textBox, limit3_Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit3Label);
                             }
                             break;
 
-                        case "tb_diameterLid":
+                        case "tbDiameterLid":
                             ColorChanges(ParameterType.DiameterLid, textBox, limit4_Label);
                             break;
 
-                        case "tb_handleHeight":
+                        case "tbHandleHeight":
                             ColorChanges(ParameterType.HeightHandle, textBox, limit5_Label);
                             break;
-                    }
-
-                    // Пересчет Var3, если это поле нужное для расчета
-                    if (textBox.Name == "tb_var1" || textBox.Name == "tb_var2")
-                    {
-                        CalculateVar3();
                     }
                 }
             }
@@ -359,26 +355,25 @@ namespace KettlePlugin
         /// <param name="e">Аргументы события нажатия на кнопку.</param>
         private void Build_Click(object sender, EventArgs e)
         {
-            if (this.tb_var1.BackColor == Color.FromArgb(217, 84, 77) ||
-                this.tb_var2.BackColor == Color.FromArgb(217, 84, 77) ||
-                this.tb_var3.BackColor == Color.FromArgb(217, 84, 77) ||
-                this.tb_diameterLid.BackColor == Color.FromArgb(217, 84, 77) ||
-                this.tb_handleHeight.BackColor == Color.FromArgb(217, 84, 77) ||
-                this.tb_var1.BackColor == SystemColors.Window ||
-                this.tb_var2.BackColor == SystemColors.Window ||
-                this.tb_var3.BackColor == SystemColors.Window ||
-                this.tb_diameterLid.BackColor == SystemColors.Window ||
-                this.tb_handleHeight.BackColor == SystemColors.Window)
+            if (this.tbVar1.BackColor == Color.FromArgb(217, 84, 77) ||
+                this.tbVar2.BackColor == Color.FromArgb(217, 84, 77) ||
+                this.tbVar3.BackColor == Color.FromArgb(217, 84, 77) ||
+                this.tbDiameterLid.BackColor == Color.FromArgb(217, 84, 77) ||
+                this.tbHandleHeight.BackColor == Color.FromArgb(217, 84, 77) ||
+                this.tbVar1.BackColor == SystemColors.Window ||
+                this.tbVar2.BackColor == SystemColors.Window ||
+                this.tbVar3.BackColor == SystemColors.Window ||
+                this.tbDiameterLid.BackColor == SystemColors.Window ||
+                this.tbHandleHeight.BackColor == SystemColors.Window)
             {
-                MessageBox.Show("Невозможно построить модель. Проверьте параметры на ошибки и заполните все поля.",
-                        "Ошибка построения",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                MessageBox.Show("Невозможно построить модель. " +
+                    "Проверьте параметры на ошибки и заполните все поля.", "Ошибка построения",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 int color = pbChoiceColor.BackColor.ToArgb();
-                this._builder.Build(this._parameters, color, cb_handleForm.SelectedIndex);
+                this._builder.Build(this._parameters, color, cbHandleForm.SelectedIndex);
             }
         }
     }
