@@ -257,8 +257,10 @@ namespace KettlePlugin
         /// <param name="e">Аргументы события нажатия клавиши.</param>
         private void TextBoxKeyPressHandler(object sender, KeyPressEventArgs e)
         {
-            // Проверка на цифры и запятую
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back)
+            // Допустимый ввод: цифры '0123456789' и одна запятая ','
+            if (sender is TextBox textBox &&
+                (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back ||
+                (e.KeyChar == ',' && textBox.Text.Contains(","))))
             {
                 e.Handled = true;
             }
@@ -328,6 +330,8 @@ namespace KettlePlugin
                             {
                                 ColorChanges(ParameterType.Volume, textBox, limit3Label);
                             }
+                            ColorChanges(ParameterType.DiameterLid, tbDiameterLid, limit4_Label);
+                            ColorChanges(ParameterType.HeightHandle, tbHandleHeight, limit5_Label);
                             break;
 
                         case "tbDiameterLid":

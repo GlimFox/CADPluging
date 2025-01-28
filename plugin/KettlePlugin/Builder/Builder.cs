@@ -115,7 +115,8 @@ namespace KettlePlugin
 
             switch (handleForm)
             {
-                case 0: // Прямая ручка
+                // Прямая ручка
+                case 0:
                     //Создаем прямую линию ручки
                     double[,] horizontalPoint = {{xC + offsetHandle, height / 2 + handle, 
                         -xC - offsetHandle, height / 2 + handle, 1 }};
@@ -129,7 +130,8 @@ namespace KettlePlugin
 
                     break;
 
-                case 1: // Изогнутая ручка (вниз)
+                // Изогнутая ручка (вниз)
+                case 1: 
                     // Создаем волнистую форму ручки
                     _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 
                         xC, height / 2 + handle - offsetHandle, 90);
@@ -140,7 +142,8 @@ namespace KettlePlugin
 
                     break;
 
-                case 2: // Изогнутая ручка (вверх)
+                // Изогнутая ручка (вверх)
+                case 2:
                     // Создаем скругления дугами
                     _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle,
                         xC, height / 2 + handle - offsetHandle, 90);
