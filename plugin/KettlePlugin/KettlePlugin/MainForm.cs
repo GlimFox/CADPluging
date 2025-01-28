@@ -6,6 +6,7 @@ using StressTests;
 
 namespace KettlePlugin
 {
+    //TODO:XML
     public partial class MainForm : Form
     {
         #region Features (Свойства)

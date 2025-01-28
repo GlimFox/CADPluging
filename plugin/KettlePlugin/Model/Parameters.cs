@@ -169,28 +169,28 @@ namespace KettlePlugin
         /// <returns>Результат расчёта.</returns>
         public double Calculations(int i, double var1, double var2)
         {
-            double calc = 0;
 
+            //TODO: enum
             // Расчет диаметра дна чайника (bottomDiameter)
             if (i == 1)
             {
-                calc = Math.Round(2f * Math.Sqrt(var1 / (Math.PI * var2)) * 1000, 0);
+                return Math.Round(2f * Math.Sqrt(var1 / (Math.PI * var2)) * 1000, 0);
             }
 
             // Расчет высоты чайника (height)
             if (i == 2)
             {
-                calc = Math.Round((var2 / (Math.PI * Math.Pow(var1 / 2, 2))) * 1000000, 0);
+                return Math.Round((var2 / (Math.PI * Math.Pow(var1 / 2, 2))) * 1000000, 0);
             }
 
             // Расчет объема чайника (volume)
             if (i == 3)
             {
-                calc = Math.Round((Math.PI * Math.Pow(var1 / 2, 2) * var2) / 1000000, 2);
+                return Math.Round((Math.PI * Math.Pow(var1 / 2, 2) * var2) / 1000000, 2);
             }
 
             // Возвращаем посчитанное число
-            return calc;
+            throw new Exception();
         }
     }
 }
