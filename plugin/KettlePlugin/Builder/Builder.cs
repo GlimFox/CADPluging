@@ -64,7 +64,8 @@ namespace KettlePlugin
                 // Вертикальная линия
                 { -bottom / 2, -height / 2, -bottom / 2, height / 2, 1 },
                 // Переход к отверстию
-                { -bottom / 2 + offsetHole, height / 2 + offsetHole, -lid / 2 - offsetHole, height / 2 + offsetHole, 1 }, 
+                { -bottom / 2 + offsetHole, height / 2 + offsetHole, 
+                    -lid / 2 - offsetHole, height / 2 + offsetHole, 1 }, 
                 // Поднятие отверстия
                 { -lid / 2, height / 2 + 2, -lid / 2, height / 2 + heightHole, 1 }, 
                 // Стенки отверстия
@@ -78,8 +79,10 @@ namespace KettlePlugin
             _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0));
 
             // Добавляем 2 скругления дугами между линий 2/3 и 3/4
-            _wrapper.CreateArc(-bottom / 2 + offsetHole, height / 2 + offsetHole, -bottom / 2, height / 2, 90);
-            _wrapper.CreateArc(-lid / 2 - offsetHole, height / 2 + offsetHole, -lid / 2, height / 2 + 2, 90);
+            _wrapper.CreateArc(-bottom / 2 + offsetHole, height / 2 + offsetHole, 
+                -bottom / 2, height / 2, 90);
+            _wrapper.CreateArc(-lid / 2 - offsetHole, height / 2 + offsetHole, 
+                -lid / 2, height / 2 + 2, 90);
 
             // Выдавливание вращением
             _wrapper.Spin();
@@ -153,7 +156,8 @@ namespace KettlePlugin
                     // Создаем волнистую форму ручки
                     _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle, 
                         xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2,  90);
-                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 
+                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), 
+                        height / 2 + handle + offsetHandle * 2, 
                         xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 90);
                     _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 
                         -xC - offsetHandle, height / 2 + handle, 90);

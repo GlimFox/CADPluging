@@ -127,7 +127,8 @@ namespace KettlePlugin
                     if (this.AllParameters.TryGetValue(ParameterType.DiameterBottom, out diameterBottom) &&
                         this.AllParameters.TryGetValue(ParameterType.HeightBase, out height))
                     {
-                        double calculatedVolume = Math.PI * Math.Pow(diameterBottom.Value / 2, 2) * height.Value / 1000;
+                        double calculatedVolume = Math.PI * Math.Pow(diameterBottom.Value / 2, 2) 
+                            * height.Value / 1000;
                         if (Math.Abs(parameter.Value - calculatedVolume) > 0.01)
                         {
                             exception += $"Объём ({parameter.Value} л) не соответствует диаметру дна " +
