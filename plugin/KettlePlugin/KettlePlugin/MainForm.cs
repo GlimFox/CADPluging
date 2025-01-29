@@ -3,7 +3,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using StressTests;
-using static KettlePlugin.Parameters;
 
 namespace KettlePlugin
 {
@@ -131,10 +130,10 @@ namespace KettlePlugin
             }
 
             // Выбор типа расчета из перечисления
-            CalculationType calculationType = 
-                rbBottomDiameter.Checked ? CalculationType.Bottom :
-                rbHeightBase.Checked ? CalculationType.Height :
-                rbVolume.Checked ? CalculationType.Volume :
+            Parameters.CalculationType calculationType = 
+                rbBottomDiameter.Checked ? Parameters.CalculationType.Bottom :
+                rbHeightBase.Checked ? Parameters.CalculationType.Height :
+                rbVolume.Checked ? Parameters.CalculationType.Volume :
                 throw new InvalidOperationException
                 ("Не выбрана ни одна формула.");
 
