@@ -21,11 +21,16 @@ namespace StressTests
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.Volume, new Parameter ( 0.63, 56.55, 0.63) },
-                    { ParameterType.HeightBase, new Parameter ( 80, 450, 80 ) },
-                    { ParameterType.DiameterLid, new Parameter ( 75, 300, 75 ) },
-                    { ParameterType.HeightHandle, new Parameter ( 70, 150, 70 ) },
-                    { ParameterType.DiameterBottom, new Parameter ( 100, 400, 100 ) },
+                    { ParameterType.Volume, new Parameter 
+                    ( 0.63, 56.55, 0.63) },
+                    { ParameterType.HeightBase, new Parameter 
+                    ( 80, 450, 80 ) },
+                    { ParameterType.DiameterLid, new Parameter 
+                    ( 75, 300, 75 ) },
+                    { ParameterType.HeightHandle, new Parameter 
+                    ( 70, 150, 70 ) },
+                    { ParameterType.DiameterBottom, new Parameter 
+                    ( 100, 400, 100 ) },
                 }
             };
 
@@ -45,10 +50,12 @@ namespace StressTests
 
                 var computerInfo = new ComputerInfo();
                 var usedMemory = (computerInfo.TotalPhysicalMemory
-                                  - computerInfo.AvailablePhysicalMemory)
-                                 * gigabyteInByte;
+                    - computerInfo.AvailablePhysicalMemory)
+                    * gigabyteInByte;
 
-                streamWriter.WriteLine($"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t{usedMemory:F2}");
+                streamWriter.WriteLine(
+                    $"{++count}\t{stopWatch.Elapsed:hh\\:mm\\:ss}" +
+                    $"\t{usedMemory:F2}");
                 streamWriter.Flush();
                 stopWatch.Reset();
             }

@@ -10,7 +10,7 @@ namespace Kompas
     /// </summary>
     public class Wrapper
     {
-        #region Features (Свойства)
+        #region Fields (Поля)
 
         /// <summary>
         /// Поле для хранения приложения Компас.
@@ -48,7 +48,8 @@ namespace Kompas
             document3D.Create();
 
             // Запоминаем текущий файл
-            this._part = (ksPart)document3D.GetPart((short)Part_Type.pTop_Part);
+            this._part = (ksPart)
+                document3D.GetPart((short)Part_Type.pTop_Part);
         }
 
         /// <summary>
@@ -59,15 +60,18 @@ namespace Kompas
             // Попытка подключения к уже запущенному процессу Kompas3D
             try
             {
-                this._kompas = (KompasObject)Marshal.GetActiveObject("KOMPAS.Application.5");
+                this._kompas = (KompasObject)
+                    Marshal.GetActiveObject("KOMPAS.Application.5");
             }
             // Если процесс не найден, создается новый экземпляр
             catch
             {
-                Type kompasType = Type.GetTypeFromProgID("KOMPAS.Application.5");
+                Type kompasType = Type.GetTypeFromProgID
+                    ("KOMPAS.Application.5");
                 if (kompasType != null)
                 {
-                    this._kompas = (KompasObject)Activator.CreateInstance(kompasType);
+                    this._kompas = 
+                        (KompasObject)Activator.CreateInstance(kompasType);
                 }
             }
 
@@ -78,7 +82,8 @@ namespace Kompas
             }
             else
             {
-                throw new Exception("Не удалось запустить или подключиться к Kompas3D.");
+                throw new Exception
+                    ("Не удалось запустить или подключиться к Kompas3D.");
             }
         }
         #endregion
@@ -91,29 +96,35 @@ namespace Kompas
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. " +
+                throw new Exception("Деталь не была инициализирована. " +
                     "Вызовите CreateFile() перед созданием эскиза.");
             }
 
             // Создаем эскиз и помещаем его в _sketch
             ksSketchDefinition sketch;
-            this._sketch = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
-            sketch = (ksSketchDefinition)this._sketch.GetDefinition();
+            this._sketch = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_sketch);
+            sketch = (ksSketchDefinition)
+                this._sketch.GetDefinition();
 
             // Выбор пространства для построения плоскости
             switch (plane)
             {
                 case 1: 
-                    this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
+                    this._plane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
                     break;
                 case 2: 
-                    this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+                    this._plane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
                     break;
                 case 3:
-                    this._plane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
+                    this._plane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
                     break;
                 default:
-                    throw new ArgumentException("Некорректная плоскость. Допустимые значения: 1, 2, 3.");
+                    throw new ArgumentException("Некорректная плоскость. " +
+                        "Допустимые значения: 1, 2, 3.");
             }
 
             // Устанавливаем плоскость для эскиза
@@ -131,22 +142,25 @@ namespace Kompas
         /// Создание эскиза (скетча) на созданной плоскости.
         /// </summary>
         /// <exception cref="Exception">Ошибка инициализации</exception>
-        /// <exception cref="ArgumentNullException">Ошибка значения NULL</exception>
+        /// <exception cref="ArgumentNullException">
+        /// Ошибка значения NULL</exception>
         public void CreateSketch()
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. " +
+                throw new Exception("Деталь не была инициализирована. " +
                     "Вызовите CreateFile() перед созданием эскиза.");
             }
 
             if (_plane == null)
             {
-                throw new ArgumentNullException(nameof(_plane), "Плоскость не должна быть null.");
+                throw new ArgumentNullException(nameof(_plane), 
+                    "Плоскость не должна быть null.");
             }
 
             ksSketchDefinition sketch;
-            this._sketch = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_sketch);
+            this._sketch = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_sketch);
             sketch = (ksSketchDefinition)this._sketch.GetDefinition();
 
             // Устанавливаем пользовательскую плоскость для эскиза
@@ -163,9 +177,10 @@ namespace Kompas
         /// <summary>
         /// Создание линии в компасе.
         /// </summary>
-        /// <param name="pointsArray">Массив точек по которым строятся линии.</param>
+        /// <param name="pointsArray">Массив точек, 
+        /// по которым строятся линии.</param>
         /// <param name="start">Стартовый индекс массива.</param>
-        /// <param name="count">Количество считываемых строк из массива.</param>
+        /// <param name="count">Количество считываемых строк.</param>
         public void CreateLine(double[,] pointsArray, int start, int count)
         {
             ksDocument2D document2D;
@@ -179,7 +194,8 @@ namespace Kompas
             {
                 for (int i = start; i < start + count; i++)
                 {
-                    document2D.ksLineSeg(pointsArray[i, 0], pointsArray[i, 1], pointsArray[i, 2],
+                    document2D.ksLineSeg(pointsArray[i, 0], 
+                        pointsArray[i, 1], pointsArray[i, 2],
                         pointsArray[i, 3], (int)pointsArray[i, 4]);
                 }
 
@@ -196,14 +212,18 @@ namespace Kompas
         /// <param name="y2">Y-координата второй окружности</param>
         /// <param name="angleInDegrees">Угол в градусах</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void CreateArc(double x1, double y1, double x2, double y2, int angleInDegrees)
+        public void CreateArc(double x1, double y1, 
+            double x2, double y2, int angleInDegrees)
         {
             ksDocument2D document2D;
             ksSketchDefinition sketch;
             sketch = (ksSketchDefinition)this._sketch.GetDefinition();
             document2D = (ksDocument2D)sketch.BeginEdit();
 
-            if (document2D == null) throw new ArgumentNullException(nameof(document2D));
+            if (document2D == null)
+            {
+                throw new ArgumentNullException(nameof(document2D));
+            }
 
             double angleInRadians = angleInDegrees * Math.PI / 180.0;
 
@@ -217,13 +237,15 @@ namespace Kompas
             double midY = (y1 + y2) / 2;
 
             // Смещение от середины отрезка к центру дуги
-            double offset = Math.Sqrt(radius * radius - (dist / 2) * (dist / 2));
+            double offset = Math.Sqrt
+                (radius * radius - (dist / 2) * (dist / 2));
             double centerX = midX - dy / dist * offset;
             double centerY = midY + dx / dist * offset;
 
             // Построение дуги
-            short direction = 1; // 1 - против часовой, -1 - по часовой стрелке
-            document2D.ksArcByPoint(centerX, centerY, radius, x1, y1, x2, y2, direction, 1);
+            short direction = 1; // 1 - против часовой, -1 - по часовой
+            document2D.ksArcByPoint(centerX, centerY, 
+                radius, x1, y1, x2, y2, direction, 1);
             sketch.EndEdit();
         }
 
@@ -232,16 +254,20 @@ namespace Kompas
         /// </summary>
         public void Spin()
         {
-            ksEntity entityRotate = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossRotated);
+            ksEntity entityRotate = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_bossRotated);
             if (entityRotate == null)
             {
-                throw new Exception("Не удалось создать сущность для вращения.");
+                throw new Exception
+                    ("Не удалось создать сущность для вращения.");
             }
 
-            ksBossRotatedDefinition rotateDef = (ksBossRotatedDefinition)entityRotate.GetDefinition();
+            ksBossRotatedDefinition rotateDef = 
+                (ksBossRotatedDefinition)entityRotate.GetDefinition();
             if (rotateDef == null)
             {
-                throw new Exception("Не удалось получить параметры для операции вращения.");
+                throw new Exception
+                    ("Не удалось получить параметры для операции вращения.");
             }
 
             // Настраиваем параметры вращения
@@ -261,38 +287,48 @@ namespace Kompas
         /// <param name="length">Глубина выдавливания.</param>
         public void Extrusion(int parameter, double length)
         {
-            ksEntity entityExtrusion = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossExtrusion);
+            ksEntity entityExtrusion = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_bossExtrusion);
 
             if (entityExtrusion == null)
             {
-                throw new Exception("Не удалось создать сущность для выдавливания.");
+                throw new Exception
+                    ("Не удалось создать сущность для выдавливания.");
             }
 
             // Получаем интерфейс свойств базовой операции выдавливания
-            ksBossExtrusionDefinition extrusionDef = (ksBossExtrusionDefinition)entityExtrusion.GetDefinition();
+            ksBossExtrusionDefinition extrusionDef = 
+                (ksBossExtrusionDefinition)entityExtrusion.GetDefinition();
             if (extrusionDef == null)
             {
-                throw new Exception("Не удалось получить параметры выдавливания.");
+                throw new Exception
+                    ("Не удалось получить параметры выдавливания.");
             }
 
             // Тип выдавливания: 1 - стандартное, 2 - по траектороии
             switch (parameter)
             {
                 case 1:
-                    extrusionDef.directionType = (short)Direction_Type.dtMiddlePlane;
-                    extrusionDef.SetSideParam(true, (short)End_Type.etBlind, length, 0, false);
-                    extrusionDef.SetThinParam(true, (short)Direction_Type.dtBoth, 2, 0);
+                    extrusionDef.directionType = 
+                        (short)Direction_Type.dtMiddlePlane;
+                    extrusionDef.SetSideParam(true, 
+                        (short)End_Type.etBlind, length, 0, false);
+                    extrusionDef.SetThinParam(true, 
+                        (short)Direction_Type.dtBoth, 2, 0);
                     extrusionDef.SetSketch(this._sketch);
                     entityExtrusion.Create();
                     break;
 
                 case 2:
-                    ksExtrusionParam extrusionProp = (ksExtrusionParam)extrusionDef.ExtrusionParam();
-                    ksThinParam thinProp = (ksThinParam)extrusionDef.ThinParam();
+                    ksExtrusionParam extrusionProp = 
+                        (ksExtrusionParam)extrusionDef.ExtrusionParam();
+                    ksThinParam thinProp = 
+                        (ksThinParam)extrusionDef.ThinParam();
 
                     if (extrusionProp == null || thinProp == null)
                     {
-                        throw new Exception("Не удалось получить параметры выдавливания по траектории.");
+                        throw new Exception("Не удалось получить " +
+                            "параметры выдавливания по траектории.");
                     }
 
                     extrusionDef.SetSketch(this._sketch);
@@ -307,8 +343,9 @@ namespace Kompas
                     break;
 
                 default:
-                    throw new ArgumentException("Некорректный метод выдавливания. " +
-                        "Допустимые значения: 1 (стандартное), 2 (по траектории).");
+                    throw new ArgumentException
+                        ("Некорректный метод выдавливания. Допустимые " +
+                        "значения: 1 (стандартное), 2 (по траектории).");
             }
         }
 
@@ -316,14 +353,16 @@ namespace Kompas
         /// <summary>
         /// Создание смещенной плоскости.
         /// </summary>
-        /// <param name="basePlaneType">Тип базовой плоскости (1 - XOY, 2 - XOZ, 3 - YOZ).</param>
+        /// <param name="basePlaneType">Тип базовой плоскости 
+        /// (1 - XOY, 2 - XOZ, 3 - YOZ).</param>
         /// <param name="offset">Смещение в мм от базовой плоскости.</param>
         public void CreateOffsetPlane(int basePlaneType, double offset)
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. " +
-                    "Вызовите CreateFile() перед созданием смещенной плоскости.");
+                throw new Exception
+                    ("Деталь не была инициализирована. Вызовите " +
+                    "CreateFile() перед созданием смещенной плоскости.");
             }
 
             // Создаем базовую плоскость
@@ -332,16 +371,20 @@ namespace Kompas
             switch (basePlaneType)
             {
                 case 1:
-                    basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
+                    basePlane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
                     break;
                 case 2:
-                    basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
+                    basePlane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeXOZ);
                     break;
                 case 3:
-                    basePlane = (ksEntity)this._part.GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
+                    basePlane = (ksEntity)this._part.
+                        GetDefaultEntity((short)Obj3dType.o3d_planeYOZ);
                     break;
                 default:
-                    throw new ArgumentException("Некорректный тип базовой плоскости. Допустимые значения: 1, 2, 3.");
+                    throw new ArgumentException("Некорректный тип " +
+                        "базовой плоскости. Допустимые значения: 1, 2, 3.");
             }
 
             if (basePlane == null)
@@ -350,17 +393,21 @@ namespace Kompas
             }
 
             // Создаем смещенную плоскость
-            ksEntity offsetPlaneEntity = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_planeOffset);
+            ksEntity offsetPlaneEntity = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_planeOffset);
             if (offsetPlaneEntity == null)
             {
-                throw new Exception("Не удалось создать смещенную плоскость.");
+                throw new Exception
+                    ("Не удалось создать смещенную плоскость.");
             }
 
             // Получаем параметры смещенной плоскости
-            ksPlaneOffsetDefinition offsetPlaneDef = (ksPlaneOffsetDefinition)offsetPlaneEntity.GetDefinition();
+            ksPlaneOffsetDefinition offsetPlaneDef = 
+                (ksPlaneOffsetDefinition)offsetPlaneEntity.GetDefinition();
             if (offsetPlaneDef == null)
             {
-                throw new Exception("Не удалось получить параметры смещенной плоскости.");
+                throw new Exception
+                    ("Не удалось получить параметры смещенной плоскости.");
             }
 
             // Направление смещения (true/false)
@@ -411,11 +458,12 @@ namespace Kompas
         /// <param name="lid">Диаметр крышки</param>
         /// <param name="handle">Высота ручки</param>
         /// <exception cref="Exception"></exception>
-        public void CreateLoftedElement(double height, double bottom, double lid, double handle)
+        public void CreateLoftedElement
+            (double height, double bottom, double lid, double handle)
         {
             if (this._part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. " +
+                throw new Exception("Деталь не была инициализирована. " +
                     "Вызовите CreateFile() перед созданием элемента.");
             }
 
@@ -426,15 +474,20 @@ namespace Kompas
             // Направляющая кривая
             ksEntity guideCurve;
 
-            // Задаем соотношение радиусов от создаваемого объема (15/13 - коэффициенты соотношения)
-            double radius1 = bottom / 15 + height / 13;
+            // Коэффициенты соотношения
+            int ratioX = 15;
+            int ratioY = 13;
+
+            // Задаем соотношение радиусов от создаваемого объема
+            double radius1 = bottom / ratioX + height / ratioY;
             double radius2 = radius1 / 2;
 
             // Создаем окружность для первого сечения
             this.CreateSketch(3);
             if (this._sketch == null)
             {
-                throw new Exception("Не удалось создать эскиз для первого сечения.");
+                throw new Exception
+                    ("Не удалось создать эскиз для первого сечения.");
             }
             section1 = this._sketch;
             this.CreateCircle(radius1, 0, (height / 11));
@@ -444,7 +497,8 @@ namespace Kompas
             this.CreateSketch();
             if (this._sketch == null)
             {
-                throw new Exception("Не удалось создать эскиз для второго сечения.");
+                throw new Exception
+                    ("Не удалось создать эскиз для второго сечения.");
             }
             section2 = this._sketch;
             this.CreateCircle(radius2, -bottom * 1.15, 0);
@@ -469,30 +523,37 @@ namespace Kompas
             this.CreateSketch(1);
             if (this._sketch == null)
             {
-                throw new Exception("Не удалось создать эскиз для направляющей кривой.");
+                throw new Exception
+                    ("Не удалось создать эскиз для направляющей кривой.");
             }
             guideCurve = this._sketch;
             this.CreateArc(offsetXCurve, heightCurve, 0, offsetYCurve, angle);
 
             // Создаем сущность элемента по сечениям
-            ksEntity loftEntity = (ksEntity)this._part.NewEntity((short)Obj3dType.o3d_bossLoft);
+            ksEntity loftEntity = (ksEntity)
+                this._part.NewEntity((short)Obj3dType.o3d_bossLoft);
             if (loftEntity == null)
             {
-                throw new Exception("Не удалось создать сущность элемента по сечениям.");
+                throw new Exception
+                    ("Не удалось создать сущность элемента по сечениям.");
             }
 
             // Получаем параметры элемента
-            ksBossLoftDefinition loftDef = (ksBossLoftDefinition)loftEntity.GetDefinition();
+            ksBossLoftDefinition loftDef = 
+                (ksBossLoftDefinition)loftEntity.GetDefinition();
             if (loftDef == null)
             {
-                throw new Exception("Не удалось получить параметры элемента по сечениям.");
+                throw new Exception
+                    ("Не удалось получить параметры элемента по сечениям.");
             }
 
             // Настраиваем параметры сечений
-            ksEntityCollection sections = (ksEntityCollection)loftDef.Sketchs();
+            ksEntityCollection sections = 
+                (ksEntityCollection)loftDef.Sketchs();
             if (sections == null)
             {
-                throw new Exception("Не удалось получить коллекцию сечений.");
+                throw new Exception
+                    ("Не удалось получить коллекцию сечений.");
             }
 
             // Добавляем сечения в коллекцию
@@ -502,14 +563,15 @@ namespace Kompas
             // Настраиваем направляющую кривую
             loftDef.SetDirectionalLine(guideCurve);
 
-            // Устанавливаем параметры тонкостенного элемента (толщину стенок)
+            // Устанавливаем параметры тонкостенного элемента
             double thickness = 0.4;
             loftDef.SetThinParam(true, 0, thickness, thickness);
 
             // Создаем элемент
             if (!loftEntity.Create())
             {
-                throw new Exception("Не удалось создать элемент по сечениям.");
+                throw new Exception
+                    ("Не удалось создать элемент по сечениям.");
             }
 
             Console.WriteLine("Элемент по сечениям создан успешно.");
@@ -518,17 +580,19 @@ namespace Kompas
         /// <summary>
         /// Изменение цвета всей модели.
         /// </summary>
-        /// <param name="color">Цвет модели в формате int (например, 0xRRGGBB).</param>
+        /// <param name="color">Цвет модели 
+        /// в формате int (например, 0xRRGGBB).</param>
         public void SetModelColor(int color)
         {
             if (_part == null)
             {
-                throw new Exception("Деталь (_part) не была инициализирована. " +
+                throw new Exception("Деталь не была инициализирована. " +
                     "Вызовите CreateFile() перед изменением цвета.");
             }
 
-            // Преобразуем заданный цвет из RRGGBB в BGR (цветовое пространство для OpenCV)
-            int reversedColor = ((color & 0xFF) << 16) | (color & 0xFF00) | ((color >> 16) & 0xFF);
+            // Преобразуем заданный цвет из RRGGBB в BGR
+            int reversedColor = ((color & 0xFF) << 16) |
+                (color & 0xFF00) | ((color >> 16) & 0xFF);
 
             // Задаем уровень окружающего и рассеянного света
             double _ambient = 1;
@@ -539,7 +603,8 @@ namespace Kompas
                 ambient: _ambient, diffuse: _diffuse);
             if (!result)
             {
-                throw new Exception("Не удалось установить цвет для модели.");
+                throw new Exception
+                    ("Не удалось установить цвет для модели.");
             }
 
             // Обновляем деталь

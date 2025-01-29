@@ -4,7 +4,8 @@ using System;
 namespace KettlePlugin
 {
     /// <summary>
-    /// Класс, отвечающий за построение модели с использованием API Kompas (Wrapper).
+    /// Класс, отвечающий за построение модели 
+    /// с использованием API Kompas (Wrapper).
     /// </summary>
     public class Builder
     {
@@ -24,8 +25,9 @@ namespace KettlePlugin
         /// <summary>
         /// Построение модели с заданными параметрами.
         /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="color"></param>
+        /// <param name="parameters">Параметры.</param>
+        /// <param name="color">Цвет.</param>
+        /// <param name="handleForm">Форма ручки.</param>
         public void Build(Parameters parameters, int color, int handleForm)
         {
             // Открываем CAD и создаём новый файл
@@ -49,9 +51,12 @@ namespace KettlePlugin
         private void BuildBase(Parameters parameters)
         {
             // Получаем параметры: высота и диаметры основания и крышки
-            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
-            double bottom = parameters.AllParameters[ParameterType.DiameterBottom].Value;
-            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
+            double height = parameters.AllParameters
+                [ParameterType.HeightBase].Value;
+            double bottom = parameters.AllParameters
+                [ParameterType.DiameterBottom].Value;
+            double lid = parameters.AllParameters
+                [ParameterType.DiameterLid].Value;
 
             // Задаем параметры для отверстия
             double offsetHole = 1;
@@ -67,9 +72,11 @@ namespace KettlePlugin
                 { -bottom / 2 + offsetHole, height / 2 + offsetHole, 
                     -lid / 2 - offsetHole, height / 2 + offsetHole, 1 }, 
                 // Поднятие отверстия
-                { -lid / 2, height / 2 + 2, -lid / 2, height / 2 + heightHole, 1 }, 
+                { -lid / 2, height / 2 + 2, 
+                    -lid / 2, height / 2 + heightHole, 1 }, 
                 // Стенки отверстия
-                { -lid / 2, height / 2 + heightHole, 0, height / 2 + heightHole, 1 }, 
+                { -lid / 2, height / 2 + heightHole, 
+                    0, height / 2 + heightHole, 1 }, 
                 // Вспомогательная линия (3 в конце) вдоль оси OY
                 { 0, -height / 2, 0, height / 2 + heightHole, 3 } 
             };
@@ -79,9 +86,11 @@ namespace KettlePlugin
             _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0));
 
             // Добавляем 2 скругления дугами между линий 2/3 и 3/4
-            _wrapper.CreateArc(-bottom / 2 + offsetHole, height / 2 + offsetHole, 
+            _wrapper.CreateArc
+                (-bottom / 2 + offsetHole, height / 2 + offsetHole, 
                 -bottom / 2, height / 2, 90);
-            _wrapper.CreateArc(-lid / 2 - offsetHole, height / 2 + offsetHole, 
+            _wrapper.CreateArc
+                (-lid / 2 - offsetHole, height / 2 + offsetHole, 
                 -lid / 2, height / 2 + 2, 90);
 
             // Выдавливание вращением
@@ -91,14 +100,21 @@ namespace KettlePlugin
         /// <summary>
         /// Построение ручки чайника, с возможностью смены формы.
         /// </summary>
-        /// <param name="parameters">Параметры модели.</param>
+        /// <param name="parameters">Параметры.</param>
+        /// <param name="handleForm">Форма ручки.</param>
+        /// <exception cref="ArgumentException">Ошибка:
+        /// Недопустимая форма ручки.</exception>
         private void BuildHandle(Parameters parameters, int handleForm)
         {
-            // Получаем параметры: высота, диаметр, диаметр крышки, высота ручки
-            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
-            double bottom = parameters.AllParameters[ParameterType.DiameterBottom].Value;
-            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
-            double handle = parameters.AllParameters[ParameterType.HeightHandle].Value;
+            // Получаем параметры: размеры высоты, дна, крышки, ручки
+            double height = parameters.AllParameters
+                [ParameterType.HeightBase].Value;
+            double bottom = parameters.AllParameters
+                [ParameterType.DiameterBottom].Value;
+            double lid = parameters.AllParameters
+                [ParameterType.DiameterLid].Value;
+            double handle = parameters.AllParameters
+                [ParameterType.HeightHandle].Value;
 
             // Задаем параметр смещения для ручки
             double offsetHandle = 4.5;
@@ -108,8 +124,10 @@ namespace KettlePlugin
 
             // Точки для высоты ручки
             double[,] pointsArray = {
-                {xC, height/2, xC, height/2+handle-4.5, 1 }, // Высота ручки
-                {-xC, height/2+handle-4.5, -xC, height/2, 1 }, // Вторая высота ручки
+                // Высота ручки
+                {xC, height/2, xC, height/2+handle-4.5, 1 },
+                // Вторая высота ручки
+                {-xC, height/2+handle-4.5, -xC, height/2, 1 },
             };
 
             // Создаем скетч и строим заданные линии
@@ -121,14 +139,17 @@ namespace KettlePlugin
                 // Прямая ручка
                 case 0:
                     //Создаем прямую линию ручки
-                    double[,] horizontalPoint = {{xC + offsetHandle, height / 2 + handle, 
+                    double[,] horizontalPoint = 
+                        {{xC + offsetHandle, height / 2 + handle, 
                         -xC - offsetHandle, height / 2 + handle, 1 }};
                     _wrapper.CreateLine(horizontalPoint, 0, 1);
 
                     // Создаем скругления дугами
-                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle, 
+                    _wrapper.CreateArc(
+                        xC + offsetHandle, height / 2 + handle, 
                         xC, height / 2 + handle - offsetHandle, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
+                    _wrapper.CreateArc(
+                        -xC, height / 2 + handle - offsetHandle, 
                         -xC - offsetHandle, height / 2 + handle, 90);
 
                     break;
@@ -136,30 +157,41 @@ namespace KettlePlugin
                 // Изогнутая ручка (вниз)
                 case 1: 
                     // Создаем волнистую форму ручки
-                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 
+                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), 
+                        height / 2 + handle - offsetHandle, 
                         xC, height / 2 + handle - offsetHandle, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
-                        -xC - lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 90);
-                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 
-                        -xC - lid / (offsetHandle - 0.5), height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(-xC, 
+                        height / 2 + handle - offsetHandle, 
+                        -xC - lid / (offsetHandle - 0.5), 
+                        height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(xC + lid / (offsetHandle - 0.5), 
+                        height / 2 + handle - offsetHandle, 
+                        -xC - lid / (offsetHandle - 0.5), 
+                        height / 2 + handle - offsetHandle, 90);
 
                     break;
 
                 // Изогнутая ручка (вверх)
                 case 2:
                     // Создаем скругления дугами
-                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle,
-                        xC, height / 2 + handle - offsetHandle, 90);
-                    _wrapper.CreateArc(-xC, height / 2 + handle - offsetHandle, 
+                    _wrapper.CreateArc(xC + offsetHandle, 
+                        height / 2 + handle, xC, 
+                        height / 2 + handle - offsetHandle, 90);
+                    _wrapper.CreateArc(-xC, 
+                        height / 2 + handle - offsetHandle, 
                         -xC - offsetHandle, height / 2 + handle, 90);
 
                     // Создаем волнистую форму ручки
-                    _wrapper.CreateArc(xC + offsetHandle, height / 2 + handle, 
-                        xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2,  90);
+                    _wrapper.CreateArc(xC + offsetHandle, 
+                        height / 2 + handle, 
+                        xC + lid / (offsetHandle - 0.5), 
+                        height / 2 + handle + offsetHandle * 2,  90);
                     _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), 
                         height / 2 + handle + offsetHandle * 2, 
-                        xC + lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 90);
-                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), height / 2 + handle + offsetHandle * 2, 
+                        xC + lid / (offsetHandle - 0.5), 
+                        height / 2 + handle + offsetHandle * 2, 90);
+                    _wrapper.CreateArc(-xC - lid / (offsetHandle - 0.5), 
+                        height / 2 + handle + offsetHandle * 2, 
                         -xC - offsetHandle, height / 2 + handle, 90);
 
                     break;
@@ -180,9 +212,11 @@ namespace KettlePlugin
         /// <param name="parameters">Параметры модели.</param>
         private void BuildLid(Parameters parameters)
         {
-            // Получаем параметры: диаметр крышки, высота чайника
-            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
-            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
+            // Получаем параметры: размеры крышки и высоты чайника
+            double lid = parameters.AllParameters
+                [ParameterType.DiameterLid].Value;
+            double height = parameters.AllParameters
+                [ParameterType.HeightBase].Value;
 
             // Задаем параметр смещения для плоскости
             double offset = 2.5;
@@ -215,8 +249,10 @@ namespace KettlePlugin
             _wrapper.CreateLine(pointsArray, 0, pointsArray.GetLength(0));
 
             // Создаем скругления дугами
-            _wrapper.CreateArc(xC + 2, height / 2 + 12.5, xC, height / 2 + 10.5, 90);
-            _wrapper.CreateArc(-xC, height / 2 + 10.5, -xC - 2, height / 2 + 12.5, 90);
+            _wrapper.CreateArc(xC + 2, height / 2 + 12.5, 
+                xC, height / 2 + 10.5, 90);
+            _wrapper.CreateArc(-xC, height / 2 + 10.5, 
+                -xC - 2, height / 2 + 12.5, 90);
 
             // Задаем параметр длины для выдавливания
             int lenght = 7;
@@ -231,11 +267,15 @@ namespace KettlePlugin
         /// <param name="parameters">Параметры модели.</param>
         private void BuildSpout(Parameters parameters)
         {
-            // Получаем параметры: высота, диаметр, диаметр крышки, высота ручки
-            double height = parameters.AllParameters[ParameterType.HeightBase].Value;
-            double diameter = parameters.AllParameters[ParameterType.DiameterBottom].Value;
-            double lid = parameters.AllParameters[ParameterType.DiameterLid].Value;
-            double handle = parameters.AllParameters[ParameterType.HeightHandle].Value;
+            // Получаем параметры: размеры высоты, дна, крышки, ручки
+            double height = parameters.AllParameters
+                [ParameterType.HeightBase].Value;
+            double diameter = parameters.AllParameters
+                [ParameterType.DiameterBottom].Value;
+            double lid = parameters.AllParameters
+                [ParameterType.DiameterLid].Value;
+            double handle = parameters.AllParameters
+                [ParameterType.HeightHandle].Value;
 
             // Создание скетчей и выдавливание по секциям
             _wrapper.CreateLoftedElement(height, diameter, lid, handle);

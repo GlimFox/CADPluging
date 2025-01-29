@@ -2,11 +2,13 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Reflection;
+using static KettlePlugin.Parameters;
 
 namespace UnitTest.ParametersTest
 {
     /// <summary>
-    /// Класс Unit тестов для проверки корректности работы класса <see cref="Parameters"/>.
+    /// Класс Unit тестов для проверки 
+    /// корректности работы класса <see cref="Parameters"/>.
     /// </summary>
     [TestFixture]
     public class ParametersTests
@@ -15,14 +17,16 @@ namespace UnitTest.ParametersTest
         /// Позитивный тест геттера AllParameters.
         /// Проверяет работу get у AllParameters.
         /// </summary>
-        [Test(Description = "Позитивный тест геттера AllParameters. Проверяет работу get у AllParameters.")]
+        [Test(Description = "Позитивный тест геттера AllParameters. " +
+            "Проверяет работу get у AllParameters.")]
         public void AllParameters_Get_ReturnsCorrectDictionary()
         {
             var parameters = new Parameters
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter (100, 400, 150) }
+                    { ParameterType.DiameterBottom, 
+                        new Parameter (100, 400, 150) }
                 }
             };
             Assert.IsNotNull(parameters.AllParameters);
@@ -33,13 +37,15 @@ namespace UnitTest.ParametersTest
         /// Позитивный тест сеттера AllParameters.
         /// Проверяет работу set у AllParameters.
         /// </summary>
-        [Test(Description = "Позитивный тест сеттера AllParameters. Проверяет работу set у AllParameters.")]
+        [Test(Description = "Позитивный тест сеттера AllParameters. " +
+            "Проверяет работу set у AllParameters.")]
         public void AllParameters_Set_SetsCorrectDictionary()
         {
             var parameters = new Parameters();
             var newParameters = new Dictionary<ParameterType, Parameter>
             {
-                { ParameterType.DiameterBottom, new Parameter (100, 400, 150) }
+                { ParameterType.DiameterBottom, 
+                    new Parameter (100, 400, 150) }
             };
 
             parameters.AllParameters = newParameters;
@@ -51,21 +57,26 @@ namespace UnitTest.ParametersTest
         /// Позитивный тест метода SetParameter.
         /// Проверяет работу set для _parameter.
         /// </summary>
-        [Test(Description = "Позитивный тест метода SetParameter. Проверяет работу set для _parameter.")]
-        public void SetParameter_ValidParameters_SuccessfullyUpdatesParameter()
+        [Test(Description = "Позитивный тест метода SetParameter. " +
+            "Проверяет работу set для _parameter.")]
+        public void 
+            SetParameter_ValidParameters_SuccessfullyUpdatesParameter()
         {
             var parameters = new Parameters
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter(100, 400, 150) }
+                    { ParameterType.DiameterBottom, 
+                        new Parameter(100, 400, 150) }
                 }
             };
-            var newParameter = new Parameter (100, 400, 200);
+            var newParameter = new Parameter(100, 400, 200);
 
-            parameters.SetParameter(ParameterType.DiameterBottom, newParameter);
+            parameters.SetParameter
+                (ParameterType.DiameterBottom, newParameter);
 
-            Assert.AreEqual(200, parameters.AllParameters[ParameterType.DiameterBottom].Value);
+            Assert.AreEqual(200, parameters.AllParameters
+                [ParameterType.DiameterBottom].Value);
         }
 
         /// <summary>
@@ -74,26 +85,32 @@ namespace UnitTest.ParametersTest
         /// </summary>
         [Test(Description = "Негативный тест ValidateParameters. " +
             "Проверяет вызов исключения при некорректных зависимостях.")]
-        public void ValidateParameters_InvalidDependentValues_ThrowsArgumentException()
+        public void 
+            ValidateParameters_InvalidDependentValues_ThrowsArgumentException()
         {
             var parameters = new Parameters
             {
                 AllParameters = new Dictionary<ParameterType, Parameter>
                 {
-                    { ParameterType.DiameterBottom, new Parameter (100, 400, 150) },
-                    { ParameterType.DiameterLid, new Parameter (75, 300, 200 ) }
+                    { ParameterType.DiameterBottom, 
+                        new Parameter (100, 400, 150) },
+                    { ParameterType.DiameterLid, 
+                        new Parameter (75, 300, 200 ) }
                 }
             };
 
-            var validateMethod = typeof(Parameters).GetMethod("ValidateParameters",
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var validateMethod = 
+                typeof(Parameters).GetMethod("ValidateParameters",
+                System.Reflection.BindingFlags.NonPublic | 
+                System.Reflection.BindingFlags.Instance);
 
             Assert.IsNotNull(validateMethod);
 
-            var ex = Assert.Throws<TargetInvocationException>(() =>
-                validateMethod.Invoke(parameters, null));
+            var ex = Assert.Throws<TargetInvocationException>
+                (() => validateMethod.Invoke(parameters, null));
 
-            Assert.That(ex.InnerException.Message, Does.Contain("Диаметр дна"));
+            Assert.That
+                (ex.InnerException.Message, Does.Contain("Диаметр дна"));
         }
         /// <summary>
         /// Проверяет корректность расчета диаметра дна.
@@ -105,7 +122,8 @@ namespace UnitTest.ParametersTest
             double volume = 5.0;
             double height = 200.0;
 
-            var result = parameters.Calculations(1, volume, height);
+            var result = parameters.Calculations
+                (CalculationType.Bottom, volume, height);
 
             Assert.That(result, Is.GreaterThan(0));
         }
@@ -120,7 +138,8 @@ namespace UnitTest.ParametersTest
             double bottomDiameter = 150.0;
             double volume = 5.0;
 
-            var result = parameters.Calculations(2, bottomDiameter, volume);
+            var result = parameters.Calculations
+                (CalculationType.Height, bottomDiameter, volume);
 
             Assert.That(result, Is.GreaterThan(0));
         }
@@ -135,7 +154,8 @@ namespace UnitTest.ParametersTest
             double bottomDiameter = 150.0;
             double height = 200.0;
 
-            var result = parameters.Calculations(3, bottomDiameter, height);
+            var result = parameters.
+                Calculations(CalculationType.Volume, bottomDiameter, height);
 
             Assert.That(result, Is.GreaterThan(0));
         }
