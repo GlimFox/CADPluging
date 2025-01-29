@@ -3,17 +3,13 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using StressTests;
-using static KettlePlugin.Parameters;
 
 namespace KettlePlugin
 {
-    //TODO:XML +++
-    /// <summary>
-    /// Главная форма пользовательского интерфейса приложения.
-    /// </summary>
+    //TODO:XML
     public partial class MainForm : Form
     {
-        #region Fields (Поля)
+        #region Features (Свойства)
 
         /// <summary>
         /// Построитель для создания модели.
@@ -28,8 +24,7 @@ namespace KettlePlugin
         /// <summary>
         /// Словарь, содержащий строки ошибок валидации.
         /// </summary>
-        private Dictionary<ParameterType, string> _errors = 
-            new Dictionary<ParameterType, string>();
+        private Dictionary<ParameterType, string> _errors = new Dictionary<ParameterType, string>();
 
         #endregion
 
@@ -70,6 +65,7 @@ namespace KettlePlugin
 
                 UpdateErrorList();
             }
+
 
             if (rbBottomDiameter.Checked)
             {
@@ -117,30 +113,24 @@ namespace KettlePlugin
         }
 
         /// <summary>
-        /// Рассчитывает значение для tbVar3 на основе var1 и var2.
+        /// Рассчитывает значение для Var3 на основе Var1 и Var2.
         /// </summary>
         private void CalculateVar3()
         {
-            // Прерываем, если поле пустое/не удалось преобразовать в число
-            if (string.IsNullOrWhiteSpace(tbVar1.Text) || 
-                string.IsNullOrWhiteSpace(tbVar2.Text) ||
-                (!double.TryParse(tbVar1.Text, out double var1) || 
-                !double.TryParse(tbVar2.Text, out double var2)))
+            if (tbVar1.Text != null && tbVar2.Text != null)
             {
-                return;
+                double var1, var2, var3 = 0;
+                if (double.TryParse(tbVar1.Text, out var1) && double.TryParse(tbVar2.Text, out var2))
+                {
+
+                    if (rbBottomDiameter.Checked) var3 = _parameters.Calculations(1, var1, var2);
+                    if (rbHeightBase.Checked) var3 = _parameters.Calculations(2, var1, var2);
+                    if (rbVolume.Checked) var3 = _parameters.Calculations(3, var1, var2);
+
+                    // Записываем рассчитанное значение в текстбокс
+                    tbVar3.Text = var3.ToString();
+                }
             }
-
-            // Выбор типа расчета из перечисления
-            CalculationType calculationType = 
-                rbBottomDiameter.Checked ? CalculationType.Bottom :
-                rbHeightBase.Checked ? CalculationType.Height :
-                rbVolume.Checked ? CalculationType.Volume :
-                throw new InvalidOperationException
-                ("Не выбрана ни одна формула.");
-
-            // Записываем рассчитанное значение в текстбокс
-            tbVar3.Text = _parameters.Calculations
-                (calculationType, var1, var2).ToString();
         }
 
         /// <summary>
@@ -171,13 +161,12 @@ namespace KettlePlugin
         #region ValidationFunctions (Функции валидации)
 
         /// <summary>
-        /// Изменяет цвет текста в зависимости от валидации параметров.
+        /// Изменяет цвет текста и подсказок в зависимости от валидации параметров.
         /// </summary>
         /// <param name="parameterType">Тип параметра.</param>
         /// <param name="textBox">Текстовое поле.</param>
         /// <param name="limitLabel">Метка ограничения.</param>
-        private void ColorChanges(ParameterType parameterType, 
-            TextBox textBox, Label limitLabel)
+        private void ColorChanges(ParameterType parameterType, TextBox textBox, Label limitLabel)
         {
             try
             {
@@ -206,8 +195,7 @@ namespace KettlePlugin
             catch (FormatException)
             {
                 // Обработка ошибок формата
-                string errorMessage = 
-                    "Введите корректное числовое значение.";
+                string errorMessage = "Введите корректное числовое значение.";
                 _errors[parameterType] = errorMessage;
                 textBox.BackColor = Color.FromArgb(217, 84, 77);
                 limitLabel.ForeColor = Color.FromArgb(217, 84, 77);
@@ -224,14 +212,11 @@ namespace KettlePlugin
         {
             // Проверка, что диаметр дна > диаметра крышки
             if (parameterType == ParameterType.DiameterLid &&
-                _parameters.AllParameters.TryGetValue
-                (ParameterType.DiameterBottom, out var bottomDiameter))
+                _parameters.AllParameters.TryGetValue(ParameterType.DiameterBottom, out var bottomDiameter))
             {
-                if (_parameters.AllParameters
-                    [ParameterType.DiameterLid].Value > bottomDiameter.Value)
+                if (_parameters.AllParameters[ParameterType.DiameterLid].Value > bottomDiameter.Value)
                 {
-                    string errorMessage = 
-                        "Диаметр крышки не может превышать диаметр дна.";
+                    string errorMessage = "Диаметр крышки не может превышать диаметр дна.";
                     _errors[ParameterType.DiameterLid] = errorMessage;
                     tbDiameterLid.BackColor = Color.FromArgb(217, 84, 77);
                     limit4_Label.ForeColor = Color.FromArgb(217, 84, 77);
@@ -244,14 +229,11 @@ namespace KettlePlugin
 
             // Проверка, что высота чанйика > высоты ручки
             if (parameterType == ParameterType.HeightHandle &&
-                _parameters.AllParameters.TryGetValue
-                (ParameterType.HeightBase, out var heightBase))
+                _parameters.AllParameters.TryGetValue(ParameterType.HeightBase, out var heightBase))
             {
-                if (_parameters.AllParameters
-                    [ParameterType.HeightHandle].Value > heightBase.Value)
+                if (_parameters.AllParameters[ParameterType.HeightHandle].Value > heightBase.Value)
                 {
-                    string errorMessage = 
-                        "Высота ручки не может превышать высоту чайника.";
+                    string errorMessage = "Высота ручки не может превышать высоту чайника.";
                     _errors[ParameterType.HeightHandle] = errorMessage;
                     tbHandleHeight.BackColor = Color.FromArgb(217, 84, 77);
                     limit5_Label.ForeColor = Color.FromArgb(217, 84, 77);
@@ -277,8 +259,8 @@ namespace KettlePlugin
         private void TextBoxKeyPressHandler(object sender, KeyPressEventArgs e)
         {
             // Допустимый ввод: цифры '0123456789' и одна запятая ','
-            if (sender is TextBox textBox && (!char.IsDigit(e.KeyChar) && 
-                e.KeyChar != ',' && e.KeyChar != (char)Keys.Back ||
+            if (sender is TextBox textBox &&
+                (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != (char)Keys.Back ||
                 (e.KeyChar == ',' && textBox.Text.Contains(","))))
             {
                 e.Handled = true;
@@ -290,8 +272,7 @@ namespace KettlePlugin
         /// </summary>
         /// <param name="sender">Источник события (радиокнопка).</param>
         /// <param name="e">Аргументы события изменения выбора.</param>
-        private void RadioButtonCheckedChangedHandler
-            (object sender, EventArgs e)
+        private void RadioButtonCheckedChangedHandler(object sender, EventArgs e)
         {
             CheckChange(true);
         }
@@ -312,13 +293,11 @@ namespace KettlePlugin
                         case "tbVar1":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.Volume,
-                                    textBox, limit1Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit1Label);
                             }
                             else if (rbHeightBase.Checked || rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.DiameterBottom,
-                                    textBox, limit1Label);
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit1Label);
                             }
                             CalculateVar3();
                             break;
@@ -326,18 +305,15 @@ namespace KettlePlugin
                         case "tbVar2":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase, 
-                                    textBox, limit2Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2Label);
                             }
                             else if (rbHeightBase.Checked)
                             {
-                                ColorChanges(ParameterType.Volume, 
-                                    textBox, limit2Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit2Label);
                             }
                             else if (rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase, 
-                                    textBox, limit2Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit2Label);
                             }
                             CalculateVar3();
                             break;
@@ -345,41 +321,33 @@ namespace KettlePlugin
                         case "tbVar3":
                             if (rbBottomDiameter.Checked)
                             {
-                                ColorChanges(ParameterType.DiameterBottom, 
-                                    textBox, limit3Label);
+                                ColorChanges(ParameterType.DiameterBottom, textBox, limit3Label);
                             }
                             else if (rbHeightBase.Checked)
                             {
-                                ColorChanges(ParameterType.HeightBase,
-                                    textBox, limit3Label);
+                                ColorChanges(ParameterType.HeightBase, textBox, limit3Label);
                             }
                             else if (rbVolume.Checked)
                             {
-                                ColorChanges(ParameterType.Volume, 
-                                    textBox, limit3Label);
+                                ColorChanges(ParameterType.Volume, textBox, limit3Label);
                             }
-                            ColorChanges(ParameterType.DiameterLid, 
-                                tbDiameterLid, limit4_Label);
-                            ColorChanges(ParameterType.HeightHandle, 
-                                tbHandleHeight, limit5_Label);
+                            ColorChanges(ParameterType.DiameterLid, tbDiameterLid, limit4_Label);
+                            ColorChanges(ParameterType.HeightHandle, tbHandleHeight, limit5_Label);
                             break;
 
                         case "tbDiameterLid":
-                            ColorChanges(ParameterType.DiameterLid, 
-                                textBox, limit4_Label);
+                            ColorChanges(ParameterType.DiameterLid, textBox, limit4_Label);
                             break;
 
                         case "tbHandleHeight":
-                            ColorChanges(ParameterType.HeightHandle, 
-                                textBox, limit5_Label);
+                            ColorChanges(ParameterType.HeightHandle, textBox, limit5_Label);
                             break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         
@@ -404,15 +372,13 @@ namespace KettlePlugin
                 this.tbHandleHeight.BackColor == SystemColors.Window)
             {
                 MessageBox.Show("Невозможно построить модель. " +
-                    "Проверьте параметры на ошибки и заполните все поля.",
-                    "Ошибка построения",
+                    "Проверьте параметры на ошибки и заполните все поля.", "Ошибка построения",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 int color = pbChoiceColor.BackColor.ToArgb();
-                this._builder.Build
-                    (this._parameters, color, cbHandleForm.SelectedIndex);
+                this._builder.Build(this._parameters, color, cbHandleForm.SelectedIndex);
             }
         }
     }

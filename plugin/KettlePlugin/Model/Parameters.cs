@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static KettlePlugin.Parameters;
 
 namespace KettlePlugin
 {
@@ -11,26 +10,9 @@ namespace KettlePlugin
     public class Parameters
     {
         /// <summary>
-        /// Перечисление типов расчета параметров чайника.
+        /// Словарь, содержащий параметры модели, ключ - тип параметра, значение - сам параметр.
         /// </summary>
-        public enum CalculationType
-        {
-            /// <summary> Расчет диаметра дна. </summary>
-            Bottom,
-
-            /// <summary> Расчет высоты чайника. </summary>
-            Height,
-
-            /// <summary> Расчет объема чайника. </summary>
-            Volume
-        }
-
-        /// <summary>
-        /// Словарь, содержащий параметры модели.
-        /// Ключ - тип параметра, значение - сам параметр.
-        /// </summary>
-        private Dictionary<ParameterType, Parameter> _parameter = 
-            new Dictionary<ParameterType, Parameter>
+        private Dictionary<ParameterType, Parameter> _parameter = new Dictionary<ParameterType, Parameter>
         {
             { ParameterType.DiameterBottom, new Parameter (100, 400)},
             { ParameterType.DiameterLid, new Parameter (75, 300)},
@@ -56,15 +38,12 @@ namespace KettlePlugin
         }
 
         /// <summary>
-        /// Устанавливает параметр в словарь. 
-        /// Если уже существует - обновляется.
+        /// Устанавливает параметр в словарь. Если уже существует - обновляется.
         /// </summary>
         /// <param name="parameterType">Тип параметра.</param>
         /// <param name="parameter">Объект параметра.</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если параметр 
-        /// не прошел валидацию.</exception>
-        public void SetParameter
-            (ParameterType parameterType, Parameter parameter)
+        /// <exception cref="ArgumentException">Выбрасывается, если параметр не прошел валидацию.</exception>
+        public void SetParameter(ParameterType parameterType, Parameter parameter)
         {
             try
             {
@@ -112,75 +91,59 @@ namespace KettlePlugin
             switch (parameterType)
             {
                 case ParameterType.DiameterBottom:
-                    if (this.AllParameters.TryGetValue
-                        (ParameterType.DiameterLid, out diameterLid))
+                    if (this.AllParameters.TryGetValue(ParameterType.DiameterLid, out diameterLid))
                     {
                         if (parameter.Value < diameterLid.Value)
                         {
-                            exception += $"Диаметр дна ({parameter.Value} " +
-                                $"мм) не может быть меньше диаметра крышки " +
-                                $"({diameterLid.Value} мм).\n";
+                            exception += $"Диаметр дна ({parameter.Value} мм) " +
+                                $"не может быть меньше диаметра крышки ({diameterLid.Value} мм).\n";
                         }
                     }
                     break;
 
                 case ParameterType.DiameterLid:
-                    if (this.AllParameters.TryGetValue
-                        (ParameterType.DiameterBottom, out diameterBottom))
+                    if (this.AllParameters.TryGetValue(ParameterType.DiameterBottom, out diameterBottom))
                     {
                         if (parameter.Value > diameterBottom.Value)
                         {
-                            exception += $"Диаметр крышки " +
-                                $"({parameter.Value} мм) " +
-                                $"не может быть больше диаметра дна " +
-                                $"({diameterBottom.Value} мм).\n";
+                            exception += $"Диаметр крышки ({parameter.Value} мм) " +
+                                $"не может быть больше диаметра дна ({diameterBottom.Value} мм).\n";
                         }
                     }
                     break;
 
                 case ParameterType.HeightBase:
-                    if (this.AllParameters.TryGetValue
-                        (ParameterType.HeightHandle, out handleHeight))
+                    if (this.AllParameters.TryGetValue(ParameterType.HeightHandle, out handleHeight))
                     {
                         if (handleHeight.Value > parameter.Value)
                         {
-                            exception += $"Высота ручки " +
-                                $"({handleHeight.Value} мм) " +
-                                $"не может превышать высоту чайника " +
-                                $"({parameter.Value} мм).\n";
+                            exception += $"Высота ручки ({handleHeight.Value} мм) " +
+                                $"не может превышать высоту чайника ({parameter.Value} мм).\n";
                         }
                     }
                     break;
 
                 case ParameterType.Volume:
-                    if (this.AllParameters.TryGetValue
-                        (ParameterType.DiameterBottom, out diameterBottom) &&
-                        this.AllParameters.TryGetValue
-                        (ParameterType.HeightBase, out height))
+                    if (this.AllParameters.TryGetValue(ParameterType.DiameterBottom, out diameterBottom) &&
+                        this.AllParameters.TryGetValue(ParameterType.HeightBase, out height))
                     {
-                        double calculatedVolume = Math.PI * 
-                            Math.Pow(diameterBottom.Value / 2, 2) * 
-                            height.Value / 1000;
-                        if (Math.Abs(parameter.Value - 
-                            calculatedVolume) > 0.01)
+                        double calculatedVolume = Math.PI * Math.Pow(diameterBottom.Value / 2, 2) 
+                            * height.Value / 1000;
+                        if (Math.Abs(parameter.Value - calculatedVolume) > 0.01)
                         {
-                            exception += $"Объём ({parameter.Value} л) " +
-                                $"не соответствует диаметру дна " +
-                                $"({diameterBottom.Value} мм) и высоте " +
-                                $"({height.Value} мм). Пересчитайте объём.\n";
+                            exception += $"Объём ({parameter.Value} л) не соответствует диаметру дна " +
+                                $"({diameterBottom.Value} мм) и высоте ({height.Value} мм). Пересчитайте объём.\n";
                         }
                     }
                     break;
 
                 case ParameterType.HeightHandle:
-                    if (this.AllParameters.TryGetValue
-                        (ParameterType.HeightBase, out height))
+                    if (this.AllParameters.TryGetValue(ParameterType.HeightBase, out height))
                     {
                         if (parameter.Value > height.Value)
                         {
-                            exception += $"Высота ручки " +
-                                $"({parameter.Value} мм) не может быть " +
-                                $"больше высоты чайника ({height.Value} мм).\n";
+                            exception += $"Высота ручки ({parameter.Value} мм) " +
+                                $"не может быть больше высоты чайника ({height.Value} мм).\n";
                         }
                     }
                     break;
@@ -196,39 +159,38 @@ namespace KettlePlugin
             }
         }
 
-
         /// <summary>
-        /// Выполняет расчёты параметров чайника от входных данных.
+        /// Выполняет расчёты параметров чайника в зависимости от входных данных.
         /// Значения 1000 и 1000000 нужны для превращения мм в дм
         /// </summary>
-        /// <param name="calculationType">Тип расчета</param>
-        /// <param name="var1">Значение первого текстового поля.</param>
-        /// <param name="var2">Значение второго текстового поля.</param>
+        /// <param name="i">Тип расчёта (1 - диаметр дна, 2 - высота, 3 - объём).</param>
+        /// <param name="var1">Первое значение (например, объём или диаметр).</param>
+        /// <param name="var2">Второе значение (например, высота).</param>
         /// <returns>Результат расчёта.</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public double Calculations(CalculationType calculationType,
-            double var1, double var2)
+        public double Calculations(int i, double var1, double var2)
         {
-            //TODO: enum +++
 
-            switch (calculationType)
+            //TODO: enum
+            // Расчет диаметра дна чайника (bottomDiameter)
+            if (i == 1)
             {
-                case CalculationType.Bottom:
-                    return Math.Round(2f * Math.Sqrt(var1 / 
-                        (Math.PI * var2)) * 1000, 0);
-
-                case CalculationType.Height:
-                    return Math.Round((var2 / 
-                        (Math.PI * Math.Pow(var1 / 2, 2))) * 1000000, 0);
-
-                case CalculationType.Volume:
-                    return Math.Round((Math.PI * 
-                        Math.Pow(var1 / 2, 2) * var2) / 1000000, 2);
-
-                default:
-                    throw new ArgumentException
-                        ("Некорректный тип расчёта.");
+                return Math.Round(2f * Math.Sqrt(var1 / (Math.PI * var2)) * 1000, 0);
             }
+
+            // Расчет высоты чайника (height)
+            if (i == 2)
+            {
+                return Math.Round((var2 / (Math.PI * Math.Pow(var1 / 2, 2))) * 1000000, 0);
+            }
+
+            // Расчет объема чайника (volume)
+            if (i == 3)
+            {
+                return Math.Round((Math.PI * Math.Pow(var1 / 2, 2) * var2) / 1000000, 2);
+            }
+
+            // Возвращаем посчитанное число
+            throw new Exception();
         }
     }
 }
