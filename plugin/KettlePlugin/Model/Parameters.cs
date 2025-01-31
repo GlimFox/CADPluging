@@ -208,8 +208,6 @@ namespace KettlePlugin
         public double Calculations(CalculationType calculationType,
             double var1, double var2)
         {
-            //TODO: enum +++
-
             switch (calculationType)
             {
                 case CalculationType.Bottom:
