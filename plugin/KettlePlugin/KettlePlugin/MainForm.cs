@@ -6,7 +6,6 @@ using StressTests;
 
 namespace KettlePlugin
 {
-    //TODO:XML +++
     /// <summary>
     /// Главная форма пользовательского интерфейса приложения.
     /// </summary>
